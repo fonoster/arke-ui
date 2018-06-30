@@ -1,16 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import IconButton from '@material-ui/core/IconButton';
+import LaunchIcon from '@material-ui/icons/Launch';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
+import Button from "@material-ui/core/Button";
 import Typography from '@material-ui/core/Typography';
+import AlarmOffIcon from '@material-ui/icons/AlarmOff';
 
-const styles = {
+const styles = theme => ({
+  button: {
+    margin: theme.spacing.unit,
+  },
+  input: {
+    display: 'none',
+  },
   card: {
-    minWidth: 275,
-    maxWidth: 275,
+    maxWidth: 300,
     position: 'relative',
     margin: '10% auto'
   },
@@ -21,7 +29,7 @@ const styles = {
   pos: {
     marginBottom: 12,
   },
-};
+});
 
 function NoResourcesCard(props) {
   const { classes, resource, handleAddItem } = props;
@@ -40,13 +48,12 @@ function NoResourcesCard(props) {
             resource
           </Typography>
           <Typography component="p">
-          Endpoints generates a Developer Portal for your APIs, giving your customers access to useful,
-          never-outdated API documentation.<br />
-            {'"a benevolent smile"'}
+          Not resources found on the {resource.toLowerCase()} section at this time. Please go to the
+          documentation to learn more about resources <a href="https://github.com/fonoster/sipio/wiki/Configuration-Files"><LaunchIcon style={{ color: '#3F51B5', fontSize: 18 }}></LaunchIcon></a>
           </Typography>
         </CardContent>
         <CardActions>
-          <Button style={{color: '#00c853'}} onClick={handleAddItem} color="secondary" size="small">Add {resource}</Button>
+          <Button className={classes.button} variant="contained" onClick={handleAddItem} color="secondary" size="small">Add {resource}</Button>
         </CardActions>
       </Card>
     </div>
