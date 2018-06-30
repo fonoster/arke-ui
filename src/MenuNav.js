@@ -24,66 +24,65 @@ const styles = theme => ({
 });
 
 function MenuNav(props) {
-  const { classes, handleChangeResource } = props;
-  return (
-    <div className={classes.root}>
-      <ListItem button onClick={e => handleChangeResource(e, 'domains')}>
-        <ListItemIcon>
-          <DomainsIcon/>
-        </ListItemIcon>
-        <ListItemText primary="Domains"/>
-      </ListItem>
-      <ListItem button onClick={e => handleChangeResource(e, 'agents')}>
-        <ListItemIcon>
-          <AgentsIcon />
-        </ListItemIcon>
-        <ListItemText primary="Agents" />
-      </ListItem>
-      <ListItem button onClick={e => handleChangeResource(e, 'peers')}>
-        <ListItemIcon>
-          <PeersAgent />
-        </ListItemIcon>
-        <ListItemText primary="Peers" />
-      </ListItem>
-      <ListItem button onClick={e => handleChangeResource(e, 'gateways')}>
-        <ListItemIcon>
-          <GatewaysIcon />
-        </ListItemIcon>
-        <ListItemText primary="Gateways" />
-      </ListItem>
-      <ListItem button onClick={e => handleChangeResource(e, 'numbers')}>
-        <ListItemIcon>
-          <PhoneIcon />
-        </ListItemIcon>
-        <ListItemText primary="Numbers" />
-      </ListItem>
-      <ListItem button>
-        <ListItemIcon>
-          <LocationSearching />
-        </ListItemIcon>
-        <ListItemText primary="Location" />
-      </ListItem>
-      <ListItem button>
-        <ListItemIcon>
-          <DoneIcon />
-        </ListItemIcon>
-        <ListItemText primary="Registration" />
-      </ListItem>
-      <Divider />
-      <ListItem button>
-        <ListItemIcon>
-          <LogsIcon />
-        </ListItemIcon>
-        <ListItemText primary="Logs" />
-      </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            <SettingsIcon />
-          </ListItemIcon>
-          <ListItemText primary="Settings" />
-        </ListItem>
-    </div>
-  );
+    const { classes, handleChangeSection } = props;
+    return (
+      <div className={classes.root}>
+          <ListItem button onClick={e => handleChangeSection(e, 'domains')}>
+            <ListItemIcon>
+              <DomainsIcon/>
+            </ListItemIcon>
+            <ListItemText primary="Domains"/>
+          </ListItem>
+          <ListItem button onClick={e => handleChangeSection(e, 'agents')}>
+            <ListItemIcon>
+              <AgentsIcon />
+            </ListItemIcon>
+            <ListItemText primary="Agents" />
+          </ListItem>
+          <ListItem button onClick={e => handleChangeSection(e, 'peers')}>
+            <ListItemIcon>
+              <PeersAgent />
+            </ListItemIcon>
+            <ListItemText primary="Peers" />
+          </ListItem>
+          <ListItem button onClick={e => handleChangeSection(e, 'gateways')}>
+            <ListItemIcon>
+              <GatewaysIcon />
+            </ListItemIcon>
+            <ListItemText primary="Gateways" />
+          </ListItem>
+          <ListItem button onClick={e => handleChangeSection(e, 'numbers')}>
+            <ListItemIcon>
+              <PhoneIcon />
+            </ListItemIcon>
+            <ListItemText primary="Numbers" />
+          </ListItem>
+          <ListItem button onClick={e => handleChangeSection(e, 'location')}>
+            <ListItemIcon>
+              <LocationSearching />
+            </ListItemIcon>
+            <ListItemText primary="Location" />
+          </ListItem>
+          <ListItem button onClick={e => handleChangeSection(e, 'registration')}>
+            <ListItemIcon>
+              <DoneIcon />
+            </ListItemIcon>
+            <ListItemText primary="Registration" />
+          </ListItem>
+          <Divider />
+          <ListItem disabled button onClick={e => handleChangeSection(e, 'logs')}>
+            <ListItemIcon>
+              <LogsIcon />
+            </ListItemIcon>
+            <ListItemText primary="Logs" />
+          </ListItem >
+          <ListItem disabled button onClick={e => handleChangeSection(e, 'settings')}>
+            <ListItemIcon>
+              <SettingsIcon />
+            </ListItemIcon>
+            <ListItemText primary="Settings" />
+          </ListItem>
+      </div>);
 }
 
 MenuNav.propTypes = {

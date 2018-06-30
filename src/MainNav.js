@@ -41,7 +41,7 @@ class MenuAppBar extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, onOpenAbout } = this.props;
     const { auth, anchorEl } = this.state;
     const open = Boolean(anchorEl);
 
@@ -75,8 +75,8 @@ class MenuAppBar extends React.Component {
                   open={open}
                   onClose={this.handleClose}
                 >
-                  <MenuItem onClick={this.handleClose}>Settings</MenuItem>
-                  <MenuItem onClick={this.handleClose}>About</MenuItem>
+                  <MenuItem disabled onClick={this.handleClose}>Settings</MenuItem>
+                  <MenuItem onClick={onOpenAbout}>About</MenuItem>
                 </Menu>
               </div>
             )}

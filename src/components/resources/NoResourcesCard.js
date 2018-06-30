@@ -46,7 +46,7 @@ function NoResourcesCard(props) {
             resource
           </Typography>
           <Typography component="p">
-          Not resources found on the {resource.toLowerCase()} section at this time. Please go to the
+          At this time not resources found on the {resource.toLowerCase()} sectio. Go to the
           documentation to learn more about resources <a href="https://github.com/fonoster/sipio/wiki/Configuration-Files"><LaunchIcon style={{ color: '#3F51B5', fontSize: 18 }}></LaunchIcon></a>
           </Typography>
         </CardContent>

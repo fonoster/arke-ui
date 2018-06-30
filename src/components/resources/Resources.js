@@ -1,17 +1,9 @@
 import React from 'react';
 import EnhancedTable from '../common/EnhancedTable'
 import DocViewer from '../common/DocViewer'
-import FileUploader from '../common/FileUploader'
-import NoResourcesCard from '../common/NoResourcesCard'
-
-function toTitleCase(str) {
-    return str.replace(
-        /\w\S*/g,
-        function(txt) {
-            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-        }
-    );
-}
+import FileUploader from './FileUploader'
+import NoResourcesCard from './NoResourcesCard'
+import { toTitleCase } from '../common/utils'
 
 class Resources extends React.Component {
 
@@ -37,7 +29,7 @@ class Resources extends React.Component {
     }
 
     render() {
-      const { endpoint, resource, columnData, data, handleChangeResource, handleDeleteItems } = this.props;
+      const { endpoint, resource, columnData, data, handleChangeResource, handleDeleteItems, handleNotify } = this.props;
 
       return (
           <div>
@@ -60,9 +52,13 @@ class Resources extends React.Component {
 
             <FileUploader open={this.state.fileUploaderOpen}
                 endpoint= { endpoint }
-                handleClose={ e => {
-                  this.setState({fileUploaderOpen: false});
-                  handleChangeResource(e, resource);
+                handleClose = { e => {
+                    this.setState({fileUploaderOpen: false});
+                }}
+                handleOnSuccess={ (e, res) => {
+                    handleNotify(res)
+                    this.setState({fileUploaderOpen: false});
+                    handleChangeResource(e, resource);
                 }} />
           </div>
       );

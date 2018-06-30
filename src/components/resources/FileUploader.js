@@ -26,38 +26,9 @@ function Transition(props) {
 }
 
 class FileUploader extends React.Component {
-
-  constructor(props) {
-    super(props);
-
-    this.state = {
-        open: false,
-    };
-
-    this.handleUploadDoc = this.handleUploadDoc.bind(this);
-  }
-
-  handleUploadDoc(e, endpoint) {
-    e.preventDefault();
-
-    const data = new FormData();
-    data.append('file', this.uploadInput.files[0]);
-    data.append('filename', this.fileName.value);
-
-    fetch(endpoint, {
-        method: 'POST',
-        body: data
-    }).then(response => {
-        return response
-    }).then(result => {
-        this.setState({ open: false });
-        console.log('What?')
-    });
-  };
-
   render() {
-    const { classes, open, endpoint, handleClose } = this.props;
-    const eventHandlers = { success: handleClose }
+    const { classes, open, endpoint, handleOnSuccess, handleClose } = this.props;
+    const eventHandlers = { success: handleOnSuccess }
     const djsConfig = { addRemoveLinks: true };
 
     const componentConfig = {
@@ -70,9 +41,8 @@ class FileUploader extends React.Component {
       <div>
         <Dialog
           open={ open }
-          onClose={ e => handleClose(e) }
-          TransitionComponent={Transition}
-        >
+          onClose={ handleClose }
+          TransitionComponent={Transition}>
           <AppBar className={classes.appBar}>
             <Toolbar>
               <IconButton color="inherit" aria-label="Close" onClick={ handleClose }>

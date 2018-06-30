@@ -7,7 +7,9 @@ import MainNav from './MainNav'
 import MenuNav from './MenuNav'
 import Resources from './components/resources/Resources.js'
 import NotificationBar from './components/common/NotificationBar'
-import { getColumnData, createData} from './components/resources/resourcesData'
+import { getColumnData, createData} from './components/common/dataStruct'
+import PaginationTable from './components/common/PaginationTable'
+import About from './components/common/About'
 
 const drawerWidth = 240;
 
@@ -35,15 +37,14 @@ const styles = theme => ({
   toolbar: theme.mixins.toolbar,
 });
 
-
-
 class ClippedDrawer extends React.Component {
 
-  constructor() {
-      super()
+  constructor(props) {
+      super(props)
       this.state = {
           data: [],
-          resource: 'domains',
+          aboutDialogOpen: false,
+          section: 'domains',
           notificationBarOpen: false,
           notificationBarMessage: '',
           apiUrl: "https://localhost:4567/api/v1draft1",
@@ -53,14 +54,15 @@ class ClippedDrawer extends React.Component {
 
   componentWillMount() {
       setTimeout(function() {
-          fetch(this.state.apiUrl + '/' + this.state.resource + '?filter=*&token=' + this.state.token)
+          const section = this.state.section === 'numbers'? 'dids' : this.state.section
+          fetch(this.state.apiUrl + '/' + section + '?filter=*&token=' + this.state.token)
           .then(results => {
               return results.json();
           }).then(resources => {
               const data = []
               if (resources && resources.result) {
                 resources.result.forEach(item => {
-                    data.push(createData(item, this.state.resource))
+                    data.push(createData(item, this.state.section))
                 })
               }
               this.setState({ data })
@@ -70,25 +72,38 @@ class ClippedDrawer extends React.Component {
 
   handleDeleteItems = (e, selected) => {
       selected.forEach(ref => {
-          fetch(this.state.apiUrl + '/' + this.state.resource + '/'+ ref + '?token=' + this.state.token, {
+          const section = this.state.section === 'numbers'? 'dids' : this.state.section
+          fetch(this.state.apiUrl + '/' + section + '/'+ ref + '?token=' + this.state.token, {
               method: 'DELETE'
           })
           .then(results => {
               return results.json()
           })
           .then(response => {
-              console.log('res2: ' + JSON.stringify(response))
               this.componentWillMount()
-              const notificationBarOpen = true
-              const notificationBarMessage = response.message
-              this.setState({ notificationBarOpen, notificationBarMessage })
+              this.setState({ notificationBarOpen: true, notificationBarMessage: response.message })
           });
       })
   }
 
-  handleChangeResource = (e, res) => {
-      this.setState({resource: res})
+  handleChangeSection = (e, section) => {
+      this.setState({section})
       this.componentWillMount()
+  }
+
+  handleNotify = (message) => {
+      this.setState({ notificationBarOpen: true, notificationBarMessage: message })
+  }
+
+  isResourceSection = () => {
+      if (this.state.section === 'domains'  ||
+          this.state.section === 'agents'   ||
+          this.state.section === 'peers'    ||
+          this.state.section === 'gateways'  ||
+          this.state.section === 'numbers') {
+            return true
+      }
+      return false
   }
 
   render () {
@@ -97,7 +112,7 @@ class ClippedDrawer extends React.Component {
     return(
       <div className={classes.root}>
         <AppBar position="absolute" className={classes.appBar}>
-          <MainNav />
+          <MainNav onOpenAbout={ e => this.setState({aboutDialogOpen: true}) } />
         </AppBar>
         <Drawer
           variant="permanent"
@@ -105,19 +120,29 @@ class ClippedDrawer extends React.Component {
             paper: classes.drawerPaper,
           }}>
           <div className={classes.toolbar} />
-          <MenuNav handleChangeResource={ (e, res) => this.handleChangeResource(e, res)}/>
+          <MenuNav handleChangeSection={ (e, res) => this.handleChangeSection(e, res)}/>
         </Drawer>
         <main className={classes.content}>
           <div className={classes.toolbar} />
-          <Resources
-              endpoint = {this.state.apiUrl + '/' + this.state.resource + '?token=' + this.state.token}
+          { this.isResourceSection() && <Resources
+              endpoint = {this.state.apiUrl + '/' + (this.state.section === 'numbers'? 'dids' : this.state.section) + '?token=' + this.state.token}
               handleDeleteItems={ (e, selected) => this.handleDeleteItems(e, selected) }
-              handleChangeResource={ (e, res) => this.handleChangeResource(e, res)}
-              columnData={getColumnData(this.state.resource)} data={this.state.data} resource={this.state.resource} />
+              handleNotify={this.handleNotify}
+              columnData={getColumnData(this.state.section)} data={this.state.data} resource={this.state.section} /> }
+
+          { !this.isResourceSection() && <PaginationTable
+            handleRefresh={ e => this.componentWillMount() }
+            name={this.state.section}
+            columnData={getColumnData(this.state.section)}
+            data={this.state.data} /> }
+
           <NotificationBar
               message={ this.state.notificationBarMessage }
               open={ this.state.notificationBarOpen}
               handleClose = { e => this.setState({ notificationBarOpen: false })} />
+          <About handleClose={ e => this.setState({aboutDialogOpen:false})}
+              endpoint={this.state.apiUrl + '/system/info?token=' + this.state.token}
+              open={this.state.aboutDialogOpen}></About>
         </main>
       </div>
     );
