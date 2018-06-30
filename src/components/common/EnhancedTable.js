@@ -19,25 +19,13 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import AddItemIcom from '@material-ui/icons/Add';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
 
-let counter = 0;
-function createData(name, uri, modified) {
-  counter += 1;
-  return { id: counter, name, uri, modified};
-}
-
-const columnData = [
-  { id: 'name', numeric: false, disablePadding: true, label: 'Domain Name' },
-  { id: 'uri', numeric: false, disablePadding: false, label: 'URI' },
-  { id: 'modified', numeric: false, disablePadding: false, label: 'Modified' },
-];
-
 class EnhancedTableHead extends React.Component {
   createSortHandler = property => event => {
     this.props.onRequestSort(event, property);
   };
 
   render() {
-    const { onSelectAllClick, order, orderBy, numSelected, rowCount } = this.props;
+    const { onSelectAllClick, order, orderBy, numSelected, rowCount, columnData } = this.props;
 
     return (
       <TableHead>
@@ -114,9 +102,10 @@ const toolbarStyles = theme => ({
 });
 
 let EnhancedTableToolbar = props => {
-  const { numSelected, classes } = props;
+  const { numSelected, classes, name, handleDeleteItems, handleAddItem } = props;
 
   return (
+
     <Toolbar
       className={classNames(classes.root, {
         [classes.highlight]: numSelected > 0,
@@ -129,21 +118,22 @@ let EnhancedTableToolbar = props => {
           </Typography>
         ) : (
           <Typography variant="title" id="tableTitle">
-            Domains
+            {name}
           </Typography>
         )}
       </div>
       <div className={classes.spacer} />
       <div className={classes.actions}>
         {numSelected > 0 ? (
+
           <Tooltip title="Delete">
-            <IconButton aria-label="Delete">
-              <DeleteIcon />
+            <IconButton aria-label="Delete" onClick={ e => handleDeleteItems(e) }>
+              <DeleteIcon/>
             </IconButton>
           </Tooltip>
         ) : (
-          <Tooltip title="Filter list">
-            <IconButton aria-label="Add Domain">
+          <Tooltip title="Add">
+            <IconButton aria-label="Add" onClick={ handleAddItem } >
               <AddItemIcom />
             </IconButton>
           </Tooltip>
@@ -171,9 +161,13 @@ const styles = theme => ({
   tableWrapper: {
     overflowX: 'auto',
   },
+  cursor: {
+    cursor: 'pointer',
+  }
 });
 
 class EnhancedTable extends React.Component {
+
   constructor(props, context) {
     super(props, context);
 
@@ -181,12 +175,8 @@ class EnhancedTable extends React.Component {
       order: 'asc',
       orderBy: 'calories',
       selected: [],
-      data: [
-        createData('Walmart Cameron', 'w01.walmart.com', 'Today at 12:08 AM'),
-        createData('Starbucks', 'sip.starbucks.com', 'Today at 08:00 AM'),
-        createData('Test Service', 'test.domain', 'Jan 2018'),
-        createData('Local Service', 'sip.local', '2017')
-      ].sort((a, b) => (a.calories < b.calories ? -1 : 1)),
+      data: [],
+      deleted: [],
       page: 0,
       rowsPerPage: 5,
     };
@@ -248,17 +238,23 @@ class EnhancedTable extends React.Component {
   isSelected = id => this.state.selected.indexOf(id) !== -1;
 
   render() {
-    const { classes } = this.props;
-    const { data, order, orderBy, selected, rowsPerPage, page } = this.state;
+    const { classes, columnData, data, name, handleOpenDocViewer, handleDeleteItems, handleAddItem } = this.props;
+    const { order, orderBy, selected, deleted, rowsPerPage, page } = this.state;
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
 
     return (
       <Paper className={classes.root}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar name={ name }
+            handleAddItem={ handleAddItem }
+            numSelected={selected.length} handleDeleteItems={ e => {
+                handleDeleteItems(e, this.state.selected);
+                this.state.selected = [];
+              }}/>
         <div className={classes.tableWrapper}>
           <Table className={classes.table} aria-labelledby="tableTitle">
             <EnhancedTableHead
-              numSelected={selected.length}
+              columnData={ columnData }
+              numSelected={ selected.length}
               order={order}
               orderBy={orderBy}
               onSelectAllClick={this.handleSelectAllClick}
@@ -271,21 +267,23 @@ class EnhancedTable extends React.Component {
                 return (
                   <TableRow
                     hover
-                    onClick={event => this.handleClick(event, n.id)}
                     role="checkbox"
                     aria-checked={isSelected}
                     tabIndex={-1}
                     key={n.id}
                     selected={isSelected}
                   >
-                    <TableCell padding="checkbox">
+                    <TableCell padding="checkbox"
+                      onClick={ e => this.handleClick(e, n.c1)}>
                       <Checkbox checked={isSelected} />
                     </TableCell>
-                    <TableCell component="th" scope="row" padding="none">
-                      {n.name}
+                    <TableCell onClick={ e => handleOpenDocViewer(e, n.c2) } className={classes.cursor} component="th" scope="row" padding="none">
+                      {n.c3}
                     </TableCell>
-                    <TableCell>{n.uri}</TableCell>
-                    <TableCell>{n.modified}</TableCell>
+                    <TableCell onClick={ e => handleOpenDocViewer(e, n.c2) } className={classes.cursor}>{n.c4}</TableCell>
+                    {n.c5 && <TableCell onClick={ e => handleOpenDocViewer(e, n.c2) } className={classes.cursor}>{n.c5}</TableCell>}
+                    {n.c6 && <TableCell onClick={ e => handleOpenDocViewer(e, n.c2) } className={classes.cursor}>{n.c6}</TableCell>}
+                    <TableCell onClick={ e => handleOpenDocViewer(e, n.c2) } className={classes.cursor}>{n.c1}</TableCell>
                   </TableRow>
                 );
               })}

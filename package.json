@@ -7,7 +7,9 @@
     "@material-ui/icons": "^1.0.0",
     "material-ui": "^0.20.1",
     "react": "^16.3.2",
+    "react-ace": "^6.1.2",
     "react-dom": "^16.3.2",
+    "react-dropzone-component": "^3.2.0",
     "react-scripts": "1.1.4"
   },
   "scripts": {
