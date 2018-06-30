@@ -9,7 +9,7 @@ import DomainsIcon from '@material-ui/icons/Business';
 import SettingsIcon from '@material-ui/icons/Settings';
 import GatewaysIcon from '@material-ui/icons/SwapHoriz';
 import AgentsIcon from '@material-ui/icons/People';
-import PhoneIcon from '@material-ui/icons/Phone';
+import DialpadIcon from '@material-ui/icons/Dialpad';
 import PeersAgent from '@material-ui/icons/GroupWork';
 import LocationSearching from '@material-ui/icons/LocationSearching';
 import DoneIcon from '@material-ui/icons/Done';
@@ -53,7 +53,7 @@ function MenuNav(props) {
           </ListItem>
           <ListItem button onClick={e => handleChangeSection(e, 'numbers')}>
             <ListItemIcon>
-              <PhoneIcon />
+              <DialpadIcon />
             </ListItemIcon>
             <ListItemText primary="Numbers" />
           </ListItem>

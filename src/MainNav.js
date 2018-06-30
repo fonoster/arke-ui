@@ -7,6 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
+import Typography from '@material-ui/core/Typography';
 import logo from './logo.png'
 
 const styles = {
@@ -50,6 +51,9 @@ class MenuAppBar extends React.Component {
         <AppBar position="static" color="primary">
           <Toolbar>
             <img src={logo} className="App-logo" alt="logo" />
+            <Typography style={{color: 'white'}} variant="caption" gutterBottom align="center">
+               - prealpha
+            </Typography>
             <span className={classes.flex}/>
             {auth && (
               <div>
