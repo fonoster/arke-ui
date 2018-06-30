@@ -81,19 +81,14 @@ export function getColumnData(resource) {
     switch (resource) {
       case 'domains':
         return columnDataDomains
-        break;
       case 'agents':
           return columnDataAgents
-          break;
       case 'peers':
           return columnDataPeers
-          break;
       case 'gateways':
           return columnDataGateways
-          break;
       case 'numbers':
           return columnDataNumbers
-          break;
       default:
         return columnDataDomains
     }
@@ -103,19 +98,14 @@ export function createData(item, resource) {
     switch (resource) {
       case 'domains':
           return domainsStruct(item)
-          break;
       case 'agents':
           return agentsStruct(item)
-          break;
       case 'peers':
           return peersStruct(item)
-          break;
       case 'gateways':
           return gatewaysStruct(item)
-          break;
       case 'numbers':
           return numbersStruct(item)
-          break;
       default:
         return domainsStruct(item)
     }

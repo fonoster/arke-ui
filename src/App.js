@@ -1,23 +1,21 @@
 import React, { Component } from 'react';
 import './App.css';
 import '../node_modules/dropzone/dist/min/dropzone.min.css'
-import MenuAppBar from './MainNav';
 import ClippedDrawer from './ClippedDrawer';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import blue from '@material-ui/core/colors/blue';
 
 const theme = createMuiTheme({
   palette: {
-    primary: {
-      main: '#444444',
+      primary: {
+        light: '#757ce8',
+        main: '#444444',
+        dark: '#002884',
+        contrastText: '#fff',
+      },
+      secondary: {
+        main: '#3F51B5',
+      },
     },
-    secondary: {
-      light: '#00c853',
-      main: '#444444',
-      contrastText: '#ffcc00',
-    },
-    // error: will use the default color
-  },
 });
 
 class App extends Component {

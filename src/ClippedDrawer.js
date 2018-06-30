@@ -3,11 +3,10 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import MainNav from './MainNav'
 import MenuNav from './MenuNav'
 import Resources from './components/resources/Resources.js'
+import NotificationBar from './components/common/NotificationBar'
 import { getColumnData, createData} from './components/resources/resourcesData'
 
 const drawerWidth = 240;
@@ -45,6 +44,8 @@ class ClippedDrawer extends React.Component {
       this.state = {
           data: [],
           resource: 'domains',
+          notificationBarOpen: false,
+          notificationBarMessage: '',
           apiUrl: "https://localhost:4567/api/v1draft1",
           token: "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiJ9.75_0_jp8__mLr2FK5Q-m2ph4euWA_zl3G_q01SdCo0Drg-_Dya3_OLTRGbRImnG5P-TfAgboqf5y3qGu1l39BA"
       }
@@ -76,9 +77,10 @@ class ClippedDrawer extends React.Component {
               return results.json()
           })
           .then(response => {
+              console.log('res2: ' + JSON.stringify(response))
               this.componentWillMount()
               const notificationBarOpen = true
-              const notificationBarMessage = selected.length + ' deleted items'
+              const notificationBarMessage = response.message
               this.setState({ notificationBarOpen, notificationBarMessage })
           });
       })
@@ -112,6 +114,10 @@ class ClippedDrawer extends React.Component {
               handleDeleteItems={ (e, selected) => this.handleDeleteItems(e, selected) }
               handleChangeResource={ (e, res) => this.handleChangeResource(e, res)}
               columnData={getColumnData(this.state.resource)} data={this.state.data} resource={this.state.resource} />
+          <NotificationBar
+              message={ this.state.notificationBarMessage }
+              open={ this.state.notificationBarOpen}
+              handleClose = { e => this.setState({ notificationBarOpen: false })} />
         </main>
       </div>
     );

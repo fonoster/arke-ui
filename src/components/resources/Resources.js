@@ -1,7 +1,6 @@
 import React from 'react';
 import EnhancedTable from '../common/EnhancedTable'
 import DocViewer from '../common/DocViewer'
-import NotificationBar from '../common/NotificationBar'
 import FileUploader from '../common/FileUploader'
 import NoResourcesCard from '../common/NoResourcesCard'
 
@@ -21,8 +20,6 @@ class Resources extends React.Component {
         this.state = {
             docViewerOpen: false,
             docViewerContent: '',
-            notificationBarOpen: false,
-            notificationBarMessage: '',
             fileUploaderOpen: false,
         }
     }
@@ -53,24 +50,20 @@ class Resources extends React.Component {
               handleDeleteItems = { handleDeleteItems }
               handleAddItem = { e => this.setState({ fileUploaderOpen: true }) } /> }
 
-            { data.length == 0 && <NoResourcesCard resource={toTitleCase(resource)}
+            { data.length === 0 && <NoResourcesCard resource={toTitleCase(resource)}
               handleAddItem={ e => this.setState({ fileUploaderOpen: true }) }/> }
 
             <DocViewer
                 open={this.state.docViewerOpen}
                 content={this.state.docViewerContent}
                 handleClose = { e => this.handleCloseDocViewer(e)} />
-                
+
             <FileUploader open={this.state.fileUploaderOpen}
+                endpoint= { endpoint }
                 handleClose={ e => {
                   this.setState({fileUploaderOpen: false});
                   handleChangeResource(e, resource);
-                }}
-                endpoint= { endpoint } />
-            <NotificationBar
-                message={ this.state.notificationBarMessage }
-                open={ this.state.notificationBarOpen}
-                handleClose = { e => this.setState({ notificationBarOpen: false })} />
+                }} />
           </div>
       );
     }

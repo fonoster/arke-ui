@@ -1,13 +1,8 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { render } from 'react-dom';
-import brace from 'brace';
-import AceEditor from 'react-ace';
 import 'brace/mode/ruby';
 import 'brace/theme/monokai';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -61,7 +56,7 @@ class FileUploader extends React.Component {
   };
 
   render() {
-    const { classes, content, open, endpoint, handleClose } = this.props;
+    const { classes, open, endpoint, handleClose } = this.props;
     const eventHandlers = { success: handleClose }
     const djsConfig = { addRemoveLinks: true };
 

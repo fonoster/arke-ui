@@ -127,7 +127,7 @@ let EnhancedTableToolbar = props => {
         {numSelected > 0 ? (
 
           <Tooltip title="Delete">
-            <IconButton aria-label="Delete" onClick={ e => handleDeleteItems(e) }>
+            <IconButton aria-label="Delete" onClick={handleDeleteItems}>
               <DeleteIcon/>
             </IconButton>
           </Tooltip>
@@ -175,8 +175,7 @@ class EnhancedTable extends React.Component {
       order: 'asc',
       orderBy: 'calories',
       selected: [],
-      data: [],
-      deleted: [],
+      data: props.data,
       page: 0,
       rowsPerPage: 5,
     };
@@ -200,7 +199,7 @@ class EnhancedTable extends React.Component {
 
   handleSelectAllClick = (event, checked) => {
     if (checked) {
-      this.setState({ selected: this.state.data.map(n => n.id) });
+      this.setState({ selected: this.state.data.map(n => n.c1) });
       return;
     }
     this.setState({ selected: [] });
@@ -239,7 +238,7 @@ class EnhancedTable extends React.Component {
 
   render() {
     const { classes, columnData, data, name, handleOpenDocViewer, handleDeleteItems, handleAddItem } = this.props;
-    const { order, orderBy, selected, deleted, rowsPerPage, page } = this.state;
+    const { order, orderBy, selected, rowsPerPage, page } = this.state;
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
 
     return (
@@ -248,7 +247,7 @@ class EnhancedTable extends React.Component {
             handleAddItem={ handleAddItem }
             numSelected={selected.length} handleDeleteItems={ e => {
                 handleDeleteItems(e, this.state.selected);
-                this.state.selected = [];
+                this.setState({selected: []});
               }}/>
         <div className={classes.tableWrapper}>
           <Table className={classes.table} aria-labelledby="tableTitle">
@@ -263,14 +262,14 @@ class EnhancedTable extends React.Component {
             />
             <TableBody>
               {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
-                const isSelected = this.isSelected(n.id);
+                const isSelected = this.isSelected(n.c1);
                 return (
                   <TableRow
                     hover
                     role="checkbox"
                     aria-checked={isSelected}
                     tabIndex={-1}
-                    key={n.id}
+                    key={n.c1}
                     selected={isSelected}
                   >
                     <TableCell padding="checkbox"

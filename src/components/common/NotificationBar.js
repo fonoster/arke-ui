@@ -33,7 +33,7 @@ class NotificationBar extends React.Component {
           }}
           message={<span id="message-id">{message}</span>}
           action={[
-            <Button key="undo" color="secondary" size="small" onClick={ e => handleClose(e) }>
+            <Button key="undo" disabled color="secondary" size="small" onClick={ e => handleClose(e) }>
               UNDO
             </Button>,
             <IconButton

@@ -3,14 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "^1.0.0",
-    "@material-ui/icons": "^1.0.0",
-    "material-ui": "^0.20.1",
-    "react": "^16.3.2",
-    "react-ace": "^6.1.2",
-    "react-dom": "^16.3.2",
-    "react-dropzone-component": "^3.2.0",
-    "react-scripts": "1.1.4"
+    "react-dom": "latest",
+    "react": "latest",
+    "prop-types": "latest",
+    "@material-ui/core": "latest",
+    "@material-ui/icons": "latest",
+    "react-ace": "latest",
+    "react-dropzone-component": "latest",
+    "react-scripts": "latest"
   },
   "scripts": {
     "start": "react-scripts start",
