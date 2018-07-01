@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import MainNav from './MainNav'
@@ -10,6 +11,7 @@ import NotificationBar from './components/common/NotificationBar'
 import { getColumnData, createData} from './components/common/dataStruct'
 import PaginationTable from './components/common/PaginationTable'
 import About from './components/common/About'
+import { getParameterByName } from './components/common/utils'
 
 const drawerWidth = 240;
 
@@ -46,27 +48,33 @@ class ClippedDrawer extends React.Component {
           aboutDialogOpen: false,
           section: 'domains',
           notificationBarOpen: false,
-          notificationBarMessage: '',
-          apiUrl: "https://localhost:4567/api/v1draft1",
-          token: "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiJ9.75_0_jp8__mLr2FK5Q-m2ph4euWA_zl3G_q01SdCo0Drg-_Dya3_OLTRGbRImnG5P-TfAgboqf5y3qGu1l39BA"
+          notificationBarMessage: ''
       }
   }
 
   componentWillMount() {
+      this.setState({apiUrl: getParameterByName('apiUrl')})
+      this.setState({token: getParameterByName('token')})
+
       setTimeout(function() {
-          const section = this.state.section === 'numbers'? 'dids' : this.state.section
-          fetch(this.state.apiUrl + '/' + section + '?filter=*&token=' + this.state.token)
-          .then(results => {
-              return results.json();
-          }).then(resources => {
-              const data = []
-              if (resources && resources.result) {
-                resources.result.forEach(item => {
-                    data.push(createData(item, this.state.section))
-                })
-              }
-              this.setState({ data })
-          })
+          if(this.isApiReady()) {
+            const section = this.state.section === 'numbers'? 'dids' : this.state.section
+            fetch(this.state.apiUrl + '/' + section + '?filter=*&token=' + this.state.token)
+            .then(results => {
+                return results.json();
+            }).then(resources => {
+                const data = []
+                if (resources && resources.result) {
+                  resources.result.forEach(item => {
+                      data.push(createData(item, this.state.section))
+                  })
+                }
+                this.setState({ data })
+            })
+          } else {
+              this.setState({notificationBarOpen: true})
+              this.setState({notificationBarMessage: 'Unable to find `apiUrl` or `token` in query string'})
+          }
       }.bind(this), 1);  // wait for the state change
   }
 
@@ -106,6 +114,10 @@ class ClippedDrawer extends React.Component {
       return false
   }
 
+  isApiReady = () => {
+    return !this.state.apiUrl || !this.state.token? false : true
+  }
+
   render () {
     const { classes } = this.props;
 
@@ -140,9 +152,13 @@ class ClippedDrawer extends React.Component {
               message={ this.state.notificationBarMessage }
               open={ this.state.notificationBarOpen}
               handleClose = { e => this.setState({ notificationBarOpen: false })} />
-          <About handleClose={ e => this.setState({aboutDialogOpen:false})}
+          { this.isApiReady() && <About handleClose={ e => this.setState({aboutDialogOpen:false})}
               endpoint={this.state.apiUrl + '/system/info?token=' + this.state.token}
-              open={this.state.aboutDialogOpen}></About>
+              open={this.state.aboutDialogOpen}></About> }
+
+              <Typography style={{marginTop: 25}} variant="caption" gutterBottom align="center">
+                  Brought to you by Fonoster, Inc and friends | v1.0 alpha
+              </Typography>
         </main>
       </div>
     );
