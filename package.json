@@ -2,7 +2,7 @@
   "name": "sipiowctl",
   "version": "0.1.0",
   "private": true,
-  "proxy":"http://localhost:4567/",
+  "proxy":"https://localhost:4567",
   "dependencies": {
     "react-dom": "latest",
     "react": "latest",

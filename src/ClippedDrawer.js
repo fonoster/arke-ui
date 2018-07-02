@@ -48,40 +48,52 @@ class ClippedDrawer extends React.Component {
           aboutDialogOpen: false,
           section: 'domains',
           notificationBarOpen: false,
-          notificationBarMessage: ''
+          notificationBarMessage: '',
+          token: '',
+          apiPath: '/api/v1draft1'
       }
   }
 
+  getEndpoint = (apiPath, resource, filter, token) => {
+      let endpoint = apiPath + '/' + resource
+
+      if (filter) {
+          endpoint = endpoint + '?filter=' + filter
+      }
+
+      if (token) {
+          filter ? endpoint = endpoint + '&token=' + token : endpoint = endpoint + '?token=' + token
+      }
+
+      return endpoint
+  }
+
   componentWillMount() {
-      this.setState({apiUrl: getParameterByName('apiUrl')})
-      this.setState({token: getParameterByName('token')})
+      getParameterByName('token')? this.setState({token:getParameterByName('token')}) : this.setState({token:''})
 
       setTimeout(function() {
-          if(this.isApiReady()) {
-            const section = this.state.section === 'numbers'? 'dids' : this.state.section
-            fetch(this.state.apiUrl + '/' + section + '?filter=*&token=' + this.state.token)
-            .then(results => {
-                return results.json();
-            }).then(resources => {
-                const data = []
-                if (resources && resources.result) {
-                  resources.result.forEach(item => {
-                      data.push(createData(item, this.state.section))
-                  })
-                }
-                this.setState({ data })
-            })
-          } else {
-              this.setState({notificationBarOpen: true})
-              this.setState({notificationBarMessage: 'Unable to find `apiUrl` or `token` in query string'})
-          }
+          const section = this.state.section === 'numbers'? 'dids' : this.state.section
+
+          fetch(this.getEndpoint(this.state.apiPath, section, '*', this.state.token))
+          .then(results => {
+              return results.json();
+          }).then(resources => {
+              const data = []
+              if (resources && resources.result) {
+                resources.result.forEach(item => {
+                    data.push(createData(item, this.state.section))
+                })
+              }
+              this.setState({ data })
+          })
       }.bind(this), 1);  // wait for the state change
   }
 
   handleDeleteItems = (e, selected) => {
       selected.forEach(ref => {
           const section = this.state.section === 'numbers'? 'dids' : this.state.section
-          fetch(this.state.apiUrl + '/' + section + '/'+ ref + '?token=' + this.state.token, {
+
+          fetch(this.getEndpoint(this.state.apiPath, section + '/'+ ref, '',this.state.token), {
               method: 'DELETE'
           })
           .then(results => {
@@ -114,10 +126,6 @@ class ClippedDrawer extends React.Component {
       return false
   }
 
-  isApiReady = () => {
-    return !this.state.apiUrl || !this.state.token? false : true
-  }
-
   render () {
     const { classes } = this.props;
 
@@ -137,7 +145,7 @@ class ClippedDrawer extends React.Component {
         <main className={classes.content}>
           <div className={classes.toolbar} />
           { this.isResourceSection() && <Resources
-              endpoint = {this.state.apiUrl + '/' + (this.state.section === 'numbers'? 'dids' : this.state.section) + '?token=' + this.state.token}
+              endpoint = { this.getEndpoint(this.state.apiPath, this.state.section === 'numbers'? 'dids' : this.state.section, '',this.state.token) }
               handleDeleteItems={ (e, selected) => this.handleDeleteItems(e, selected) }
               handleNotify={this.handleNotify}
               columnData={getColumnData(this.state.section)} data={this.state.data} resource={this.state.section} /> }
@@ -152,9 +160,9 @@ class ClippedDrawer extends React.Component {
               message={ this.state.notificationBarMessage }
               open={ this.state.notificationBarOpen}
               handleClose = { e => this.setState({ notificationBarOpen: false })} />
-          { this.isApiReady() && <About handleClose={ e => this.setState({aboutDialogOpen:false})}
-              endpoint={this.state.apiUrl + '/system/info?token=' + this.state.token}
-              open={this.state.aboutDialogOpen}></About> }
+          <About handleClose={ e => this.setState({aboutDialogOpen:false})}
+              endpoint={ this.getEndpoint(this.state.apiPath, '/system/info', '', this.state.token) }
+              open={this.state.aboutDialogOpen}></About>
 
               <Typography style={{marginTop: 25}} variant="caption" gutterBottom align="center">
                   Brought to you by Fonoster, Inc and friends | v1.0 alpha
