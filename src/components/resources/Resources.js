@@ -29,7 +29,7 @@ class Resources extends React.Component {
     }
 
     render() {
-      const { endpoint, resource, columnData, data, handleChangeResource, handleDeleteItems, handleNotify } = this.props;
+      const { endpoint, resource, columnData, data, handleNotify, handleChangeSection, handleDeleteItems } = this.props;
 
       return (
           <div>
@@ -56,9 +56,9 @@ class Resources extends React.Component {
                     this.setState({fileUploaderOpen: false});
                 }}
                 handleOnSuccess={ (e, res) => {
-                    handleNotify(res)
+                    handleNotify(res);
                     this.setState({fileUploaderOpen: false});
-                    handleChangeResource(e, resource);
+                    handleChangeSection(e, resource);
                 }} />
           </div>
       );

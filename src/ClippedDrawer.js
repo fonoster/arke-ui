@@ -69,7 +69,9 @@ class ClippedDrawer extends React.Component {
   }
 
   componentWillMount() {
-      getParameterByName('token')? this.setState({token:getParameterByName('token')}) : this.setState({token:''})
+      if (getParameterByName('token')) {
+          this.setState({token:getParameterByName('token')})
+      }
 
       setTimeout(function() {
           const section = this.state.section === 'numbers'? 'dids' : this.state.section
@@ -101,7 +103,7 @@ class ClippedDrawer extends React.Component {
           })
           .then(response => {
               this.componentWillMount()
-              this.setState({ notificationBarOpen: true, notificationBarMessage: response.message })
+              this.handleNotify(response.message)
           });
       })
   }
@@ -148,6 +150,7 @@ class ClippedDrawer extends React.Component {
               endpoint = { this.getEndpoint(this.state.apiPath, this.state.section === 'numbers'? 'dids' : this.state.section, '',this.state.token) }
               handleDeleteItems={ (e, selected) => this.handleDeleteItems(e, selected) }
               handleNotify={this.handleNotify}
+              handleChangeSection={this.handleChangeSection}
               columnData={getColumnData(this.state.section)} data={this.state.data} resource={this.state.section} /> }
 
           { !this.isResourceSection() && <PaginationTable
