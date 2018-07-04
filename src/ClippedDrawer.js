@@ -50,7 +50,7 @@ class ClippedDrawer extends React.Component {
           notificationBarOpen: false,
           notificationBarMessage: '',
           token: '',
-          apiPath: '/api/v1draft1'
+          apiPath: '/api/v1beta1'
       }
   }
 
