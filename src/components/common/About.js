@@ -74,15 +74,15 @@ class About extends React.Component {
                 v1.0 alpha
               </Typography>
               <Typography variant="headline" component="h2">
-                Sip I/O Console
+                Arke Console
               </Typography>
               <Typography component="p">
-                This version "alpha" of Sip I/O console is not production ready <br />
+                This version "alpha" of Arke console is not production ready <br />
                 {'"Use this version at your own discretion"'}
               </Typography>
             </CardContent>
             <CardActions>
-              <Button size="small" href="https://github.com/fonoster/sipio">Learn More</Button>
+              <Button size="small" href="https://fonoster.github.com/arke">Learn More</Button>
             </CardActions>
           </Card>
         </Dialog>
