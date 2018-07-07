@@ -2,7 +2,7 @@
   "name": "arke-ui",
   "version": "1.0.0",
   "private": true,
-  "proxy":"https://localhost:4567",
+  "proxy": "https://localhost:4567",
   "dependencies": {
     "react-dom": "latest",
     "react": "latest",
