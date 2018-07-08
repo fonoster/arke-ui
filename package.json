@@ -1,5 +1,5 @@
 {
-  "name": "arke-ui",
+  "name": "routr-ui",
   "version": "1.0.0",
   "private": true,
   "proxy": "https://localhost:4567",

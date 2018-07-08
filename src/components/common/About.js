@@ -74,15 +74,15 @@ class About extends React.Component {
                 v1.0 alpha
               </Typography>
               <Typography variant="headline" component="h2">
-                Arke Console
+                Routr Console
               </Typography>
               <Typography component="p">
-                This version "alpha" of Arke console is not production ready <br />
+                This version "alpha" of Routr console is not production ready <br />
                 {'"Use this version at your own discretion"'}
               </Typography>
             </CardContent>
             <CardActions>
-              <Button size="small" href="https://fonoster.github.com/arke">Learn More</Button>
+              <Button size="small" href="https://fonoster.github.com/routr">Learn More</Button>
             </CardActions>
           </Card>
         </Dialog>
