@@ -50,12 +50,12 @@ class ClippedDrawer extends React.Component {
           notificationBarOpen: false,
           notificationBarMessage: '',
           token: '',
-          apiPath: '/api/v1beta1'
+          apiURL: '/api/v1beta1'
       }
   }
 
-  getEndpoint = (apiPath, resource, filter, token) => {
-      let endpoint = apiPath + '/' + resource
+  getEndpoint = (apiURL, resource, filter, token) => {
+      let endpoint = apiURL + '/' + resource
 
       if (filter) {
           endpoint = endpoint + '?filter=' + filter
@@ -73,10 +73,14 @@ class ClippedDrawer extends React.Component {
           this.setState({token:getParameterByName('token')})
       }
 
+      if (getParameterByName('apiURL')) {
+          this.setState({apiURL:getParameterByName('apiURL')})
+      }
+
       setTimeout(function() {
           const section = this.state.section === 'numbers'? 'dids' : this.state.section
 
-          fetch(this.getEndpoint(this.state.apiPath, section, '*', this.state.token))
+          fetch(this.getEndpoint(this.state.apiURL, section, '*', this.state.token))
           .then(results => {
               return results.json();
           }).then(resources => {
@@ -95,7 +99,7 @@ class ClippedDrawer extends React.Component {
       selected.forEach(ref => {
           const section = this.state.section === 'numbers'? 'dids' : this.state.section
 
-          fetch(this.getEndpoint(this.state.apiPath, section + '/'+ ref, '',this.state.token), {
+          fetch(this.getEndpoint(this.state.apiURL, section + '/'+ ref, '',this.state.token), {
               method: 'DELETE'
           })
           .then(results => {
@@ -113,7 +117,7 @@ class ClippedDrawer extends React.Component {
       this.componentWillMount()
   }
 
-  handleNotify = (message) => {
+  handleNotify = message => {
       this.setState({ notificationBarOpen: true, notificationBarMessage: message })
   }
 
@@ -147,7 +151,7 @@ class ClippedDrawer extends React.Component {
         <main className={classes.content}>
           <div className={classes.toolbar} />
           { this.isResourceSection() && <Resources
-              endpoint = { this.getEndpoint(this.state.apiPath, this.state.section === 'numbers'? 'dids' : this.state.section, '',this.state.token) }
+              endpoint = { this.getEndpoint(this.state.apiURL, this.state.section === 'numbers'? 'dids' : this.state.section, '',this.state.token) }
               handleDeleteItems={ (e, selected) => this.handleDeleteItems(e, selected) }
               handleNotify={this.handleNotify}
               handleChangeSection={this.handleChangeSection}
@@ -164,7 +168,7 @@ class ClippedDrawer extends React.Component {
               open={ this.state.notificationBarOpen}
               handleClose = { e => this.setState({ notificationBarOpen: false })} />
           <About handleClose={ e => this.setState({aboutDialogOpen:false})}
-              endpoint={ this.getEndpoint(this.state.apiPath, '/system/info', '', this.state.token) }
+              endpoint={ this.getEndpoint(this.state.apiURL, '/system/info', '', this.state.token) }
               open={this.state.aboutDialogOpen}></About>
 
               <Typography style={{marginTop: 25}} variant="caption" gutterBottom align="center">
