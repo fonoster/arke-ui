@@ -82,7 +82,7 @@ class About extends React.Component {
               </Typography>
             </CardContent>
             <CardActions>
-              <Button size="small" href="https://fonoster.github.com/routr">Learn More</Button>
+              <Button size="small" href="https://routr.io">Learn More</Button>
             </CardActions>
           </Card>
         </Dialog>

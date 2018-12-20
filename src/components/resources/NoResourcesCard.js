@@ -47,7 +47,7 @@ function NoResourcesCard(props) {
           </Typography>
           <Typography component="p">
           At this time not resources found on the {resource.toLowerCase()} section. Go to the
-          documentation to learn more about resources <a href="https://fonoster.github.io/routr/docs/api-resources.html"><LaunchIcon style={{ color: '#3F51B5', fontSize: 18 }}></LaunchIcon></a>
+          documentation to learn more about resources <a href="https://routr.io/docs/api-resources.html"><LaunchIcon style={{ color: '#3F51B5', fontSize: 18 }}></LaunchIcon></a>
           </Typography>
         </CardContent>
         <CardActions>
