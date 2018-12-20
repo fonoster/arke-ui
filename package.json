@@ -4,13 +4,14 @@
   "private": true,
   "proxy": "https://localhost:4567",
   "dependencies": {
-    "react-dom": "latest",
-    "react": "latest",
-    "prop-types": "latest",
     "@material-ui/core": "latest",
     "@material-ui/icons": "latest",
+    "prop-types": "latest",
+    "react": "latest",
     "react-ace": "latest",
+    "react-dom": "latest",
     "react-dropzone-component": "latest",
+    "react-github-button": "^0.1.11",
     "react-scripts": "latest"
   },
   "scripts": {

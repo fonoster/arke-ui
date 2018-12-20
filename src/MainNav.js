@@ -1,12 +1,15 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { withStyles } from '@material-ui/core/styles'
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+import IconButton from '@material-ui/core/IconButton'
+import Button from '@material-ui/core/Button'
+import AccountCircle from '@material-ui/icons/AccountCircle'
+import MenuItem from '@material-ui/core/MenuItem'
+import Menu from '@material-ui/core/Menu'
+import GitHubButton from 'react-github-button'
+import 'react-github-button/assets/style.css'
 import logo from './logo.png'
 
 const styles = {
@@ -20,30 +23,34 @@ const styles = {
     marginLeft: -12,
     marginRight: 20,
   },
-};
+  githubButton: {
+    bordeR: 0,
+    color: 'red'
+  }
+}
 
 class MenuAppBar extends React.Component {
   state = {
     auth: true,
     anchorEl: null,
-  };
+  }
 
   handleChange = (event, checked) => {
-    this.setState({ auth: checked });
-  };
+    this.setState({ auth: checked })
+  }
 
   handleMenu = event => {
-    this.setState({ anchorEl: event.currentTarget });
-  };
+    this.setState({ anchorEl: event.currentTarget })
+  }
 
   handleClose = () => {
-    this.setState({ anchorEl: null });
-  };
+    this.setState({ anchorEl: null })
+  }
 
   render() {
-    const { classes, onOpenAbout } = this.props;
-    const { auth, anchorEl } = this.state;
-    const open = Boolean(anchorEl);
+    const { classes, onOpenAbout } = this.props
+    const { auth, anchorEl } = this.state
+    const open = Boolean(anchorEl)
 
     return (
       <div>
@@ -53,6 +60,9 @@ class MenuAppBar extends React.Component {
             <span className={classes.flex}/>
             {auth && (
               <div>
+                <Button>
+                  <GitHubButton style={{textTransform: 'capitalize'}} type="stargazers" namespace="fonoster" repo="routr" />
+                </Button>
                 <IconButton
                   aria-owns={open ? 'menu-appbar' : null}
                   aria-haspopup="true"
@@ -83,12 +93,12 @@ class MenuAppBar extends React.Component {
           </Toolbar>
         </AppBar>
       </div>
-    );
+    )
   }
 }
 
 MenuAppBar.propTypes = {
   classes: PropTypes.object.isRequired,
-};
+}
 
-export default withStyles(styles)(MenuAppBar);
+export default withStyles(styles)(MenuAppBar)
