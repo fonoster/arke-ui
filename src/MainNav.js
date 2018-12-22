@@ -12,7 +12,6 @@ import MenuItem from '@material-ui/core/MenuItem'
 import Menu from '@material-ui/core/Menu'
 import GitHubButton from 'react-github-button'
 import 'react-github-button/assets/style.css'
-import logo from './logo.png'
 
 const styles = {
   root: {
@@ -58,7 +57,7 @@ class MenuAppBar extends React.Component {
       <div>
         <AppBar position="static" color="primary">
           <Toolbar>
-            <img src={logo} className="App-logo" alt="logo" />
+            <img src="/images/logo.png" className="App-logo" alt="logo" />
             <span className={classes.flex}/>
             {auth && (
               <div>
@@ -70,7 +69,7 @@ class MenuAppBar extends React.Component {
                   href="https://github.com/fonoster/routr/issues"
                 >
                   <BugReportIcon />
-                </IconButton>                
+                </IconButton>
                 <IconButton
                   color="inherit"
                   href="https://routr.io"
