@@ -1,5 +1,5 @@
 import React from 'react';
-import clsx from 'clsx';
+import clsx from 'classnames';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';

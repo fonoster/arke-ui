@@ -44,7 +44,6 @@ class About extends React.Component {
       .then(results => {
           return results.json();
       }).then(response => {
-          console.log(JSON.stringify(response))
           this.setState({serverVersion: response.version})
       })
   }

@@ -11,19 +11,19 @@ class Resources extends React.Component {
         super()
         this.state = {
             docViewerOpen: false,
-            docViewerContent: '',
+            docViewerContent: {},
             fileUploaderOpen: false,
         }
     }
 
     handleOpenDocViewer = (e, doc) => {
-        const docViewerContent = JSON.stringify(JSON.parse(doc), null, "\t")
+        const docViewerContent = doc
         const docViewerOpen = true
         this.setState({docViewerOpen, docViewerContent})
     }
 
     handleCloseDocViewer = (e) => {
-        const docViewerContent = ''
+        const docViewerContent = {}
         const docViewerOpen = false
         this.setState({docViewerOpen, docViewerContent})
     }

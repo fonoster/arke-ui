@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import './App.css'
 import '../node_modules/dropzone/dist/min/dropzone.min.css'
 import ClippedDrawer from './ClippedDrawer'
-import Welcome from './Welcome'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 
 const theme = createMuiTheme({
