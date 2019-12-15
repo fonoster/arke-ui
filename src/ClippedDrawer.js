@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import MainNav from './MainNav'
@@ -34,7 +33,7 @@ const styles = theme => ({
   content: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
-    padding: theme.spacing.unit * 3,
+    padding: theme.spacing(3),
     minWidth: 0, // So the Typography noWrap works
   },
   toolbar: theme.mixins.toolbar,
@@ -69,7 +68,7 @@ class ClippedDrawer extends React.Component {
       return endpoint
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
       if (getParameterByName('token')) {
           this.setState({token:getParameterByName('token')})
       }
@@ -79,15 +78,15 @@ class ClippedDrawer extends React.Component {
       }
 
       setTimeout(function() {
-          const section = this.state.section === 'numbers'? 'dids' : this.state.section
+          const section = this.state.section
 
           fetch(this.getEndpoint(this.state.apiURL, section, '*', this.state.token))
           .then(results => {
               return results.json();
           }).then(resources => {
               const data = []
-              if (resources && resources.result) {
-                resources.result.forEach(item => {
+              if (resources && resources.data) {
+                resources.data.forEach(item => {
                     data.push(createData(item, this.state.section))
                 })
               }
@@ -107,7 +106,7 @@ class ClippedDrawer extends React.Component {
               return results.json()
           })
           .then(response => {
-              this.componentWillMount()
+              this.UNSAFE_componentWillMount()
               this.handleNotify(response.message)
           });
       })
@@ -115,7 +114,7 @@ class ClippedDrawer extends React.Component {
 
   handleChangeSection = (e, section) => {
       this.setState({section})
-      this.componentWillMount()
+      this.UNSAFE_componentWillMount()
   }
 
   handleNotify = message => {
@@ -159,7 +158,7 @@ class ClippedDrawer extends React.Component {
               columnData={getColumnData(this.state.section)} data={this.state.data} resource={this.state.section} /> }
 
           { !this.isResourceSection() && <PaginationTable
-            handleRefresh={ e => this.componentWillMount() }
+            handleRefresh={ e => this.UNSAFE_componentWillMount() }
             name={this.state.section}
             columnData={getColumnData(this.state.section)}
             data={this.state.data} /> }
@@ -172,9 +171,6 @@ class ClippedDrawer extends React.Component {
               endpoint={ this.getEndpoint(this.state.apiURL, '/system/info', '', this.state.token) }
               open={this.state.aboutDialogOpen}></About>
 
-              <Typography style={{marginTop: 25}} variant="caption" gutterBottom align="center">
-                  Brought to you by Fonoster, Inc and friends | v1.0 alpha
-              </Typography>
         </main>
       </div>
     );

@@ -1,5 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+//import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import Card from '@material-ui/core/Card'
@@ -37,7 +37,7 @@ class WelcomePage extends React.Component {
       <div className={classes.root}>
         <Card className={classes.card} >
           <CardContent>
-            <img height={40} src="/images/logo.png" />
+            <img alt="logo" height={40} src="/images/logo.png" />
             <br />
             <br />
             <Typography variant="caption" style={{color: '#fff'}}>

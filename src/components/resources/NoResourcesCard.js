@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
   button: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
   },
   input: {
     display: 'none',
@@ -39,7 +39,7 @@ function NoResourcesCard(props) {
           <Typography className={classes.title} color="textSecondary">
             No resources found
           </Typography>
-          <Typography variant="headline" component="h2">
+          <Typography component="h2">
               {resource}
           </Typography>
           <Typography className={classes.pos} color="textSecondary">

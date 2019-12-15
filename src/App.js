@@ -21,20 +21,12 @@ const theme = createMuiTheme({
 
 class App extends Component {
 
-  displayWelcome = () => window.location.pathname === '/login'
-
   render() {
     return (
       <div className="App">
-          {
-            this.displayWelcome() && <Welcome />
-          }
-          {
-            !this.displayWelcome() &&
-            <MuiThemeProvider theme={theme}>
-                <ClippedDrawer />
-            </MuiThemeProvider>
-          }
+          <MuiThemeProvider theme={theme}>
+              <ClippedDrawer />
+          </MuiThemeProvider>
       </div>
     )
   }

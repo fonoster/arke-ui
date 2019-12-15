@@ -65,7 +65,7 @@ EnhancedTableHead.propTypes = {
 
 const toolbarStyles = theme => ({
   root: {
-    paddingRight: theme.spacing.unit,
+    paddingRight: theme.spacing(1),
   },
   highlight:
     theme.palette.type === 'light'
@@ -94,7 +94,7 @@ let PaginationTableToolbar = props => {
   return (
     <Toolbar>
       <div className={classes.title}>
-        <Typography variant="title" id="tableTitle">
+        <Typography variant="h6" id="tableTitle">
           {toTitleCase(name)}
         </Typography>
       </div>
@@ -119,7 +119,7 @@ PaginationTableToolbar = withStyles(toolbarStyles)(PaginationTableToolbar);
 const styles = theme => ({
   root: {
     width: '100%',
-    marginTop: theme.spacing.unit * 3,
+    marginTop: theme.spacing(3),
   },
   table: {
     minWidth: 1020,

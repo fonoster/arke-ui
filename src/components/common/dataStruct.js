@@ -56,7 +56,7 @@ export function gatewaysStruct(item) {
         c1: item.metadata.ref,
         c2: JSON.stringify(item),
         c3: item.metadata.name,
-        c4: item.spec.credentials.username,
+        c4: item.spec.credentials ? item.spec.credentials.username : '--' ,
         c5: item.spec.host,
         c6: item.spec.transport
     };

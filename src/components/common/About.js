@@ -1,6 +1,6 @@
 import React from 'react';
-import 'brace/mode/ruby';
-import 'brace/theme/monokai';
+//import 'brace/mode/ruby';
+//import 'brace/theme/monokai';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
@@ -39,7 +39,7 @@ class About extends React.Component {
       }
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
       fetch(this.state.endpoint)
       .then(results => {
           return results.json();
@@ -63,7 +63,7 @@ class About extends React.Component {
               <IconButton color="inherit" aria-label="Close" onClick={ handleClose }>
                 <CloseIcon />
               </IconButton>
-              <Typography variant="title" color="inherit" className={classes.flex}>
+              <Typography variant="h6" color="inherit" className={classes.flex}>
                 About
               </Typography>
             </Toolbar>
@@ -71,14 +71,15 @@ class About extends React.Component {
           <Card className={classes.card}>
             <CardContent>
               <Typography className={classes.title} color="textSecondary">
-                v1.0 alpha
+                v1.0
               </Typography>
-              <Typography variant="headline" component="h2">
+              <Typography component="h2">
                 Routr Console
               </Typography>
               <Typography component="p">
-                This version "alpha" of Routr console is not production ready <br />
-                {'"Use this version at your own discretion"'}
+                Routr is a lightweight sip proxy, location server, and registrar that provides a reliable and scalable SIP infrastructure for telephony carriers, communication service providers, and integrators.
+                This is the version "1.0" of Routr console. <br />
+                {'"Next-generation SIP Server"'}
               </Typography>
             </CardContent>
             <CardActions>

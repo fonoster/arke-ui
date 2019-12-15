@@ -1,6 +1,6 @@
 import React from 'react';
-import 'brace/mode/ruby';
-import 'brace/theme/monokai';
+//import 'brace/mode/ruby';
+//import 'brace/theme/monokai';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
@@ -48,7 +48,7 @@ class FileUploader extends React.Component {
               <IconButton color="inherit" aria-label="Close" onClick={ handleClose }>
                 <CloseIcon />
               </IconButton>
-              <Typography variant="title" color="inherit" className={classes.flex}>
+              <Typography variant="h6" color="inherit" className={classes.flex}>
                 Resource Input
               </Typography>
             </Toolbar>
