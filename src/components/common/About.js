@@ -1,19 +1,19 @@
-import React from 'react';
-//import 'brace/mode/ruby';
-//import 'brace/theme/monokai';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import Dialog from '@material-ui/core/Dialog';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import CloseIcon from '@material-ui/icons/Close';
-import Slide from '@material-ui/core/Slide';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import Button from "@material-ui/core/Button";
+import React from 'react'
+//import 'brace/mode/ruby'
+//import 'brace/theme/monokai'
+import PropTypes from 'prop-types'
+import { withStyles } from '@material-ui/core/styles'
+import Dialog from '@material-ui/core/Dialog'
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+import IconButton from '@material-ui/core/IconButton'
+import Typography from '@material-ui/core/Typography'
+import CloseIcon from '@material-ui/icons/Close'
+import Slide from '@material-ui/core/Slide'
+import Card from '@material-ui/core/Card'
+import CardActions from '@material-ui/core/CardActions'
+import CardContent from '@material-ui/core/CardContent'
+import Button from "@material-ui/core/Button"
 
 const styles = {
   appBar: {
@@ -22,10 +22,10 @@ const styles = {
   flex: {
     flex: 1,
   },
-};
+}
 
 function Transition(props) {
-  return <Slide direction="up" {...props} />;
+  return <Slide direction="up" {...props} />
 }
 
 class About extends React.Component {
@@ -42,14 +42,14 @@ class About extends React.Component {
   UNSAFE_componentWillMount() {
       fetch(this.state.endpoint)
       .then(results => {
-          return results.json();
+          return results.json()
       }).then(response => {
           this.setState({serverVersion: response.version})
       })
   }
 
   render() {
-    const { classes, open, handleClose} = this.props;
+    const { classes, open, handleClose} = this.props
     return (
       <div>
         <Dialog
@@ -87,12 +87,12 @@ class About extends React.Component {
           </Card>
         </Dialog>
       </div>
-    );
+    )
   }
 }
 
 About.propTypes = {
   classes: PropTypes.object.isRequired,
-};
+}
 
-export default withStyles(styles)(About);
+export default withStyles(styles)(About)

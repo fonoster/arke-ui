@@ -7,6 +7,8 @@
     "@material-ui/core": "~3.9.3",
     "@material-ui/icons": "~3.0.2",
     "json2yaml": "^1.1.0",
+    "mobx": "^5.15.1",
+    "mobx-react": "^6.1.4",
     "react": "~16.12.0",
     "react-ace": "^8.0.0",
     "react-dom": "~16.12.0",

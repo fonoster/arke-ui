@@ -1,31 +1,32 @@
-import React from 'react';
-import clsx from 'classnames';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TablePagination from '@material-ui/core/TablePagination';
-import TableRow from '@material-ui/core/TableRow';
-import TableSortLabel from '@material-ui/core/TableSortLabel';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
-import Checkbox from '@material-ui/core/Checkbox';
-import IconButton from '@material-ui/core/IconButton';
-import Tooltip from '@material-ui/core/Tooltip';
-import DeleteIcon from '@material-ui/icons/Delete';
-import AddItemIcom from '@material-ui/icons/Add';
-import { lighten } from '@material-ui/core/styles/colorManipulator';
+import React from 'react'
+import clsx from 'classnames'
+import PropTypes from 'prop-types'
+import { withStyles } from '@material-ui/core/styles'
+import Table from '@material-ui/core/Table'
+import TableBody from '@material-ui/core/TableBody'
+import TableCell from '@material-ui/core/TableCell'
+import TableHead from '@material-ui/core/TableHead'
+import TablePagination from '@material-ui/core/TablePagination'
+import TableRow from '@material-ui/core/TableRow'
+import TableSortLabel from '@material-ui/core/TableSortLabel'
+import Toolbar from '@material-ui/core/Toolbar'
+import Typography from '@material-ui/core/Typography'
+import Paper from '@material-ui/core/Paper'
+import Checkbox from '@material-ui/core/Checkbox'
+import IconButton from '@material-ui/core/IconButton'
+import Tooltip from '@material-ui/core/Tooltip'
+import DeleteIcon from '@material-ui/icons/Delete'
+import AddItemIcom from '@material-ui/icons/Add'
+import { lighten } from '@material-ui/core/styles/colorManipulator'
+import { observer, inject } from 'mobx-react'
 
 class EnhancedTableHead extends React.Component {
   createSortHandler = property => event => {
-    this.props.onRequestSort(event, property);
-  };
+    this.props.onRequestSort(event, property)
+  }
 
   render() {
-    const { onSelectAllClick, order, orderBy, numSelected, rowCount, columnData } = this.props;
+    const { onSelectAllClick, order, orderBy, numSelected, rowCount, columnData } = this.props
 
     return (
       <TableHead>
@@ -41,7 +42,6 @@ class EnhancedTableHead extends React.Component {
             return (
               <TableCell
                 key={column.id}
-                numeric={column.numeric}
                 padding={column.disablePadding ? 'none' : 'default'}
                 sortDirection={orderBy === column.id ? order : false}
               >
@@ -59,11 +59,11 @@ class EnhancedTableHead extends React.Component {
                   </TableSortLabel>
                 </Tooltip>
               </TableCell>
-            );
+            )
           }, this)}
         </TableRow>
       </TableHead>
-    );
+    )
   }
 }
 
@@ -74,7 +74,7 @@ EnhancedTableHead.propTypes = {
   order: PropTypes.string.isRequired,
   orderBy: PropTypes.string.isRequired,
   rowCount: PropTypes.number.isRequired,
-};
+}
 
 const toolbarStyles = theme => ({
   root: {
@@ -99,10 +99,10 @@ const toolbarStyles = theme => ({
   title: {
     flex: '0 0 auto',
   },
-});
+})
 
 let EnhancedTableToolbar = props => {
-  const { numSelected, classes, name, handleDeleteItems, handleAddItem } = props;
+  const { numSelected, classes, name, handleDeleteItems, handleAddItem } = props
 
   return (
 
@@ -113,11 +113,11 @@ let EnhancedTableToolbar = props => {
     >
       <div className={classes.title}>
         {numSelected > 0 ? (
-          <Typography color="inherit" variant="subheading">
+          <Typography color="inherit" variant="subtitle1">
             {numSelected} selected
           </Typography>
         ) : (
-          <Typography variant="title" id="tableTitle">
+          <Typography variant="h6" id="tableTitle">
             {name}
           </Typography>
         )}
@@ -140,15 +140,15 @@ let EnhancedTableToolbar = props => {
         )}
       </div>
     </Toolbar>
-  );
-};
+  )
+}
 
 EnhancedTableToolbar.propTypes = {
   classes: PropTypes.object.isRequired,
   numSelected: PropTypes.number.isRequired,
-};
+}
 
-EnhancedTableToolbar = withStyles(toolbarStyles)(EnhancedTableToolbar);
+EnhancedTableToolbar = withStyles(toolbarStyles)(EnhancedTableToolbar)
 
 const styles = theme => ({
   root: {
@@ -164,12 +164,12 @@ const styles = theme => ({
   cursor: {
     cursor: 'pointer',
   }
-});
+})
 
 class EnhancedTable extends React.Component {
 
   constructor(props, context) {
-    super(props, context);
+    super(props, context)
 
     this.state = {
       order: 'asc',
@@ -178,76 +178,77 @@ class EnhancedTable extends React.Component {
       data: props.data,
       page: 0,
       rowsPerPage: 5,
-    };
+    }
   }
 
   handleRequestSort = (event, property) => {
-    const orderBy = property;
-    let order = 'desc';
+    const orderBy = property
+    let order = 'desc'
 
     if (this.state.orderBy === property && this.state.order === 'desc') {
-      order = 'asc';
+      order = 'asc'
     }
 
     const data =
       order === 'desc'
         ? this.state.data.sort((a, b) => (b[orderBy] < a[orderBy] ? -1 : 1))
-        : this.state.data.sort((a, b) => (a[orderBy] < b[orderBy] ? -1 : 1));
+        : this.state.data.sort((a, b) => (a[orderBy] < b[orderBy] ? -1 : 1))
 
-    this.setState({ data, order, orderBy });
-  };
+    this.setState({ data, order, orderBy })
+  }
 
   handleSelectAllClick = (event, checked) => {
     if (checked) {
-      this.setState({ selected: this.state.data.map(n => n.c1) });
-      return;
+      this.setState({ selected: this.state.data.map(n => n.c1) })
+      return
     }
-    this.setState({ selected: [] });
-  };
+    this.setState({ selected: [] })
+  }
 
   handleClick = (event, id) => {
-    const { selected } = this.state;
-    const selectedIndex = selected.indexOf(id);
-    let newSelected = [];
+    const { selected } = this.state
+    const selectedIndex = selected.indexOf(id)
+    let newSelected = []
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, id);
+      newSelected = newSelected.concat(selected, id)
     } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
+      newSelected = newSelected.concat(selected.slice(1))
     } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
+      newSelected = newSelected.concat(selected.slice(0, -1))
     } else if (selectedIndex > 0) {
       newSelected = newSelected.concat(
         selected.slice(0, selectedIndex),
         selected.slice(selectedIndex + 1),
-      );
+      )
     }
 
-    this.setState({ selected: newSelected });
-  };
+    this.setState({ selected: newSelected })
+  }
 
-  handleChangePage = (event, page) => {
-    this.setState({ page });
-  };
+  handleChangePage = (event, page) => this.setState({ page })
 
-  handleChangeRowsPerPage = event => {
-    this.setState({ rowsPerPage: event.target.value });
-  };
+  handleChangeRowsPerPage = event => this.setState({ rowsPerPage: event.target.value })
 
-  isSelected = id => this.state.selected.indexOf(id) !== -1;
+  isSelected = id => this.state.selected.indexOf(id) !== -1
+
+  showResourceEditor = resource => {
+      this.props.appStore.setCurrentResource(resource)
+      this.props.appStore.setResourceEditorOpen()
+  }
 
   render() {
-    const { classes, columnData, data, name, handleOpenDocViewer, handleDeleteItems, handleAddItem } = this.props;
-    const { order, orderBy, selected, rowsPerPage, page } = this.state;
-    const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
+    const { classes, columnData, data, name, handleDeleteItems, handleAddItem } = this.props
+    const { order, orderBy, selected, rowsPerPage, page } = this.state
+    const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage)
 
     return (
       <Paper className={classes.root}>
         <EnhancedTableToolbar name={ name }
             handleAddItem={ handleAddItem }
             numSelected={selected.length} handleDeleteItems={ e => {
-                handleDeleteItems(e, this.state.selected);
-                this.setState({selected: []});
+                handleDeleteItems(e, this.state.selected)
+                this.setState({selected: []})
               }}/>
         <div className={classes.tableWrapper}>
           <Table className={classes.table} aria-labelledby="tableTitle">
@@ -262,7 +263,7 @@ class EnhancedTable extends React.Component {
             />
             <TableBody>
               {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
-                const isSelected = this.isSelected(n.c1);
+                const isSelected = this.isSelected(n.c1)
                 return (
                   <TableRow
                     hover
@@ -276,15 +277,15 @@ class EnhancedTable extends React.Component {
                       onClick={ e => this.handleClick(e, n.c1)}>
                       <Checkbox checked={isSelected} />
                     </TableCell>
-                    <TableCell onClick={ e => handleOpenDocViewer(e, n.c2) } className={classes.cursor} component="th" scope="row" padding="none">
+                    <TableCell onClick={ e => this.showResourceEditor(n.c2) } className={classes.cursor} component="th" scope="row" padding="none">
                       {n.c3}
                     </TableCell>
-                    <TableCell onClick={ e => handleOpenDocViewer(e, n.c2) } className={classes.cursor}>{n.c4}</TableCell>
-                    {n.c5 && <TableCell onClick={ e => handleOpenDocViewer(e, n.c2) } className={classes.cursor}>{n.c5}</TableCell>}
-                    {n.c6 && <TableCell onClick={ e => handleOpenDocViewer(e, n.c2) } className={classes.cursor}>{n.c6}</TableCell>}
-                    <TableCell onClick={ e => handleOpenDocViewer(e, n.c2) } className={classes.cursor}>{n.c1}</TableCell>
+                    <TableCell onClick={ e => this.showResourceEditor(n.c2) } className={classes.cursor}>{n.c4}</TableCell>
+                    {n.c5 && <TableCell onClick={ e => this.showResourceEditor(n.c2) } className={classes.cursor}>{n.c5}</TableCell>}
+                    {n.c6 && <TableCell onClick={ e => this.showResourceEditor(n.c2) } className={classes.cursor}>{n.c6}</TableCell>}
+                    <TableCell onClick={ e => this.showResourceEditor(n.c2) } className={classes.cursor}>{n.c1}</TableCell>
                   </TableRow>
-                );
+                )
               })}
               {emptyRows > 0 && (
                 <TableRow style={{ height: 49 * emptyRows }}>
@@ -309,12 +310,12 @@ class EnhancedTable extends React.Component {
           onChangeRowsPerPage={this.handleChangeRowsPerPage}
         />
       </Paper>
-    );
+    )
   }
 }
 
 EnhancedTable.propTypes = {
   classes: PropTypes.object.isRequired,
-};
+}
 
-export default withStyles(styles)(EnhancedTable);
+export default inject('appStore')(withStyles(styles)(observer(EnhancedTable)))

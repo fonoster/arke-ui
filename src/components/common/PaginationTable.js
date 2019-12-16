@@ -32,7 +32,6 @@ class EnhancedTableHead extends React.Component {
             return (
               <TableCell
                 key={column.id}
-                numeric={column.numeric}
                 sortDirection={orderBy === column.id ? order : false}
               >
                 <Tooltip
@@ -65,7 +64,7 @@ EnhancedTableHead.propTypes = {
 
 const toolbarStyles = theme => ({
   root: {
-    paddingRight: theme.spacing(1),
+    paddingRight: theme.spacing.unit,
   },
   highlight:
     theme.palette.type === 'light'
@@ -119,7 +118,7 @@ PaginationTableToolbar = withStyles(toolbarStyles)(PaginationTableToolbar);
 const styles = theme => ({
   root: {
     width: '100%',
-    marginTop: theme.spacing(3),
+    marginTop: theme.spacing.unit,
   },
   table: {
     minWidth: 1020,
