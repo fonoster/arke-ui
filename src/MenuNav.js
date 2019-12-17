@@ -1,19 +1,20 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import DomainsIcon from '@material-ui/icons/Business';
-import SettingsIcon from '@material-ui/icons/Settings';
-import GatewaysIcon from '@material-ui/icons/SwapHoriz';
-import AgentsIcon from '@material-ui/icons/People';
-import DialpadIcon from '@material-ui/icons/Dialpad';
-import PeersAgent from '@material-ui/icons/GroupWork';
-import LocationSearching from '@material-ui/icons/LocationSearching';
-import DoneIcon from '@material-ui/icons/Done';
-import LogsIcon from '@material-ui/icons/Assignment';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { withStyles } from '@material-ui/core/styles'
+import Divider from '@material-ui/core/Divider'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemIcon from '@material-ui/core/ListItemIcon'
+import ListItemText from '@material-ui/core/ListItemText'
+import DomainsIcon from '@material-ui/icons/Business'
+import SettingsIcon from '@material-ui/icons/Settings'
+import GatewaysIcon from '@material-ui/icons/SwapHoriz'
+import AgentsIcon from '@material-ui/icons/People'
+import DialpadIcon from '@material-ui/icons/Dialpad'
+import PeersAgent from '@material-ui/icons/GroupWork'
+import LocationSearching from '@material-ui/icons/LocationSearching'
+import DoneIcon from '@material-ui/icons/Done'
+import LogsIcon from '@material-ui/icons/Assignment'
+import { observer, inject } from 'mobx-react'
 
 const styles = theme => ({
   root: {
@@ -21,72 +22,80 @@ const styles = theme => ({
     maxWidth: 360,
     backgroundColor: theme.palette.background.paper,
   },
-});
+})
 
-function MenuNav(props) {
-    const { classes, handleChangeSection } = props;
-    return (
-      <div className={classes.root}>
-          <ListItem button onClick={e => handleChangeSection(e, 'domains')}>
-            <ListItemIcon>
-              <DomainsIcon/>
-            </ListItemIcon>
-            <ListItemText primary="Domains"/>
-          </ListItem>
-          <ListItem button onClick={e => handleChangeSection(e, 'agents')}>
-            <ListItemIcon>
-              <AgentsIcon />
-            </ListItemIcon>
-            <ListItemText primary="Agents" />
-          </ListItem>
-          <ListItem button onClick={e => handleChangeSection(e, 'peers')}>
-            <ListItemIcon>
-              <PeersAgent />
-            </ListItemIcon>
-            <ListItemText primary="Peers" />
-          </ListItem>
-          <ListItem button onClick={e => handleChangeSection(e, 'gateways')}>
-            <ListItemIcon>
-              <GatewaysIcon />
-            </ListItemIcon>
-            <ListItemText primary="Gateways" />
-          </ListItem>
-          <ListItem button onClick={e => handleChangeSection(e, 'numbers')}>
-            <ListItemIcon>
-              <DialpadIcon />
-            </ListItemIcon>
-            <ListItemText primary="Numbers" />
-          </ListItem>
-          <ListItem button onClick={e => handleChangeSection(e, 'location')}>
-            <ListItemIcon>
-              <LocationSearching />
-            </ListItemIcon>
-            <ListItemText primary="Location" />
-          </ListItem>
-          <ListItem button onClick={e => handleChangeSection(e, 'registration')}>
-            <ListItemIcon>
-              <DoneIcon />
-            </ListItemIcon>
-            <ListItemText primary="Registration" />
-          </ListItem>
-          <Divider />
-          <ListItem disabled button onClick={e => handleChangeSection(e, 'logs')}>
-            <ListItemIcon>
-              <LogsIcon />
-            </ListItemIcon>
-            <ListItemText primary="Logs" />
-          </ListItem >
-          <ListItem disabled button onClick={e => handleChangeSection(e, 'settings')}>
-            <ListItemIcon>
-              <SettingsIcon />
-            </ListItemIcon>
-            <ListItemText primary="Settings" />
-          </ListItem>
-      </div>);
+class MenuNav extends React.Component {
+
+    render() {
+      const { classes } = this.props
+      const handleChangeSection = (e, section) => {
+          this.props.apiStore.loadResources(section)
+          this.props.appStore.setCurrentSection(section)
+      }
+
+      return (
+        <div className={classes.root}>
+            <ListItem button onClick={e => handleChangeSection(e, 'domains')}>
+              <ListItemIcon>
+                <DomainsIcon/>
+              </ListItemIcon>
+              <ListItemText primary="Domains"/>
+            </ListItem>
+            <ListItem button onClick={e => handleChangeSection(e, 'agents')}>
+              <ListItemIcon>
+                <AgentsIcon />
+              </ListItemIcon>
+              <ListItemText primary="Agents" />
+            </ListItem>
+            <ListItem button onClick={e => handleChangeSection(e, 'peers')}>
+              <ListItemIcon>
+                <PeersAgent />
+              </ListItemIcon>
+              <ListItemText primary="Peers" />
+            </ListItem>
+            <ListItem button onClick={e => handleChangeSection(e, 'gateways')}>
+              <ListItemIcon>
+                <GatewaysIcon />
+              </ListItemIcon>
+              <ListItemText primary="Gateways" />
+            </ListItem>
+            <ListItem button onClick={e => handleChangeSection(e, 'numbers')}>
+              <ListItemIcon>
+                <DialpadIcon />
+              </ListItemIcon>
+              <ListItemText primary="Numbers" />
+            </ListItem>
+            <ListItem button onClick={e => handleChangeSection(e, 'location')}>
+              <ListItemIcon>
+                <LocationSearching />
+              </ListItemIcon>
+              <ListItemText primary="Location" />
+            </ListItem>
+            <ListItem button onClick={e => handleChangeSection(e, 'registration')}>
+              <ListItemIcon>
+                <DoneIcon />
+              </ListItemIcon>
+              <ListItemText primary="Registration" />
+            </ListItem>
+            <Divider />
+            <ListItem disabled button onClick={e => handleChangeSection(e, 'logs')}>
+              <ListItemIcon>
+                <LogsIcon />
+              </ListItemIcon>
+              <ListItemText primary="Logs" />
+            </ListItem >
+            <ListItem disabled button onClick={e => handleChangeSection(e, 'settings')}>
+              <ListItemIcon>
+                <SettingsIcon />
+              </ListItemIcon>
+              <ListItemText primary="Settings" />
+            </ListItem>
+        </div>)
+    }
 }
 
 MenuNav.propTypes = {
   classes: PropTypes.object.isRequired,
-};
+}
 
-export default withStyles(styles)(MenuNav);
+export default inject('apiStore')(inject('appStore')(withStyles(styles)(observer(MenuNav))))

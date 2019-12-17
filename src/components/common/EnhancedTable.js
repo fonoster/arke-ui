@@ -102,7 +102,7 @@ const toolbarStyles = theme => ({
 })
 
 let EnhancedTableToolbar = props => {
-  const { numSelected, classes, name, handleDeleteItems, handleAddItem } = props
+  const { numSelected, classes, name, handleDeleteItems } = props
 
   return (
 
@@ -133,7 +133,7 @@ let EnhancedTableToolbar = props => {
           </Tooltip>
         ) : (
           <Tooltip title="Add">
-            <IconButton aria-label="Add" onClick={ handleAddItem } >
+            <IconButton aria-label="Add" onClick={ props.appStore.setFileUploaderOpen } >
               <AddItemIcom />
             </IconButton>
           </Tooltip>
@@ -148,7 +148,7 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 }
 
-EnhancedTableToolbar = withStyles(toolbarStyles)(EnhancedTableToolbar)
+EnhancedTableToolbar = inject('appStore')(withStyles(toolbarStyles)(observer(EnhancedTableToolbar)))
 
 const styles = theme => ({
   root: {
@@ -237,17 +237,18 @@ class EnhancedTable extends React.Component {
       this.props.appStore.setResourceEditorOpen()
   }
 
+  handleDeleteItems = () => console.log('Dummy handleDeleteItems')
+
   render() {
-    const { classes, columnData, data, name, handleDeleteItems, handleAddItem } = this.props
+    const { classes, columnData, data, name } = this.props
     const { order, orderBy, selected, rowsPerPage, page } = this.state
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage)
 
     return (
       <Paper className={classes.root}>
         <EnhancedTableToolbar name={ name }
-            handleAddItem={ handleAddItem }
             numSelected={selected.length} handleDeleteItems={ e => {
-                handleDeleteItems(e, this.state.selected)
+                this.handleDeleteItems(e, this.state.selected)
                 this.setState({selected: []})
               }}/>
         <div className={classes.tableWrapper}>
@@ -318,4 +319,4 @@ EnhancedTable.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
-export default inject('appStore')(withStyles(styles)(observer(EnhancedTable)))
+export default inject('apiStore')(inject('appStore')(withStyles(styles)(observer(EnhancedTable))))

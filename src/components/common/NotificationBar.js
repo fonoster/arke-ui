@@ -1,22 +1,14 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import Snackbar from '@material-ui/core/Snackbar';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
-
-const styles = theme => ({
-  close: {
-    width: theme.spacing.unit * 4,
-    height: theme.spacing.unit * 4,
-  },
-});
+import React from 'react'
+import PropTypes from 'prop-types'
+import Button from '@material-ui/core/Button'
+import Snackbar from '@material-ui/core/Snackbar'
+import IconButton from '@material-ui/core/IconButton'
+import CloseIcon from '@material-ui/icons/Close'
 
 class NotificationBar extends React.Component {
 
   render() {
-    const { classes, message, open, handleClose} = this.props;
+    const { message, open, handleClose} = this.props
 
     return (
       <div>
@@ -40,7 +32,6 @@ class NotificationBar extends React.Component {
               key="close"
               aria-label="Close"
               color="inherit"
-              className={classes.close}
               onClick={ e => handleClose(e)}
             >
               <CloseIcon />
@@ -48,12 +39,12 @@ class NotificationBar extends React.Component {
           ]}
         />
       </div>
-    );
+    )
   }
 }
 
 NotificationBar.propTypes = {
   classes: PropTypes.object.isRequired,
-};
+}
 
-export default withStyles(styles)(NotificationBar);
+export default NotificationBar

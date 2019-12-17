@@ -4,6 +4,8 @@ import ResourceViewer from '../common/ResourceViewer'
 import FileUploader from './FileUploader'
 import NoResourcesCard from './NoResourcesCard'
 import { toTitleCase } from '../common/utils'
+import { getColumnData } from '../common/dataStruct'
+import { observer, inject } from 'mobx-react'
 
 class Resources extends React.Component {
 
@@ -15,37 +17,34 @@ class Resources extends React.Component {
     }
 
     render() {
-      const { endpoint, resource, columnData, data, handleNotify, handleChangeSection, handleDeleteItems } = this.props;
+      const hasData = () => this.props.apiStore.getResources().length > 0
+      const getTitle = () => toTitleCase(this.props.appStore.getCurrentSection())
+      const columnData = getColumnData(this.props.appStore.getCurrentSection())
+      const data = this.props.apiStore.getResources()
 
       return (
           <div>
-             { data.length > 0 && <EnhancedTable
-              name={toTitleCase(resource)}
-              hide={true}
-              columnData= {columnData}
-              data={data}
-              handleOpenResourceViewer = { (e, resource) => this.handleOpenResourceViewer(e, resource)}
-              handleDeleteItems = { handleDeleteItems }
-              handleAddItem = { e => this.setState({ fileUploaderOpen: true }) } /> }
+            { hasData() &&
+               <EnhancedTable  hide={ true } name={ getTitle() }
+                columnData= { columnData }
+                data={ data } />
+            }
 
-            { data.length === 0 && <NoResourcesCard resource={toTitleCase(resource)}
-              handleAddItem={ e => this.setState({ fileUploaderOpen: true }) }/> }
+            { !hasData() &&
+                <NoResourcesCard resource={getTitle()}
+                handleAddItem={ e => this.setState({ fileUploaderOpen: true }) }/>
+            }
 
             <ResourceViewer />
 
-            <FileUploader open={this.state.fileUploaderOpen}
-                endpoint= { endpoint }
-                handleClose = { e => {
-                    this.setState({fileUploaderOpen: false});
-                }}
+            <FileUploader
+
                 handleOnSuccess={ (e, res) => {
-                    handleNotify(res);
                     this.setState({fileUploaderOpen: false});
-                    handleChangeSection(e, resource);
                 }} />
           </div>
       );
     }
   }
 
-export default Resources;
+export default inject('apiStore')(inject('appStore')(observer(Resources)))

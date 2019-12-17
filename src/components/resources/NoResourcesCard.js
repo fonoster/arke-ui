@@ -1,12 +1,13 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import LaunchIcon from '@material-ui/icons/Launch';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import Button from "@material-ui/core/Button";
-import Typography from '@material-ui/core/Typography';
+import React from 'react'
+import PropTypes from 'prop-types'
+import LaunchIcon from '@material-ui/icons/Launch'
+import Card from '@material-ui/core/Card'
+import CardActions from '@material-ui/core/CardActions'
+import CardContent from '@material-ui/core/CardContent'
+import Button from '@material-ui/core/Button'
+import Typography from '@material-ui/core/Typography'
+import { observer, inject } from 'mobx-react'
+import { withStyles } from '@material-ui/core/styles'
 
 const styles = theme => ({
   button: {
@@ -27,10 +28,10 @@ const styles = theme => ({
   pos: {
     marginBottom: 12,
   },
-});
+})
 
 function NoResourcesCard(props) {
-  const { classes, resource, handleAddItem } = props;
+  const { classes, resource } = props
 
   return (
     <div>
@@ -51,15 +52,17 @@ function NoResourcesCard(props) {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button className={classes.button} variant="contained" onClick={handleAddItem} color="secondary" size="small">Add {resource}</Button>
+          <Button className={classes.button} variant="contained" onClick={props.appStore.setFileUploaderOpen }
+            color="secondary" size="small">Add {resource}
+          </Button>
         </CardActions>
       </Card>
     </div>
-  );
+  )
 }
 
 NoResourcesCard.propTypes = {
     classes: PropTypes.object.isRequired
-};
+}
 
-export default withStyles(styles)(NoResourcesCard);
+export default inject('appStore')(withStyles(styles)(observer(NoResourcesCard)))

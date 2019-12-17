@@ -1,12 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import MenuItem from '@material-ui/core/MenuItem'
 import Menu from '@material-ui/core/Menu'
+import { observer, inject } from 'mobx-react'
+import { withStyles } from '@material-ui/core/styles'
 
 const styles = {
   root: {
@@ -44,7 +45,7 @@ class MenuAppBar extends React.Component {
   }
 
   render() {
-    const { classes, onOpenAbout } = this.props
+    const { classes } = this.props
     const { auth, anchorEl } = this.state
     const open = Boolean(anchorEl)
 
@@ -79,7 +80,7 @@ class MenuAppBar extends React.Component {
                   onClose={this.handleClose}
                 >
                   <MenuItem disabled onClick={this.handleClose}>Settings</MenuItem>
-                  <MenuItem onClick={onOpenAbout}>About</MenuItem>
+                  <MenuItem onClick={ this.props.appStore.setAboutDialogOpen }>About</MenuItem>
                 </Menu>
               </div>
             )}
@@ -94,4 +95,4 @@ MenuAppBar.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles)(MenuAppBar)
+export default inject('appStore')(withStyles(styles)(observer(MenuAppBar)))

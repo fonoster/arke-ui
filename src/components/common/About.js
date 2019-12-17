@@ -1,8 +1,5 @@
 import React from 'react'
-//import 'brace/mode/ruby'
-//import 'brace/theme/monokai'
 import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
 import Dialog from '@material-ui/core/Dialog'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
@@ -13,7 +10,9 @@ import Slide from '@material-ui/core/Slide'
 import Card from '@material-ui/core/Card'
 import CardActions from '@material-ui/core/CardActions'
 import CardContent from '@material-ui/core/CardContent'
-import Button from "@material-ui/core/Button"
+import Button from '@material-ui/core/Button'
+import { observer, inject } from 'mobx-react'
+import { withStyles } from '@material-ui/core/styles'
 
 const styles = {
   appBar: {
@@ -30,36 +29,18 @@ function Transition(props) {
 
 class About extends React.Component {
 
-  constructor(props) {
-      super(props)
-      this.state = {
-          endpoint: props.endpoint,
-          serverVersion: '',
-          apiVersion: '',
-      }
-  }
-
-  UNSAFE_componentWillMount() {
-      fetch(this.state.endpoint)
-      .then(results => {
-          return results.json()
-      }).then(response => {
-          this.setState({serverVersion: response.version})
-      })
-  }
-
   render() {
-    const { classes, open, handleClose} = this.props
+    const { classes } = this.props
     return (
       <div>
         <Dialog
-          open={ open }
-          onClose={e => this.handleClose(e)}
+          open={ this.props.appStore.isAboutDialogOpen() }
+          onClose={ this.props.appStore.setAboutDialogOpen }
           TransitionComponent={Transition}
         >
           <AppBar className={classes.appBar}>
             <Toolbar>
-              <IconButton color="inherit" aria-label="Close" onClick={ handleClose }>
+              <IconButton color="inherit" aria-label="Close" onClick={ this.props.appStore.setAboutDialogOpen }>
                 <CloseIcon />
               </IconButton>
               <Typography variant="h6" color="inherit" className={classes.flex}>
@@ -95,4 +76,4 @@ About.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles)(About)
+export default inject('appStore')(withStyles(styles)(observer(About)))

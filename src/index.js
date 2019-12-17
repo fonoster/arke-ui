@@ -5,9 +5,11 @@ import './index.css'
 import App from './App'
 import registerServiceWorker from './registerServiceWorker'
 import { appStore } from './stores/app'
+import { apiStore } from './stores/api'
 
 const stores = {
-  appStore
+  appStore,
+  apiStore
 }
 
 ReactDOM.render(
