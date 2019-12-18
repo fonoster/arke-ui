@@ -5,8 +5,16 @@ class AppStore {
   resourceEditorOpen = false
   aboutDialogOpen = false
   fileUploaderOpen = false
+  notificationOpen = false
+  notificationMsg = ''
   currentSection = 'domains'
 
+  notify = (msg, time) => {
+      this.notificationMsg = msg
+      this.setNotificationOpen()
+  }
+
+  setNotificationOpen = () => this.notificationOpen = !this.notificationOpen
   setCurrentResource = resource => this.currentResource = resource
   setResourceEditorOpen = () => this.resourceEditorOpen = !this.resourceEditorOpen
   setAboutDialogOpen = () => this.aboutDialogOpen = !this.aboutDialogOpen
@@ -29,6 +37,7 @@ class AppStore {
   isAboutDialogOpen = () => this.aboutDialogOpen
   isResourceEditorOpen = () => this.resourceEditorOpen
   isFileUploaderOpen = () => this.fileUploaderOpen
+  isNotificationOpen = () => this.notificationOpen
 }
 
 decorate(AppStore, {
@@ -36,7 +45,9 @@ decorate(AppStore, {
     resourceEditorOpen: observable,
     aboutDialogOpen: observable,
     currentSection: observable,
-    fileUploaderOpen: observable
+    fileUploaderOpen: observable,
+    notificationMsg: observable,
+    notificationOpen: observable
 })
 
 export const appStore = new AppStore()

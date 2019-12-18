@@ -9,13 +9,6 @@ import { observer, inject } from 'mobx-react'
 
 class Resources extends React.Component {
 
-    constructor() {
-        super()
-        this.state = {
-            fileUploaderOpen: false,
-        }
-    }
-
     render() {
       const hasData = () => this.props.apiStore.getResources().length > 0
       const getTitle = () => toTitleCase(this.props.appStore.getCurrentSection())
@@ -36,12 +29,7 @@ class Resources extends React.Component {
             }
 
             <ResourceViewer />
-
-            <FileUploader
-
-                handleOnSuccess={ (e, res) => {
-                    this.setState({fileUploaderOpen: false});
-                }} />
+            <FileUploader/>
           </div>
       );
     }

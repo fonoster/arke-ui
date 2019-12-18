@@ -19,9 +19,6 @@ class APIStore {
        )
     }
 
-    add = resource => {
-    }
-
     update = resource => {
         const rObj = JSON.parse(resource)
         const t =  rObj.kind.toLowerCase() + 's'
@@ -35,23 +32,18 @@ class APIStore {
             return results.json()
         })
         .then(response => {
-            // Notify
+            appStore.notify(response.message)
+            this.loadResources(appStore.getCurrentSection())
         })
     }
 
-    remove = (type, refs) => {
-        refs.forEach(ref => {
-            const endpoint = getEndpoint(this.apiURL, type + '/'+ ref, '', this.token)
-            fetch(endpoint, {
-                method: 'DELETE'
-            })
-            .then(results => {
-                return results.json()
-            })
-            .then(response => {
-                // Notify
-            })
-        })
+    delete = async(type, refs) => {
+        const ep = ref => getEndpoint(this.apiURL, type + '/'+ ref, '', this.token)
+        for (let i =0; i < refs.length; i++) {
+            await fetch(ep(refs[i]), { method: 'DELETE'})
+        }
+        this.loadResources(appStore.getCurrentSection())
+        appStore.notify('Done')
     }
 
     loadResources = type => {
@@ -69,8 +61,6 @@ class APIStore {
               })
             }
             this.resources = data
-        }).catch(e => {
-            console.log(e)
         })
     }
 

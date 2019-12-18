@@ -29,9 +29,15 @@ class FileUploader extends React.Component {
   render() {
     const { classes } = this.props
     const eventHandlers = { success: () => {
-        this.props.apiStore.loadResources(this.props.appStore.getCurrentSection())
-        this.props.appStore.setFileUploaderOpen()
-    }}
+          this.props.apiStore.loadResources(this.props.appStore.getCurrentSection())
+          this.props.appStore.setFileUploaderOpen()
+          this.props.appStore.notify('Successful request')
+        },
+        error: e => {
+            console.log(e)
+            this.props.appStore.notify('Unexpected error. Please verify your resource file, and resend.')
+        }
+    }
     const djsConfig = { addRemoveLinks: true }
     const endpoint = getEndpoint(
         this.props.apiStore.getAPIUrl(),

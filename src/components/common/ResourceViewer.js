@@ -118,7 +118,6 @@ class ResourceViewer extends React.Component {
 
       this.props.apiStore.update(resource)
       this.props.appStore.setResourceEditorOpen()
-      //this.props.apiStore.loadResources(this.props.appStore.getCurrentSection())
   }
 
   render() {

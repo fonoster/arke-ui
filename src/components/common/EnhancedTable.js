@@ -46,7 +46,7 @@ function desc(a, b, orderBy) {
 
 class EnhancedTableHead extends React.Component {
   createSortHandler = property => event => {
-    this.props.onRequestSort(event, property)
+      this.props.onRequestSort(event, property)
   }
 
   render() {
@@ -213,8 +213,6 @@ class EnhancedTable extends React.Component {
         order = 'asc';
       }
 
-      this.setState({data: this.props.data})
-
       this.setState({ order, orderBy });
   }
 
@@ -258,8 +256,15 @@ class EnhancedTable extends React.Component {
       this.props.appStore.setResourceEditorOpen()
   }
 
-  handleDeleteItems = selected => this.props.apiStore.remove(
+  handleDeleteItems = selected => this.props.apiStore.delete(
     this.props.appStore.getCurrentSection(), selected)
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if(nextProps.data!==prevState.data){
+       return { data: nextProps.data, selected: []};
+    }
+    else return null;
+  }
 
   render() {
     const { classes, columnData, name, data } = this.props
