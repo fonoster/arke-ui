@@ -20,6 +20,30 @@ import AddItemIcom from '@material-ui/icons/Add'
 import { lighten } from '@material-ui/core/styles/colorManipulator'
 import { observer, inject } from 'mobx-react'
 
+function stableSort(array, cmp) {
+  const stabilizedThis = array.map((el, index) => [el, index]);
+  stabilizedThis.sort((a, b) => {
+    const order = cmp(a[0], b[0]);
+    if (order !== 0) return order;
+    return a[1] - b[1];
+  });
+  return stabilizedThis.map(el => el[0]);
+}
+
+function getSorting(order, orderBy) {
+  return order === 'desc' ? (a, b) => desc(a, b, orderBy) : (a, b) => -desc(a, b, orderBy);
+}
+
+function desc(a, b, orderBy) {
+  if (b[orderBy] < a[orderBy]) {
+    return -1;
+  }
+  if (b[orderBy] > a[orderBy]) {
+    return 1;
+  }
+  return 0;
+}
+
 class EnhancedTableHead extends React.Component {
   createSortHandler = property => event => {
     this.props.onRequestSort(event, property)
@@ -151,19 +175,19 @@ EnhancedTableToolbar.propTypes = {
 EnhancedTableToolbar = inject('appStore')(withStyles(toolbarStyles)(observer(EnhancedTableToolbar)))
 
 const styles = theme => ({
-  root: {
-    width: '100%',
-    marginTop: theme.spacing.unit * 3,
-  },
-  table: {
-    minWidth: 1020,
-  },
-  tableWrapper: {
-    overflowX: 'auto',
-  },
-  cursor: {
-    cursor: 'pointer',
-  }
+    root: {
+      width: '100%',
+      marginTop: theme.spacing.unit * 3,
+    },
+    table: {
+      minWidth: 1020,
+    },
+    tableWrapper: {
+      overflowX: 'auto',
+    },
+    cursor: {
+      cursor: 'pointer',
+    }
 })
 
 class EnhancedTable extends React.Component {
@@ -172,58 +196,55 @@ class EnhancedTable extends React.Component {
     super(props, context)
 
     this.state = {
-      order: 'asc',
-      orderBy: 'calories',
-      selected: [],
-      data: props.data,
-      page: 0,
-      rowsPerPage: 5,
+        order: 'asc',
+        orderBy: 'calories',
+        selected: [],
+        data: props.data,
+        page: 0,
+        rowsPerPage: 5,
     }
   }
 
   handleRequestSort = (event, property) => {
-    const orderBy = property
-    let order = 'desc'
+      const orderBy = property;
+      let order = 'desc';
 
-    if (this.state.orderBy === property && this.state.order === 'desc') {
-      order = 'asc'
-    }
+      if (this.state.orderBy === property && this.state.order === 'desc') {
+        order = 'asc';
+      }
 
-    const data =
-      order === 'desc'
-        ? this.state.data.sort((a, b) => (b[orderBy] < a[orderBy] ? -1 : 1))
-        : this.state.data.sort((a, b) => (a[orderBy] < b[orderBy] ? -1 : 1))
+      this.setState({data: this.props.data})
 
-    this.setState({ data, order, orderBy })
+      this.setState({ order, orderBy });
   }
 
   handleSelectAllClick = (event, checked) => {
-    if (checked) {
-      this.setState({ selected: this.state.data.map(n => n.c1) })
-      return
-    }
-    this.setState({ selected: [] })
+      if(checked) {
+        this.setState({ selected: this.state.data.map(n => n.c1) })
+      } else {
+        this.setState({ selected: [] })
+      }
   }
 
   handleClick = (event, id) => {
-    const { selected } = this.state
-    const selectedIndex = selected.indexOf(id)
-    let newSelected = []
+      const { selected } = this.state
+      const selectedIndex = selected.indexOf(id)
+      let newSelected = []
 
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, id)
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1))
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1))
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1),
-      )
-    }
+      if (selectedIndex === -1) {
+        newSelected = newSelected.concat(selected, id)
+      } else if (selectedIndex === 0) {
+        newSelected = newSelected.concat(selected.slice(1))
+      } else if (selectedIndex === selected.length - 1) {
+        newSelected = newSelected.concat(selected.slice(0, -1))
+      } else if (selectedIndex > 0) {
+        newSelected = newSelected.concat(
+          selected.slice(0, selectedIndex),
+          selected.slice(selectedIndex + 1),
+        )
+      }
 
-    this.setState({ selected: newSelected })
+      this.setState({ selected: newSelected })
   }
 
   handleChangePage = (event, page) => this.setState({ page })
@@ -237,18 +258,19 @@ class EnhancedTable extends React.Component {
       this.props.appStore.setResourceEditorOpen()
   }
 
-  handleDeleteItems = () => console.log('Dummy handleDeleteItems')
+  handleDeleteItems = selected => this.props.apiStore.remove(
+    this.props.appStore.getCurrentSection(), selected)
 
   render() {
-    const { classes, columnData, data, name } = this.props
-    const { order, orderBy, selected, rowsPerPage, page } = this.state
+    const { classes, columnData, name, data } = this.props
+    const { order, orderBy, selected, rowsPerPage, page} = this.state
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage)
 
     return (
       <Paper className={classes.root}>
         <EnhancedTableToolbar name={ name }
             numSelected={selected.length} handleDeleteItems={ e => {
-                this.handleDeleteItems(e, this.state.selected)
+                this.handleDeleteItems(selected)
                 this.setState({selected: []})
               }}/>
         <div className={classes.tableWrapper}>
@@ -263,7 +285,8 @@ class EnhancedTable extends React.Component {
               rowCount={data.length}
             />
             <TableBody>
-              {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
+              { stableSort(data, getSorting(order, orderBy))
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
                 const isSelected = this.isSelected(n.c1)
                 return (
                   <TableRow
@@ -297,6 +320,7 @@ class EnhancedTable extends React.Component {
           </Table>
         </div>
         <TablePagination
+          rowsPerPageOptions={[5, 10, 25]}
           component="div"
           count={data.length}
           rowsPerPage={rowsPerPage}
