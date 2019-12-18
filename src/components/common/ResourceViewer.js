@@ -111,6 +111,16 @@ class ResourceViewer extends React.Component {
       this.setState({yamlEditorAnnotations: this.refs.yamlEditor.editor.getSession().getAnnotations()})
   }
 
+  saveResource = () => {
+      const resource = this.state.tab === 1
+        ? this.state.resourceJson
+        : JSON.stringify(J2Y.parse(this.state.resourceYaml))
+
+      this.props.apiStore.update(resource)
+      this.props.appStore.setResourceEditorOpen()
+      //this.props.apiStore.loadResources(this.props.appStore.getCurrentSection())
+  }
+
   render() {
     const { tab } = this.state
 
@@ -161,8 +171,8 @@ class ResourceViewer extends React.Component {
           </Grid>
           </DialogContent>
           <DialogActions>
-            <Button color="primary">
-              Update
+            <Button color="primary" onClick={this.saveResource}>
+              Save
             </Button>
             <Button onClick={this.props.appStore.setResourceEditorOpen} color="primary">
               Cancel
@@ -178,4 +188,4 @@ ResourceViewer.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
-export default inject('appStore')(withStyles(styles)(observer(ResourceViewer)))
+export default inject('apiStore')(inject('appStore')(withStyles(styles)(observer(ResourceViewer))))

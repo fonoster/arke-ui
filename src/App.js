@@ -3,11 +3,13 @@ import './App.css'
 import '../node_modules/dropzone/dist/min/dropzone.min.css'
 import ClippedDrawer from './ClippedDrawer'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
+import { getParameterByName } from './components/common/utils'
+import { observer, inject } from 'mobx-react'
 
 const theme = createMuiTheme({
   typography: {
     useNextVariants: true,
-  },  
+  },
   palette: {
       primary: {
         light: '#757ce8',
@@ -23,6 +25,15 @@ const theme = createMuiTheme({
 
 class App extends Component {
 
+  UNSAFE_componentWillMount() {
+      if(getParameterByName('token')) {
+          this.props.apiStore.setToken(getParameterByName('token'))
+      }
+      if(getParameterByName('apiURL')) {
+          this.props.apiStore.setApiURL(getParameterByName('apiURL'))
+      }
+  }
+
   render() {
     return (
       <div className="App">
@@ -34,4 +45,4 @@ class App extends Component {
   }
 }
 
-export default App
+export default inject('apiStore')(observer(App))

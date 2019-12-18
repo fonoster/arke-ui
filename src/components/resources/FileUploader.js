@@ -29,7 +29,7 @@ class FileUploader extends React.Component {
   render() {
     const { classes } = this.props
     const eventHandlers = { success: () => {
-        this.props.apiStore.loadResources()
+        this.props.apiStore.loadResources(this.props.appStore.getCurrentSection())
         this.props.appStore.setFileUploaderOpen()
     }}
     const djsConfig = { addRemoveLinks: true }

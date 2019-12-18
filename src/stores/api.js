@@ -7,11 +7,11 @@ class APIStore {
     resourceType = ''
     resources = []
     apiURL = '/api/v1beta1'
-    token = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiJ9.xZoFy3fXRptGpOad74RVxp5j_TZ31mD-Kuqw6PS5NfgsqWZiWWgxypi9ApFKqjWXOXwNp8HiaxgzlfmWP9w1eg'
+    token = ''
 
     constructor() {
        when(
-         () => this.resourceType !== appStore.getCurrentSection(),
+         () => this.resourceType !== appStore.getCurrentSection() && this.token !== '',
          () => {
            this.loadResources(appStore.getCurrentSection())
            this.resourceType = appStore.getCurrentSection()
@@ -19,9 +19,25 @@ class APIStore {
        )
     }
 
-    add = resource => {}
+    add = resource => {
+    }
 
-    updated = resource => {}
+    update = resource => {
+        const rObj = JSON.parse(resource)
+        const t =  rObj.kind.toLowerCase() + 's'
+        const endpoint = getEndpoint(this.apiURL,
+          t + '/' + rObj.metadata.ref, '', this.token)
+        fetch(endpoint, {
+            method: 'PUT',
+            body: resource
+        })
+        .then(results => {
+            return results.json()
+        })
+        .then(response => {
+            // Notify
+        })
+    }
 
     remove = (type, refs) => {
         refs.forEach(ref => {
@@ -39,8 +55,8 @@ class APIStore {
     }
 
     loadResources = type => {
-        const r = type === 'registration' ? 'registry' : type
-        const endpoint = getEndpoint(this.apiURL, r, '*', this.token)
+        const t = type === 'registration' ? 'registry' : type
+        const endpoint = getEndpoint(this.apiURL, t, '*', this.token)
 
         fetch(endpoint)
         .then(results => {
@@ -53,6 +69,8 @@ class APIStore {
               })
             }
             this.resources = data
+        }).catch(e => {
+            console.log(e)
         })
     }
 
@@ -60,15 +78,12 @@ class APIStore {
 
     getAPIUrl = () => this.apiURL
 
+    setApiURL = apiURL => this.apiURL = apiURL
+
     getToken = () => this.token
 
-    /*if (getParameterByName('token')) {
-        this.setState({token:getParameterByName('token')})
-    }*/
+    setToken = token => this.token = token
 
-    /*if (getParameterByName('apiURL')) {
-        this.setState({apiURL:getParameterByName('apiURL')})
-    }*/
 }
 
 decorate(APIStore, {
