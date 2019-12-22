@@ -26,24 +26,29 @@ function Transition(props) {
 }
 
 class FileUploader extends React.Component {
+  state = {
+    oldCnt: 0
+  }
+
   render() {
-    const { classes } = this.props
-    const eventHandlers = { success: () => {
-          this.props.apiStore.loadResources(this.props.appStore.getCurrentSection())
-          this.props.appStore.setFileUploaderOpen()
-          this.props.appStore.notify('Successful request')
+    const { classes, apiStore, appStore } = this.props
+
+    const eventHandlers = { success: file => {
+            apiStore.loadResources(appStore.getCurrentSection())
+            appStore.setFileUploaderOpen()
+            appStore.notify(`Resources added.`)
         },
+        sending: () => this.setState({oldCnt: apiStore.resources.length}),
         error: e => {
-            console.log(e)
-            this.props.appStore.notify('Unexpected error. Please verify your resource file, and resend.')
+            appStore.notify('An error occurred while adding resources.')
         }
     }
     const djsConfig = { addRemoveLinks: true }
     const endpoint = getEndpoint(
-        this.props.apiStore.getAPIUrl(),
-        this.props.appStore.getCurrentSection(),
+        apiStore.getAPIUrl(),
+        appStore.getCurrentSection(),
         '',
-        this.props.apiStore.getToken()
+        apiStore.getToken()
     )
     const componentConfig = {
         iconFiletypes: ['.yaml', '.yml'],

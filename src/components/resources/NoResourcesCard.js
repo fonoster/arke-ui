@@ -19,7 +19,8 @@ const styles = theme => ({
   card: {
     maxWidth: 300,
     position: 'relative',
-    margin: '10% auto'
+    margin: '10% auto',
+    padding: 8
   },
   title: {
     marginBottom: 16,

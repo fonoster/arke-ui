@@ -112,12 +112,16 @@ class ResourceViewer extends React.Component {
   }
 
   saveResource = () => {
-      const resource = this.state.tab === 1
-        ? this.state.resourceJson
-        : JSON.stringify(J2Y.parse(this.state.resourceYaml))
+      try {
+          const resource = this.state.tab === 1
+            ? this.state.resourceJson
+            : JSON.stringify(J2Y.parse(this.state.resourceYaml))
 
-      this.props.apiStore.update(resource)
-      this.props.appStore.setResourceEditorOpen()
+          this.props.apiStore.update(resource)
+          this.props.appStore.setResourceEditorOpen()
+      } catch(e) {
+          this.props.appStore.notify('Malformed json or yaml.')
+      }
   }
 
   render() {

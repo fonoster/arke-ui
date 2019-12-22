@@ -20,21 +20,29 @@ class APIStore {
     }
 
     update = resource => {
-        const rObj = JSON.parse(resource)
-        const t =  rObj.kind.toLowerCase() + 's'
-        const endpoint = getEndpoint(this.apiURL,
-          t + '/' + rObj.metadata.ref, '', this.token)
-        fetch(endpoint, {
-            method: 'PUT',
-            body: resource
-        })
-        .then(results => {
-            return results.json()
-        })
-        .then(response => {
-            appStore.notify(response.message)
-            this.loadResources(appStore.getCurrentSection())
-        })
+        try {
+          const rObj = JSON.parse(resource)
+          const t = appStore.getCurrentSection()
+          const endpoint = getEndpoint(this.apiURL,
+            t + '/' + rObj.metadata.ref, '', this.token)
+          fetch(endpoint, {
+              method: 'PUT',
+              body: resource
+          })
+          .then(results => {
+              return results.json()
+          })
+          .then(response => {
+              if (response.status === 200) {
+                  appStore.notify('Updated resource.')
+              } else {
+                  appStore.notify(response.message)
+              }
+              this.loadResources(appStore.getCurrentSection())
+          })
+      } catch(e) {
+          appStore.notify('Malformed json or yaml.')
+      }
     }
 
     delete = async(type, refs) => {
@@ -43,7 +51,7 @@ class APIStore {
             await fetch(ep(refs[i]), { method: 'DELETE'})
         }
         this.loadResources(appStore.getCurrentSection())
-        appStore.notify('Done')
+        appStore.notify(`${refs.length} ${appStore.getCurrentSection()} removed.`)
     }
 
     loadResources = type => {

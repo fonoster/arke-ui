@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Button from '@material-ui/core/Button'
 import Snackbar from '@material-ui/core/Snackbar'
 import IconButton from '@material-ui/core/IconButton'
 import CloseIcon from '@material-ui/icons/Close'
@@ -26,9 +25,6 @@ class NotificationBar extends React.Component {
           }}
           message={<span id="message-id">{this.props.appStore.notificationMsg}</span>}
           action={[
-            <Button key="undo" disabled color="secondary" size="small" onClick={this.handleClose}>
-              UNDO
-            </Button>,
             <IconButton
               key="close"
               aria-label="Close"
