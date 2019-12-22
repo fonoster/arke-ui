@@ -9,10 +9,8 @@ import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import Dialog from '@material-ui/core/Dialog'
 import IconButton from '@material-ui/core/IconButton'
-import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import CloseIcon from '@material-ui/icons/Close'
-import AnnouncementIcon from '@material-ui/icons/Announcement'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import Y2J from 'json2yaml'
@@ -119,8 +117,9 @@ class ResourceViewer extends React.Component {
 
           this.props.apiStore.update(resource)
           this.props.appStore.setResourceEditorOpen()
+          this.setState({resourceJson: '', resourceYaml: ''})
       } catch(e) {
-          this.props.appStore.notify('Malformed json or yaml.')
+          this.props.appStore.notify('Malformed document.')
       }
   }
 
@@ -131,6 +130,7 @@ class ResourceViewer extends React.Component {
       <div>
         <Dialog
           aria-labelledby="customized-dialog-title"
+          onClose={ this.props.appStore.setResourceEditorOpen }
           open={ this.props.appStore.isResourceEditorOpen() }
         >
           <DialogTitle id="customized-dialog-title" onClose={ this.props.appStore.setResourceEditorOpen }>
@@ -163,7 +163,7 @@ class ResourceViewer extends React.Component {
                 editorProps={{$blockScrolling: false}}
               />
             }
-          <Grid container wrap="nowrap" spacing={16} style={{ backgroundColor: '#f2f2f2',
+          {/*<Grid container wrap="nowrap" spacing={16} style={{ backgroundColor: '#f2f2f2',
             paddingLeft: '10px', paddingTop: '10px'}}>
             <Grid item>
               <AnnouncementIcon />
@@ -171,7 +171,7 @@ class ResourceViewer extends React.Component {
             <Grid item xs zeroMinWidth>
               <Typography noWrap>This action is equivalent to: rctl apply -f spec.yaml</Typography>
             </Grid>
-          </Grid>
+          </Grid>*/}
           </DialogContent>
           <DialogActions>
             <Button color="primary" onClick={this.saveResource}>

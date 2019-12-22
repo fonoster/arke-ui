@@ -79,8 +79,11 @@ class MenuAppBar extends React.Component {
                   open={open}
                   onClose={this.handleClose}
                 >
-                  <MenuItem disabled onClick={this.handleClose}>Settings</MenuItem>
-                  <MenuItem onClick={ this.props.appStore.setAboutDialogOpen }>About</MenuItem>
+                  <MenuItem>Settings</MenuItem>
+                  <MenuItem onClick={() => {
+                      this.props.appStore.setAboutDialogOpen()
+                      this.handleClose()}
+                  }>About</MenuItem>
                 </Menu>
               </div>
             )}

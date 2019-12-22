@@ -3,7 +3,7 @@ import moment from 'moment'
 export const columnDataDomains = [
     { id: 'name', numeric: false, disablePadding: true, label: 'Domain Name' },
     { id: 'uri', numeric: false, disablePadding: false, label: 'URI' },
-    { id: 'modifiedOn', numeric: false, disablePadding: false, label: 'Modified On' },
+    { id: 'modified', numeric: false, disablePadding: false, label: 'Modified' },
     { id: 'ref', numeric: false, disablePadding: false, label: 'Ref' },
 ]
 
@@ -20,7 +20,7 @@ export function domainsStruct(item) {
 export const columnDataAgents = [
     { id: 'name', numeric: false, disablePadding: true, label: 'Agent Name' },
     { id: 'username', numeric: false, disablePadding: false, label: 'Username' },
-    { id: 'modifiedOn', numeric: false, disablePadding: false, label: 'Modified On'},
+    { id: 'modified', numeric: false, disablePadding: false, label: 'Modified'},
     { id: 'ref', numeric: false, disablePadding: false, label: 'Ref' },
 ]
 
@@ -37,7 +37,7 @@ export function agentsStruct(item) {
 export const columnDataPeers = [
     { id: 'name', numeric: false, disablePadding: true, label: 'Peer Name' },
     { id: 'username', numeric: false, disablePadding: false, label: 'Username' },
-    { id: 'modifiedOn', numeric: false, disablePadding: false, label: 'Modified On' },
+    { id: 'modified', numeric: false, disablePadding: false, label: 'Modified' },
     { id: 'ref', numeric: false, disablePadding: false, label: 'Ref' },
 ]
 
@@ -55,8 +55,7 @@ export const columnDataGateways = [
     { id: 'name', numeric: false, disablePadding: true, label: 'Gateway' },
     { id: 'username', numeric: false, disablePadding: false, label: 'Username' },
     { id: 'host', numeric: false, disablePadding: false, label: 'Host' },
-    { id: 'transport', numeric: false, disablePadding: false, label: 'Transport' },
-    { id: 'modifiedOn', numeric: false, disablePadding: false, label: 'Modified On' },
+    { id: 'modified', numeric: false, disablePadding: false, label: 'Modified' },
     { id: 'ref', numeric: false, disablePadding: false, label: 'Ref' },
 ]
 
@@ -65,10 +64,9 @@ export function gatewaysStruct(item) {
         c1: item.metadata.ref,
         c2: JSON.stringify(item),
         c3: item.metadata.name,
-        c4: item.spec.credentials ? item.spec.credentials.username : '--' ,
-        c5: item.spec.host,
-        c6: item.spec.transport,
-        c7: moment(item.metadata.modifiedOn).fromNow()
+        c4: item.spec.credentials ? item.spec.credentials.username : 'None' ,
+        c5: `${item.spec.transport} | ${item.spec.host}`,
+        c6: moment(item.metadata.modifiedOn).fromNow()
     }
 }
 
@@ -76,7 +74,7 @@ export const columnDataNumbers = [
     { id: 'number', numeric: false, disablePadding: true, label: 'Number' },
     { id: 'location', numeric: false, disablePadding: false, label: 'Location' },
     { id: 'aorLink', numeric: false, disablePadding: false, label: 'AOR Link' },
-    { id: 'modifiedOn', numeric: false, disablePadding: false, label: 'Modified On' },
+    { id: 'modified', numeric: false, disablePadding: false, label: 'Modified' },
     { id: 'ref', numeric: false, disablePadding: false, label: 'Ref' },
 ]
 

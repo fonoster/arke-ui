@@ -13,7 +13,7 @@ import DialpadIcon from '@material-ui/icons/Dialpad'
 import PeersAgent from '@material-ui/icons/GroupWork'
 import LocationSearching from '@material-ui/icons/LocationSearching'
 import DoneIcon from '@material-ui/icons/Done'
-import LogsIcon from '@material-ui/icons/Assignment'
+import HelpIcon from '@material-ui/icons/HelpOutline'
 import { observer, inject } from 'mobx-react'
 
 const styles = theme => ({
@@ -78,18 +78,18 @@ class MenuNav extends React.Component {
               <ListItemText primary="Registration" />
             </ListItem>
             <Divider />
-            <ListItem disabled button onClick={e => handleChangeSection(e, 'logs')}>
-              <ListItemIcon>
-                <LogsIcon />
-              </ListItemIcon>
-              <ListItemText primary="Logs" />
-            </ListItem >
-            <ListItem disabled button onClick={e => handleChangeSection(e, 'settings')}>
+            <ListItem button onClick={e => handleChangeSection(e, 'settings')}>
               <ListItemIcon>
                 <SettingsIcon />
               </ListItemIcon>
               <ListItemText primary="Settings" />
             </ListItem>
+            <ListItem button onClick={e => window.open('https://github.com/fonoster/routr/issues', '_blank')}>
+              <ListItemIcon>
+                <HelpIcon />
+              </ListItemIcon>
+              <ListItemText primary="Help" />
+            </ListItem >
         </div>)
     }
 }

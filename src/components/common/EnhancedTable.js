@@ -312,7 +312,7 @@ class EnhancedTable extends React.Component {
                     <TableCell onClick={ e => this.showResourceEditor(n.c2) } className={classes.cursor}>{n.c4}</TableCell>
                     {n.c5 && <TableCell onClick={ e => this.showResourceEditor(n.c2) } className={classes.cursor}>{n.c5}</TableCell>}
                     {n.c6 && <TableCell onClick={ e => this.showResourceEditor(n.c2) } className={classes.cursor}>{n.c6}</TableCell>}
-                    {n.c7 && <TableCell onClick={ e => this.showResourceEditor(n.c2) } className={classes.cursor}>{n.c7}</TableCell>}                
+                    {n.c7 && <TableCell onClick={ e => this.showResourceEditor(n.c2) } className={classes.cursor}>{n.c7}</TableCell>}
                     <TableCell onClick={ e => this.showResourceEditor(n.c2) } className={classes.cursor}>{n.c1}</TableCell>
                   </TableRow>
                 )
