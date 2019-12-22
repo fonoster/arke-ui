@@ -136,11 +136,11 @@ class ResourceViewer extends React.Component {
           <DialogTitle id="customized-dialog-title" onClose={ this.props.appStore.setResourceEditorOpen }>
             Edit a resource
           </DialogTitle>
+          <Tabs onChange={this.handleTabsChange} value={tab}>
+            <Tab label="YAML"/>
+            <Tab label="JSON"/>
+          </Tabs>
           <DialogContent>
-            <Tabs onChange={this.handleTabsChange} value={tab}>
-              <Tab label="YAML"/>
-              <Tab label="JSON"/>
-            </Tabs>
             {tab === 0 &&
               <AceEditor
                 ref="yamlEditor"
@@ -163,21 +163,12 @@ class ResourceViewer extends React.Component {
                 editorProps={{$blockScrolling: false}}
               />
             }
-          {/*<Grid container wrap="nowrap" spacing={16} style={{ backgroundColor: '#f2f2f2',
-            paddingLeft: '10px', paddingTop: '10px'}}>
-            <Grid item>
-              <AnnouncementIcon />
-            </Grid>
-            <Grid item xs zeroMinWidth>
-              <Typography noWrap>This action is equivalent to: rctl apply -f spec.yaml</Typography>
-            </Grid>
-          </Grid>*/}
           </DialogContent>
           <DialogActions>
             <Button color="primary" onClick={this.saveResource}>
               Save
             </Button>
-            <Button onClick={this.props.appStore.setResourceEditorOpen} color="primary">
+            <Button color="primary" onClick={this.props.appStore.setResourceEditorOpen}>
               Cancel
             </Button>
           </DialogActions>
