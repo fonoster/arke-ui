@@ -49,11 +49,19 @@ class APIStore {
 
     delete = async(type, refs) => {
         const ep = ref => getEndpoint(this.apiURL, type + '/'+ ref, '', this.token)
+        let error = []
         for (let i =0; i < refs.length; i++) {
-            await fetch(ep(refs[i]), { method: 'DELETE'})
+            const response = await fetch(ep(refs[i]), { method: 'DELETE'})
+            if (response.status !== 200) {
+                error.push(response.message)
+            }
         }
         this.loadResources(appStore.getCurrentSection())
-        appStore.notify(`${refs.length} ${appStore.getCurrentSection()} removed.`)
+        if (error.length > 0) {
+            appStore.notify('An error occurred while deleting the resources.')
+        } else {
+            appStore.notify(`${refs.length} ${appStore.getCurrentSection()} removed.`)
+        }
     }
 
     loadResources = type => {

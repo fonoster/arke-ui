@@ -30,9 +30,10 @@ const styles = theme => ({
     width: 240,
   },
   content: {
+    overflow: 'scroll',
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
-    padding: theme.spacing.unit * 3,
+    padding: theme.spacing(3),
     minWidth: 0, // So the Typography noWrap works
   },
   toolbar: theme.mixins.toolbar,
@@ -40,10 +41,10 @@ const styles = theme => ({
 
 class ClippedDrawer extends React.Component {
   render () {
-    const { classes } = this.props
-    const getTitle = () => toTitleCase(this.props.appStore.getCurrentSection())
-    const columnData = getColumnData(this.props.appStore.getCurrentSection())
-    const data = this.props.apiStore.getResources()
+    const { classes, appStore, apiStore} = this.props
+    const getTitle = () => toTitleCase(appStore.getCurrentSection())
+    const columnData = getColumnData(appStore.getCurrentSection())
+    const data = apiStore.getResources()
 
     return(
       <div className={classes.root}>
@@ -55,12 +56,12 @@ class ClippedDrawer extends React.Component {
           <MenuNav />
         </Drawer>
         <main className={classes.content}>
-          <div className={classes.toolbar} />
+          <div className={classes.toolbar}/>
           {
-            this.props.appStore.isResourceSection() && <Resources />
+            appStore.isResourceSection() && <Resources/>
           }
           {
-            !this.props.appStore.isResourceSection() &&
+            !appStore.isResourceSection() &&
             <PaginationTable
                 name={ getTitle() }
                 columnData= { columnData }
