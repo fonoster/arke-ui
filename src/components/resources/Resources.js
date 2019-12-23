@@ -6,6 +6,7 @@ import NoResourcesCard from './NoResourcesCard'
 import { toTitleCase } from '../common/utils'
 import { getColumnData } from '../common/dataStruct'
 import { observer, inject } from 'mobx-react'
+import Fade from '@material-ui/core/Fade'
 
 class Resources extends React.Component {
 
@@ -19,14 +20,18 @@ class Resources extends React.Component {
       return (
           <div>
             { hasData() &&
-               <EnhancedTable  hide={ true } name={ getTitle() }
-                columnData= { columnData }
-                data={ data } />
+                <Fade in={true}>
+                  <EnhancedTable  hide={ true } name={ getTitle() }
+                    columnData= { columnData }
+                    data={ data } />
+                </Fade>
             }
 
             { !hasData() &&
-                <NoResourcesCard resource={getTitle()}
-                handleAddItem={ e => this.setState({ fileUploaderOpen: true }) }/>
+                <Fade in={true}>
+                  <NoResourcesCard resource={getTitle()}
+                  handleAddItem={ e => this.setState({ fileUploaderOpen: true }) } />
+                </Fade>
             }
 
             <ResourceViewer />

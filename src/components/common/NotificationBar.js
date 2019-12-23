@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import Snackbar from '@material-ui/core/Snackbar'
 import IconButton from '@material-ui/core/IconButton'
 import CloseIcon from '@material-ui/icons/Close'
@@ -38,10 +37,6 @@ class NotificationBar extends React.Component {
       </div>
     )
   }
-}
-
-NotificationBar.propTypes = {
-  classes: PropTypes.object.isRequired,
 }
 
 export default inject('appStore')(observer(NotificationBar))
