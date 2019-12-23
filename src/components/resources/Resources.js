@@ -10,10 +10,11 @@ import { observer, inject } from 'mobx-react'
 class Resources extends React.Component {
 
     render() {
-      const hasData = () => this.props.apiStore.getResources().length > 0
-      const getTitle = () => toTitleCase(this.props.appStore.getCurrentSection())
-      const columnData = getColumnData(this.props.appStore.getCurrentSection())
-      const data = this.props.apiStore.getResources()
+      const { appStore, apiStore } = this.props
+      const hasData = () => apiStore.getResources().length > 0
+      const getTitle = () => toTitleCase(appStore.getCurrentSection())
+      const columnData = getColumnData(appStore.getCurrentSection())
+      const data = apiStore.getResources()
 
       return (
           <div>

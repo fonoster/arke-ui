@@ -82,7 +82,8 @@ class ResourceViewer extends React.Component {
 
   UNSAFE_componentWillUpdate() {
       const resource = JSON.parse(this.props.appStore.getCurrentResource())
-      if (!this.state.resource || this.state.resource.metadata.ref !== resource.metadata.ref){
+      if (!this.state.resource
+          || this.state.resource.metadata.ref !== resource.metadata.ref){
           const resourceJson = JSON.stringify(resource, null, "\t")
           const resourceYaml = Y2J.stringify(resource)
           this.setState({resource, resourceJson, resourceYaml })
@@ -117,7 +118,7 @@ class ResourceViewer extends React.Component {
 
           this.props.apiStore.update(resource)
           this.props.appStore.setResourceEditorOpen()
-          this.setState({resourceJson: '', resourceYaml: ''})
+          this.setState({resource: void(0)})
       } catch(e) {
           this.props.appStore.notify('Malformed document.')
       }
