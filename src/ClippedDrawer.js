@@ -5,6 +5,7 @@ import AppBar from '@material-ui/core/AppBar'
 import MainNav from './MainNav'
 import MenuNav from './MenuNav'
 import Resources from './components/resources/Resources.js'
+import Settings from './components/common/Settings.js'
 import NotificationBar from './components/common/NotificationBar'
 import PaginationTable from './components/common/PaginationTable'
 import About from './components/common/About'
@@ -45,6 +46,7 @@ class ClippedDrawer extends React.Component {
     const getTitle = () => toTitleCase(appStore.getCurrentSection())
     const columnData = getColumnData(appStore.getCurrentSection())
     const data = apiStore.getResources()
+    const config = apiStore.getConfig()
 
     return(
       <div className={classes.root}>
@@ -61,12 +63,15 @@ class ClippedDrawer extends React.Component {
             appStore.isResourceSection() && <Resources/>
           }
           {
-            !appStore.isResourceSection() &&
+            appStore.isLocOrRegSection() &&
             <PaginationTable
                 name={ getTitle() }
                 columnData= { columnData }
                 data={ data }
             />
+          }
+          {
+            appStore.isSettingsSection() && <Settings config={ config }/>
           }
           <NotificationBar />
           <About />

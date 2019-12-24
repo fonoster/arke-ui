@@ -65,7 +65,7 @@ EnhancedTableHead.propTypes = {
 
 const toolbarStyles = theme => ({
   root: {
-    paddingRight: theme.spacing.unit,
+    paddingRight: theme.spacing(1),
   },
   highlight:
     theme.palette.type === 'light'
@@ -119,7 +119,7 @@ PaginationTableToolbar = withStyles(toolbarStyles)(PaginationTableToolbar)
 const styles = theme => ({
   root: {
     width: '100%',
-    marginTop: theme.spacing.unit,
+    marginTop: theme.spacing(1),
   },
   table: {
     minWidth: 1020,
@@ -175,7 +175,7 @@ class EnhancedTable extends React.Component {
     return (
       <Paper className={classes.root}>
         <PaginationTableToolbar name={ name } handleRefresh={
-          e => this.props.apiStore.loadResources(this.props.appStore.getCurrentSection()) 
+          e => this.props.apiStore.loadResources(this.props.appStore.getCurrentSection())
         }/>
         <div className={classes.tableWrapper}>
           <Table className={classes.table} aria-labelledby="tableTitle">

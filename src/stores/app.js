@@ -7,7 +7,7 @@ class AppStore {
   fileUploaderOpen = false
   notificationOpen = false
   notificationMsg = ''
-  currentSection = 'domains'
+  currentSection = 'settings'
 
   notify = (msg, time) => {
       this.notificationMsg = msg
@@ -24,16 +24,16 @@ class AppStore {
   getCurrentSection = () => this.currentSection
   getCurrentResource = () => this.currentResource
 
-  isResourceSection = () => {
-      if (this.currentSection === 'domains'  ||
-          this.currentSection === 'agents'   ||
-          this.currentSection === 'peers'    ||
-          this.currentSection === 'gateways' ||
-          this.currentSection === 'numbers') {
-            return true
-      }
-      return false
-  }
+  isResourceSection = () => this.currentSection === 'domains'  ||
+    this.currentSection === 'agents'   ||
+    this.currentSection === 'peers'    ||
+    this.currentSection === 'gateways' ||
+    this.currentSection === 'numbers'
+
+  isLocOrRegSection = () => this.currentSection === 'location'
+    || this.currentSection === 'registration'
+
+  isSettingsSection = () => this.currentSection === 'settings'
   isAboutDialogOpen = () => this.aboutDialogOpen
   isResourceEditorOpen = () => this.resourceEditorOpen
   isFileUploaderOpen = () => this.fileUploaderOpen

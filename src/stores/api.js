@@ -7,13 +7,26 @@ class APIStore {
     resourceType = ''
     resources = []
     apiURL = '/api/v1beta1'
+    config = {
+      spec: {
+        bindAddr: '',
+        externAddr: '',
+        localnets: [],
+        registrarIntf: '',
+        recordRoute: false,
+        accessControlList: { allow: [], deny: []}
+      }
+    }
     token = ''
 
     constructor() {
        when(
          () => this.resourceType !== appStore.getCurrentSection() && this.token !== '',
          () => {
-           this.loadResources(appStore.getCurrentSection())
+           if (appStore.getCurrentSection() !== 'settings') {
+              this.loadResources(appStore.getCurrentSection())
+           }
+           this.loadConfig()
            this.resourceType = appStore.getCurrentSection()
          }
        )
@@ -92,11 +105,27 @@ class APIStore {
 
     setToken = token => this.token = token
 
+    saveConfig = () => {}
+
+    loadConfig = () => {
+        const t = 'system/config'
+        const endpoint = getEndpoint(this.apiURL, t, '*', this.token)
+
+        fetch(endpoint)
+        .then(results => {
+            return results.json()
+        }).then(response => {
+            this.config = response.data
+        })
+    }
+
+    getConfig = () => this.config
 }
 
 decorate(APIStore, {
     resources: observable,
-    token: observable
+    token: observable,
+    config: observable
 })
 
 export const apiStore = new APIStore()

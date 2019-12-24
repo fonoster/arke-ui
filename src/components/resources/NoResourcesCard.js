@@ -11,7 +11,7 @@ import { withStyles } from '@material-ui/core/styles'
 
 const styles = theme => ({
   button: {
-  //  margin: theme.spacing(1),
+    margin: theme.spacing(1),
   },
   input: {
     display: 'none',
