@@ -6,6 +6,7 @@
   "dependencies": {
     "@material-ui/core": "~4.8.0",
     "@material-ui/icons": "~4.5.1",
+    "ip-address-utils": "^1.0.2",
     "json2yaml": "^1.1.0",
     "mobx": "^5.15.1",
     "mobx-react": "^6.1.4",
