@@ -40,7 +40,7 @@ export const isValidIp = field => !hasValue(field) || ipv4.isValid(field)
 
 export const isValidPort = field => !hasValue(field) || !isNaN(field)
 
-export const isValidPath = field => isValid(field)
+export const isValidPath = field => !hasValue(field) || isValid(field)
 
 // TODO: Considered the maximum allowed thread number
 export const isValidThreadNumber = field => !hasValue(field) || !isNaN(field)

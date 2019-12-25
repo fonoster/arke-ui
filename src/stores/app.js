@@ -7,7 +7,7 @@ class AppStore {
   fileUploaderOpen = false
   notificationOpen = false
   notificationMsg = ''
-  currentSection = 'settings'
+  currentSection = 'domains'
 
   notify = (msg, time) => {
       this.notificationMsg = msg

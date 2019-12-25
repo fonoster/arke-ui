@@ -11,8 +11,6 @@ import MenuItem from '@material-ui/core/MenuItem'
 import { withStyles } from "@material-ui/core/styles"
 import { styles } from './styles'
 import {
-  isValidIp,
-  isValidPort,
   isValidPath
 } from '../common/utils'
 
@@ -189,7 +187,7 @@ function NetworkingAndTransport(props) {
         <br />
         <br />
         <div>
-          <Button onClick={onSave} size="small"
+          <Button disabled={!isValid()} onClick={onSave} size="small"
             variant="contained" color="secondary"
             disableElevation>
            Save
