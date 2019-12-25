@@ -7,16 +7,7 @@ class APIStore {
     resourceType = ''
     resources = []
     apiURL = '/api/v1beta1'
-    config = {
-      spec: {
-        bindAddr: '',
-        externAddr: '',
-        localnets: [],
-        registrarIntf: '',
-        recordRoute: false,
-        accessControlList: { allow: [], deny: []}
-      }
-    }
+    config = {}
     token = ''
 
     constructor() {
@@ -105,7 +96,24 @@ class APIStore {
 
     setToken = token => this.token = token
 
-    saveConfig = () => {}
+    saveConfig = config => {
+        const t = 'system/config'
+        const endpoint = getEndpoint(this.apiURL, t , '', this.token)
+        fetch(endpoint, {
+            method: 'PUT',
+            body: JSON.stringify(config)
+        })
+        .then(results => {
+            return results.json()
+        })
+        .then(response => {
+            if (response.status === 200) {
+                appStore.notify('Updated settings.')
+            } else {
+                appStore.notify(response.message)
+            }
+        })
+    }
 
     loadConfig = () => {
         const t = 'system/config'

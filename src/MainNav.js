@@ -45,7 +45,7 @@ class MenuAppBar extends React.Component {
   }
 
   render() {
-    const { classes } = this.props
+    const { classes, appStore } = this.props
     const { auth, anchorEl } = this.state
     const open = Boolean(anchorEl)
 
@@ -79,9 +79,12 @@ class MenuAppBar extends React.Component {
                   open={open}
                   onClose={this.handleClose}
                 >
-                  <MenuItem>Settings</MenuItem>
                   <MenuItem onClick={() => {
-                      this.props.appStore.setAboutDialogOpen()
+                      appStore.setCurrentSection('settings')
+                      this.handleClose()}
+                  }>Settings</MenuItem>
+                  <MenuItem onClick={() => {
+                      appStore.setAboutDialogOpen()
                       this.handleClose()}
                   }>About</MenuItem>
                 </Menu>
