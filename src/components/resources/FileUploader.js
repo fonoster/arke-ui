@@ -8,6 +8,8 @@ import Typography from '@material-ui/core/Typography'
 import CloseIcon from '@material-ui/icons/Close'
 import Slide from '@material-ui/core/Slide'
 import DropzoneComponent from 'react-dropzone-component'
+import MuiDialogTitle from '@material-ui/core/DialogTitle'
+import MuiDialogContent from '@material-ui/core/DialogContent'
 import { withStyles } from '@material-ui/core/styles'
 import { observer, inject } from 'mobx-react'
 import { getEndpoint } from '../common/utils'
@@ -24,6 +26,39 @@ const styles = {
 function Transition(props) {
   return <Slide direction="up" {...props} />
 }
+
+const DialogTitle = withStyles(theme => ({
+  root: {
+    borderBottom: `1px solid ${theme.palette.divider}`,
+    margin: 0,
+    padding: theme.spacing(2),
+  },
+  closeButton: {
+    position: 'absolute',
+    right: theme.spacing(1),
+    top: theme.spacing(1),
+    color: theme.palette.grey[500],
+  },
+}))(props => {
+  const { children, classes, onClose } = props
+  return (
+    <MuiDialogTitle disableTypography className={classes.root}>
+      <Typography variant="h6">{children}</Typography>
+      {onClose ? (
+        <IconButton aria-label="Close" className={classes.closeButton} onClick={onClose}>
+          <CloseIcon />
+        </IconButton>
+      ) : null}
+    </MuiDialogTitle>
+  )
+})
+
+const DialogContent = withStyles(theme => ({
+  root: {
+    margin: 0,
+    padding: 0
+  },
+}))(MuiDialogContent)
 
 class FileUploader extends React.Component {
   state = {
@@ -58,22 +93,18 @@ class FileUploader extends React.Component {
 
     return (
       <div>
-        <Dialog
-          open={ this.props.appStore.isFileUploaderOpen() }
-          onClose={ this.props.appStore.setFileUploaderOpen }
-          TransitionComponent={Transition}>
-          <AppBar className={classes.appBar}>
-            <Toolbar>
-              <IconButton color="inherit" aria-label="Close" onClick={ this.props.appStore.setFileUploaderOpen }>
-                <CloseIcon />
-              </IconButton>
-              <Typography variant="h6" color="inherit" className={classes.flex}>
-                Resource Input
-              </Typography>
-            </Toolbar>
-          </AppBar>
-          <DropzoneComponent eventHandlers={eventHandlers} djsConfig={djsConfig} config={componentConfig} />
-        </Dialog>
+          <Dialog
+            aria-labelledby="customized-dialog-title"
+            open={ this.props.appStore.isFileUploaderOpen() }
+            onClose={ this.props.appStore.setFileUploaderOpen }
+          >
+            <DialogTitle id="customized-dialog-title" onClose={ this.props.appStore.setFileUploaderOpen }>
+              Submit Resource File
+            </DialogTitle>
+            <DialogContent style={{padding: 10}}>
+              <DropzoneComponent eventHandlers={eventHandlers} djsConfig={djsConfig} config={componentConfig} />
+            </DialogContent>
+          </Dialog>
       </div>
     )
   }
