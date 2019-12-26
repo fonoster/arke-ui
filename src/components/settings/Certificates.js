@@ -58,6 +58,25 @@ function NetworkingAndTransport(props) {
             </Select>
         </FormControl>
         <br />
+        <FormControl size="small" variant="outlined" className={classes.textField}>
+            <InputLabel>
+              KeyStore Type
+            </InputLabel>
+            <Select
+              value={config.scKeyStoreType}
+              onChange={onChange}
+              labelWidth={200}
+              size="small"
+            >
+              <MenuItem id='scKeyStoreType' value="jks">
+                <em>JKS</em>
+              </MenuItem>
+              <MenuItem id='scKeyStoreType' value="pkcs12">
+                  PKCS12
+              </MenuItem>
+            </Select>
+        </FormControl>
+        <br />
         <TextField
           id="scKeyStorePath"
           label="KeyStore Path"

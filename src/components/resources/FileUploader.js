@@ -1,12 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Dialog from '@material-ui/core/Dialog'
-import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
 import CloseIcon from '@material-ui/icons/Close'
-import Slide from '@material-ui/core/Slide'
 import DropzoneComponent from 'react-dropzone-component'
 import MuiDialogTitle from '@material-ui/core/DialogTitle'
 import MuiDialogContent from '@material-ui/core/DialogContent'
@@ -21,10 +18,6 @@ const styles = {
     flex: {
       flex: 1,
     }
-}
-
-function Transition(props) {
-  return <Slide direction="up" {...props} />
 }
 
 const DialogTitle = withStyles(theme => ({
@@ -66,7 +59,7 @@ class FileUploader extends React.Component {
   }
 
   render() {
-    const { classes, apiStore, appStore } = this.props
+    const { apiStore, appStore } = this.props
 
     const eventHandlers = { success: file => {
             apiStore.loadResources(appStore.getCurrentSection())

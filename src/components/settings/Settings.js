@@ -48,6 +48,7 @@ class Settings extends React.Component {
             scTrustStorePath: '',
             scKeyStorePassword: '',
             scTrustStorePassword: '',
+            scKeyStoreType: '',
             scDebugging: false,
             scClientAuthType: 'DisabledAll',
             scSSLv3: false,
@@ -111,6 +112,7 @@ class Settings extends React.Component {
             scKeyStorePassword: config.spec.securityContext.keyStorePassword,
             scTrustStorePassword: config.spec.securityContext.trustStorePassword,
             scClientAuthType: config.spec.securityContext.client.authType,
+            scKeyStoreType: config.spec.securityContext.keyStoreType,
             scDebugging: config.spec.securityContext.debugging,
             scTLSv1,
             scTLSv11,
@@ -160,6 +162,7 @@ class Settings extends React.Component {
         config.spec.securityContext.trustStorePassword = state.scTrustStorePassword
         config.spec.securityContext.debugging = state.scDebugging
         config.spec.securityContext.client.authType = state.scClientAuthType
+        config.spec.securityContext.keyStoreType = state.scKeyStoreType
 
         const tlsProtocols = []
         if (state.scTLSv1) tlsProtocols.push('TLSv1')
@@ -221,6 +224,7 @@ class Settings extends React.Component {
         if (id === 'scKeyStorePassword') this.setState({scKeyStorePassword: value})
         if (id === 'scTrustStorePassword') this.setState({scTrustStorePassword: value})
         if (id === 'scClientAuthType') this.setState({scClientAuthType: value})
+        if (id === 'scKeyStoreType') this.setState({scKeyStoreType: value})        
         if (id === 'scDebugging') this.setState({scDebugging: e.target.checked})
         if (id === 'scTLSv1') this.setState({scTLSv1: e.target.checked})
         if (id === 'scTLSv11') this.setState({scTLSv11: e.target.checked})
