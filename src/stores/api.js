@@ -4,21 +4,27 @@ import { createData} from '../components/common/dataStruct'
 import { appStore } from './app'
 
 class APIStore {
-    resourceType = ''
     resources = []
     apiURL = '/api/v1beta1'
-    config = {}
+    config = {
+      spec: {
+        restService: {},
+        securityContext: {}
+      }
+    }
     token = ''
 
     constructor() {
        when(
-         () => this.resourceType !== appStore.getCurrentSection() && this.token !== '',
-         () => {
+         () => this.token !== '',
+         async() => {
+           this.loadConfig()
+           // TODO:  This avoid a stream collection with the loadConfig fuction
+           // but it feels like a hack. Please take another look at it!
+           await setTimeout(()=> {}, 1500)
            if (appStore.getCurrentSection() !== 'settings') {
               this.loadResources(appStore.getCurrentSection())
            }
-           this.loadConfig()
-           this.resourceType = appStore.getCurrentSection()
          }
        )
     }
@@ -68,22 +74,23 @@ class APIStore {
         }
     }
 
-    loadResources = type => {
+    loadResources = async(type) => {
         const t = type === 'registration' ? 'registry' : type
         const endpoint = getEndpoint(this.apiURL, t, '*', this.token)
+        const stream = await fetch(endpoint)
+        const response = await stream.json()
 
-        fetch(endpoint)
-        .then(results => {
-            return results.json()
-        }).then(resources => {
+        if (response.status === 200) {
             const data = []
-            if (resources && resources.data) {
-              resources.data.forEach(item => {
+            if (response && response.data) {
+              response.data.forEach(item => {
                   data.push(createData(item, type))
               })
             }
             this.resources = data
-        })
+        } else {
+            appStore.notify(response.message)
+        }
     }
 
     getResources = () => this.resources
@@ -115,16 +122,17 @@ class APIStore {
         })
     }
 
-    loadConfig = () => {
+    loadConfig = async() => {
         const t = 'system/config'
         const endpoint = getEndpoint(this.apiURL, t, '*', this.token)
+        const stream = await fetch(endpoint)
+        const response = await stream.json()
 
-        fetch(endpoint)
-        .then(results => {
-            return results.json()
-        }).then(response => {
+        if (response.status === 200) {
             this.config = response.data
-        })
+        } else {
+            appStore.notify(response.message)
+        }
     }
 
     getConfig = () => this.config

@@ -29,12 +29,12 @@ class MenuNav extends React.Component {
     render() {
       const { classes, apiStore, appStore} = this.props
       const handleChangeSection = (e, section) => {
+          appStore.setCurrentSection(section)
           if (appStore.isResourceSection() || appStore.isLocOrRegSection()) {
               apiStore.loadResources(section)
           } else if(appStore.isSettingsSection()) {
               apiStore.getConfig()
           }
-          appStore.setCurrentSection(section)
       }
 
       return (

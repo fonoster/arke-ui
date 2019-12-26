@@ -25,7 +25,7 @@ function NetworkingAndTransport(props) {
     const isValid = () => isValidIp(config.restBindAddr) &&
         isValidPort(config.restPort) &&
         isValidPath(config.restKeyStorePath) &&
-        isValidPath(config.restTrueStorePath) &&
+        isValidPath(config.restTrustStorePath) &&
         isValidThreadNumber(config.restMinThreads) &&
         isValidThreadNumber(config.restMaxThreads) &&
         !isNaN(config.restTimeOutMillis)
@@ -127,11 +127,11 @@ function NetworkingAndTransport(props) {
         />
         <br />
         <TextField
-          id="restTrueStorePath"
-          label="TrueStore Path"
+          id="restTrustStorePath"
+          label="TrustStore Path"
           onChange={onChange}
           className={classes.textField}
-          value={config.restTrueStorePath}
+          value={config.restTrustStorePath}
           variant="outlined"
           size="small"
           placeholder="/etc/certificates/api-cert.jks"
@@ -149,11 +149,11 @@ function NetworkingAndTransport(props) {
         />
         <br />
         <TextField
-          id="restTrueStorePassword"
-          label="TrueStore Password"
+          id="restTrustStorePassword"
+          label="TrustStore Password"
           onChange={onChange}
           className={classes.textField}
-          value={config.restTrueStorePassword}
+          value={config.restTrustStorePassword}
           variant="outlined"
           type="password"
           size="small"

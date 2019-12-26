@@ -8,7 +8,6 @@ import RestService from './RestService'
 import Certificates from './Certificates'
 import AccessControlLists from './AccessControlLists'
 import SettingsBreadcrumbs from './SettingsBreadcrumbs'
-import { hasValue } from '../common/utils'
 import { observer, inject } from 'mobx-react'
 
 class Settings extends React.Component {
@@ -42,13 +41,13 @@ class Settings extends React.Component {
             restMaxThreads: '',
             restTimeOutMillis: '',
             restKeyStorePath: '',
-            restTrueStorePath: '',
+            restTrustStorePath: '',
             restKeyStorePassword: '',
-            restTrueStorePassword: '',
+            restTrustStorePassword: '',
             scKeyStorePath: '',
-            scTrueStorePath: '',
+            scTrustStorePath: '',
             scKeyStorePassword: '',
-            scTrueStorePassword: '',
+            scTrustStorePassword: '',
             scDebugging: false,
             scClientAuthType: 'DisabledAll',
             scSSLv3: false,
@@ -103,14 +102,14 @@ class Settings extends React.Component {
             restMaxThreads:config.spec.restService.maxThreads,
             restTimeOutMillis: config.spec.restService.timeOutMillis,
             restKeyStorePath: config.spec.restService.keyStore,
-            restTrueStorePath: config.spec.restService.trueStore,
+            restTrustStorePath: config.spec.restService.trustStore,
             restKeyStorePassword: config.spec.restService.keyStorePassword,
-            restTrueStorePassword: config.spec.restService.trueStorePassword,
+            restTrustStorePassword: config.spec.restService.trustStorePassword,
             restUnsecured: config.spec.restService.unsecured,
             scKeyStorePath: config.spec.securityContext.keyStore,
-            scTrueStorePath: config.spec.securityContext.trueStore,
+            scTrustStorePath: config.spec.securityContext.trustStore,
             scKeyStorePassword: config.spec.securityContext.keyStorePassword,
-            scTrueStorePassword: config.spec.securityContext.trueStorePassword,
+            scTrustStorePassword: config.spec.securityContext.trustStorePassword,
             scClientAuthType: config.spec.securityContext.client.authType,
             scDebugging: config.spec.securityContext.debugging,
             scTLSv1,
@@ -151,14 +150,14 @@ class Settings extends React.Component {
         config.spec.restService.maxThreads = state.restMaxThreads
         config.spec.restService.timeOutMillis = state.restTimeOutMillis
         config.spec.restService.keyStore= state.restKeyStorePath
-        config.spec.restService.trueStore = state.restTrueStorePath
+        config.spec.restService.trustStore = state.restTrustStorePath
         config.spec.restService.keyStorePassword = state.restKeyStorePassword
-        config.spec.restService.trueStorePassword = state.restTrueStorePassword
+        config.spec.restService.trustStorePassword = state.restTrustStorePassword
         config.spec.restService.unsecured = state.restUnsecured
         config.spec.securityContext.keyStore= state.scKeyStorePath
-        config.spec.securityContext.trueStore = state.scTrueStorePath
+        config.spec.securityContext.trustStore = state.scTrustStorePath
         config.spec.securityContext.keyStorePassword = state.scKeyStorePassword
-        config.spec.securityContext.trueStorePassword = state.scTrueStorePassword
+        config.spec.securityContext.trustStorePassword = state.scTrustStorePassword
         config.spec.securityContext.debugging = state.scDebugging
         config.spec.securityContext.client.authType = state.scClientAuthType
 
@@ -173,20 +172,14 @@ class Settings extends React.Component {
         const transport = []
         const transportPorts = this.state.transportPorts
 
-        if (hasValue(transportPorts.udp))
-          transport.push({ protocol: 'udp', port: transportPorts.udp})
-        if (hasValue(transportPorts.tcp))
-          transport.push({ protocol: 'tcp', port: transportPorts.tcp})
-        if (hasValue(transportPorts.tls))
-          transport.push({ protocol: 'tls', port: transportPorts.tls})
-        if (hasValue(transportPorts.ws))
-          transport.push({ protocol: 'ws', port: transportPorts.ws})
-        if (hasValue(transportPorts.wss))
-          transport.push({ protocol: 'wss', port: transportPorts.wss})
+        if (transportPorts.udp) transport.push({ protocol: 'udp', port: transportPorts.udp})
+        if (transportPorts.tcp) transport.push({ protocol: 'tcp', port: transportPorts.tcp})
+        if (transportPorts.tls) transport.push({ protocol: 'tls', port: transportPorts.tls})
+        if (transportPorts.ws) transport.push({ protocol: 'ws', port: transportPorts.ws})
+        if (transportPorts.wss) transport.push({ protocol: 'wss', port: transportPorts.wss})
 
         config.spec.transport = transport
 
-        console.log('config =>', JSON.stringify(config))
         // save
         this.props.apiStore.saveConfig(config)
         this.setState({currentSection: 'home'})
@@ -219,14 +212,14 @@ class Settings extends React.Component {
         if (id === 'restMaxThreads') this.setState({restMaxThreads: value})
         if (id === 'restTimeOutMillis') this.setState({restTimeOutMillis: value})
         if (id === 'restKeyStorePath') this.setState({restKeyStorePath: value})
-        if (id === 'restTrueStorePath') this.setState({restTrueStorePath: value})
+        if (id === 'restTrustStorePath') this.setState({restTrustStorePath: value})
         if (id === 'restKeyStorePassword') this.setState({restKeyStorePassword: value})
-        if (id === 'restTrueStorePassword') this.setState({restTrueStorePassword: value})
+        if (id === 'restTrustStorePassword') this.setState({restTrustStorePassword: value})
         if (id === 'restUnsecured') this.setState({restUnsecured: e.target.checked})
         if (id === 'scKeyStorePath') this.setState({scKeyStorePath: value})
-        if (id === 'scTrueStorePath') this.setState({scTrueStorePath: value})
+        if (id === 'scTrustStorePath') this.setState({scTrustStorePath: value})
         if (id === 'scKeyStorePassword') this.setState({scKeyStorePassword: value})
-        if (id === 'scTrueStorePassword') this.setState({scTrueStorePassword: value})
+        if (id === 'scTrustStorePassword') this.setState({scTrustStorePassword: value})
         if (id === 'scClientAuthType') this.setState({scClientAuthType: value})
         if (id === 'scDebugging') this.setState({scDebugging: e.target.checked})
         if (id === 'scTLSv1') this.setState({scTLSv1: e.target.checked})

@@ -25,7 +25,7 @@ function NetworkingAndTransport(props) {
     } = props
 
     const isValid = () => isValidPath(config.scKeyStorePath) &&
-        isValidPath(config.scTrueStorePath)
+        isValidPath(config.scTrustStorePath)
 
     return (
       <div>
@@ -71,12 +71,12 @@ function NetworkingAndTransport(props) {
         />
         <br />
         <TextField
-          id="scTrueStorePath"
-          label="TrueStore Path"
+          id="scTrustStorePath"
+          label="TrustStore Path"
           onChange={onChange}
           className={classes.textField}
-          value={config.scTrueStorePath}
-          error={!isValidPath(config.scTrueStorePath)}
+          value={config.scTrustStorePath}
+          error={!isValidPath(config.scTrustStorePath)}
           variant="outlined"
           size="small"
           placeholder="/etc/certificates/domain-cert.jks"
@@ -94,11 +94,11 @@ function NetworkingAndTransport(props) {
         />
         <br />
         <TextField
-          id="scTrueStorePassword"
-          label="TrueStore Password"
+          id="scTrustStorePassword"
+          label="TrustStore Password"
           onChange={onChange}
           className={classes.textField}
-          value={config.scTrueStorePassword}
+          value={config.scTrustStorePassword}
           variant="outlined"
           type="password"
           size="small"

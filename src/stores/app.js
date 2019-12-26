@@ -42,9 +42,9 @@ class AppStore {
 
 decorate(AppStore, {
     currentResource: observable,
+    currentSection: observable,
     resourceEditorOpen: observable,
     aboutDialogOpen: observable,
-    currentSection: observable,
     fileUploaderOpen: observable,
     notificationMsg: observable,
     notificationOpen: observable
