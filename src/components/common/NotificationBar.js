@@ -17,7 +17,7 @@ class NotificationBar extends React.Component {
             horizontal: 'left',
           }}
           open={ this.props.appStore.isNotificationOpen() }
-          autoHideDuration={4000}
+          autoHideDuration={15000}
           onClose={this.handleClose}
           ContentProps={{
             'aria-describedby': 'message-id',

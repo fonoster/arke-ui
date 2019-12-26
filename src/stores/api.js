@@ -50,6 +50,8 @@ class APIStore {
         .then(response => {
             if (response.status === 200) {
                 appStore.notify('Updated resource.')
+            } else if(response.status === 422 && response.data) {
+                appStore.notify(response.message + ': ' +  response.data)
             } else {
                 appStore.notify(response.message)
             }
