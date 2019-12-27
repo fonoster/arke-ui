@@ -19,7 +19,7 @@ class APIStore {
          () => this.token !== '',
          async() => {
            this.loadConfig()
-           // TODO:  This avoid a stream collection with the loadConfig fuction
+           // TODO:  This avoid a stream collission with the loadConfig fuction
            // but it feels like a hack. Please take another look at it!
            await setTimeout(()=> {}, 1500)
            if (appStore.getCurrentSection() !== 'settings') {
@@ -30,6 +30,10 @@ class APIStore {
     }
 
     update = resource => {
+        if (this.doesNotSupportWOOps()) {
+            appStore.notify('Operation not supported by data source provider.')
+            return
+        }
         let rObj
         try {
             rObj = JSON.parse(resource)
@@ -60,11 +64,19 @@ class APIStore {
     }
 
     delete = async(type, refs) => {
+        if (this.doesNotSupportWOOps()) {
+            appStore.notify('Operation not supported by data source provider.')
+            return
+        }
         const ep = ref => getEndpoint(this.apiURL, type + '/'+ ref, '', this.token)
         let error = []
         for (let i =0; i < refs.length; i++) {
-            const response = await fetch(ep(refs[i]), { method: 'DELETE'})
-            if (response.status !== 200) {
+            const stream = await fetch(ep(refs[i]), { method: 'DELETE'})
+            const response = await stream.json()
+            if (response.status === 405 || response.status === 409) {
+                appStore.notify(response.message)
+                return
+            } else if (response.status !== 200) {
                 error.push(response.message)
             }
         }
@@ -106,6 +118,10 @@ class APIStore {
     setToken = token => this.token = token
 
     saveConfig = config => {
+        if (this.doesNotSupportWOOps()) {
+            appStore.notify('Operation not supported by data source provider.')
+            return
+        }
         const t = 'system/config'
         const endpoint = getEndpoint(this.apiURL, t , '', this.token)
         fetch(endpoint, {
@@ -138,6 +154,9 @@ class APIStore {
     }
 
     getConfig = () => this.config
+
+    doesNotSupportWOOps = () => this.config.spec.dataSource.provider === 'files_data_provider'
+
 }
 
 decorate(APIStore, {
