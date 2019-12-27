@@ -1,6 +1,6 @@
 # Routr UI
 
-We are working in a web console that will make **Routr** even more user friendly.
+Routr UI is a 
 
 Main repo: <a href="https://github.com/fonoster/routr">Routr</a> <br/>
 CTL repo: <a href="https://github.com/fonoster/routr-ctl">Routr Command-Line Tool</a>
