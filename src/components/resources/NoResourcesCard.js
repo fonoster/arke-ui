@@ -54,7 +54,7 @@ function NoResourcesCard(props) {
         </CardContent>
         <CardActions>
           <Button className={classes.button} variant="contained" onClick={props.appStore.setFileUploaderOpen }
-            color="secondary" size="small">Add {resource}
+            color="secondary" size="small" disableElevation>Add {resource}
           </Button>
         </CardActions>
       </Card>
