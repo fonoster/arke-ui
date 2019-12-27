@@ -166,10 +166,10 @@ class ResourceViewer extends React.Component {
             }
           </DialogContent>
           <DialogActions>
-            <Button color="primary" onClick={this.saveResource}>
+            <Button size="small" variant="contained" disableElevation color="secondary" onClick={this.saveResource}>
               Save
             </Button>
-            <Button color="primary" onClick={this.props.appStore.setResourceEditorOpen}>
+            <Button size="small" variant="contained" disableElevation onClick={this.props.appStore.setResourceEditorOpen}>
               Cancel
             </Button>
           </DialogActions>
