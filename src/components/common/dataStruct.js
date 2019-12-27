@@ -1,10 +1,10 @@
 import moment from 'moment'
 
 export const columnDataDomains = [
-    { id: 'name', numeric: false, disablePadding: true, label: 'Domain Name' },
-    { id: 'uri', numeric: false, disablePadding: false, label: 'URI' },
-    { id: 'modified', numeric: false, disablePadding: false, label: 'Modified' },
-    { id: 'ref', numeric: false, disablePadding: false, label: 'Ref' },
+    { id: 'name', numeric: false, disablePadding: true, label: 'Domain Name', pos: 'c1' },
+    { id: 'uri', numeric: false, disablePadding: false, label: 'URI', pos: 'c2' },
+    { id: 'modified', numeric: false, disablePadding: false, label: 'Modified', pos: 'c3' },
+    { id: 'ref', numeric: false, disablePadding: false, label: 'Ref', pos: 'c4' },
 ]
 
 export function domainsStruct(item) {
@@ -18,10 +18,10 @@ export function domainsStruct(item) {
 }
 
 export const columnDataAgents = [
-    { id: 'name', numeric: false, disablePadding: true, label: 'Agent Name' },
-    { id: 'username', numeric: false, disablePadding: false, label: 'Username' },
-    { id: 'modified', numeric: false, disablePadding: false, label: 'Modified'},
-    { id: 'ref', numeric: false, disablePadding: false, label: 'Ref' },
+    { id: 'name', numeric: false, disablePadding: true, label: 'Agent Name', pos: 'c1' },
+    { id: 'username', numeric: false, disablePadding: false, label: 'Username', pos: 'c2' },
+    { id: 'modified', numeric: false, disablePadding: false, label: 'Modified', pos: 'c3'},
+    { id: 'ref', numeric: false, disablePadding: false, label: 'Ref', pos: 'c4' },
 ]
 
 export function agentsStruct(item) {
@@ -35,10 +35,10 @@ export function agentsStruct(item) {
 }
 
 export const columnDataPeers = [
-    { id: 'name', numeric: false, disablePadding: true, label: 'Peer Name' },
-    { id: 'username', numeric: false, disablePadding: false, label: 'Username' },
-    { id: 'modified', numeric: false, disablePadding: false, label: 'Modified' },
-    { id: 'ref', numeric: false, disablePadding: false, label: 'Ref' },
+    { id: 'name', numeric: false, disablePadding: true, label: 'Peer Name', pos: 'c1' },
+    { id: 'username', numeric: false, disablePadding: false, label: 'Username', pos: 'c2' },
+    { id: 'modified', numeric: false, disablePadding: false, label: 'Modified', pos: 'c3' },
+    { id: 'ref', numeric: false, disablePadding: false, label: 'Ref', pos: 'c4' },
 ]
 
 export function peersStruct(item) {
@@ -52,11 +52,11 @@ export function peersStruct(item) {
 }
 
 export const columnDataGateways = [
-    { id: 'name', numeric: false, disablePadding: true, label: 'Gateway' },
-    { id: 'username', numeric: false, disablePadding: false, label: 'Username' },
-    { id: 'host', numeric: false, disablePadding: false, label: 'Host' },
-    { id: 'modified', numeric: false, disablePadding: false, label: 'Modified' },
-    { id: 'ref', numeric: false, disablePadding: false, label: 'Ref' },
+    { id: 'name', numeric: false, disablePadding: true, label: 'Gateway', pos: 'c1' },
+    { id: 'username', numeric: false, disablePadding: false, label: 'Username', pos: 'c2' },
+    { id: 'host', numeric: false, disablePadding: false, label: 'Host', pos: 'c3' },
+    { id: 'modified', numeric: false, disablePadding: false, label: 'Modified', pos: 'c4' },
+    { id: 'ref', numeric: false, disablePadding: false, label: 'Ref', pos: 'c5' },
 ]
 
 export function gatewaysStruct(item) {
@@ -72,11 +72,11 @@ export function gatewaysStruct(item) {
 }
 
 export const columnDataNumbers = [
-    { id: 'number', numeric: false, disablePadding: true, label: 'Number' },
-    { id: 'location', numeric: false, disablePadding: false, label: 'Location' },
-    { id: 'aorLink', numeric: false, disablePadding: false, label: 'AOR Link' },
-    { id: 'modified', numeric: false, disablePadding: false, label: 'Modified' },
-    { id: 'ref', numeric: false, disablePadding: false, label: 'Ref' },
+    { id: 'number', numeric: false, disablePadding: true, label: 'Number', pos: 'c1' },
+    { id: 'location', numeric: false, disablePadding: false, label: 'Location', pos: 'c2' },
+    { id: 'aorLink', numeric: false, disablePadding: false, label: 'AOR Link', pos: 'c3' },
+    { id: 'modified', numeric: false, disablePadding: false, label: 'Modified', pos: 'c4' },
+    { id: 'ref', numeric: false, disablePadding: false, label: 'Ref', pos: 'c5' },
 ]
 
 export function numbersStruct(item) {
@@ -94,8 +94,8 @@ export function numbersStruct(item) {
 }
 
 export const columnDataLocation = [
-    { id: 'addressOfRecord', numeric: false, disablePadding: true, label: 'Address Of Record' },
-    { id: 'contactInfo', numeric: false, disablePadding: false, label: 'Contact Information' }
+    { id: 'addressOfRecord', numeric: false, disablePadding: true, label: 'Address Of Record', pos: 'c1' },
+    { id: 'contactInfo', numeric: false, disablePadding: false, label: 'Contact Information', pos: 'c2' }
 ]
 
 export function locationStruct(item) {
@@ -106,10 +106,10 @@ export function locationStruct(item) {
 }
 
 export const columnDataRegistration = [
-    { id: 'host', numeric: false, disablePadding: false, label: 'Host' },
-    { id: 'username', numeric: false, disablePadding: true, label: 'Username' },
-    { id: 'ipAddress', numeric: false, disablePadding: false, label: 'IP' },
-    { id: 'registered', numeric: false, disablePadding: false, label: 'Registered' }
+    { id: 'host', numeric: false, disablePadding: false, label: 'Host', pos: 'c1' },
+    { id: 'username', numeric: false, disablePadding: true, label: 'Username', pos: 'c2' },
+    { id: 'ipAddress', numeric: false, disablePadding: false, label: 'IP', pos: 'c3' },
+    { id: 'registered', numeric: false, disablePadding: false, label: 'Registered', pos: 'c4' }
 ]
 
 export function registrationStruct(item) {

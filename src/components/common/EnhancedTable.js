@@ -20,6 +20,16 @@ import AddItemIcom from '@material-ui/icons/Add'
 import { lighten } from '@material-ui/core/styles/colorManipulator'
 import { observer, inject } from 'mobx-react'
 
+function desc(a, b, orderBy) {
+  if (b[orderBy] < a[orderBy]) {
+    return -1;
+  }
+  if (b[orderBy] > a[orderBy]) {
+    return 1;
+  }
+  return 0;
+}
+
 function stableSort(array, cmp) {
   const stabilizedThis = array.map((el, index) => [el, index]);
   stabilizedThis.sort((a, b) => {
@@ -32,16 +42,6 @@ function stableSort(array, cmp) {
 
 function getSorting(order, orderBy) {
   return order === 'desc' ? (a, b) => desc(a, b, orderBy) : (a, b) => -desc(a, b, orderBy);
-}
-
-function desc(a, b, orderBy) {
-  if (b[orderBy] < a[orderBy]) {
-    return -1;
-  }
-  if (b[orderBy] > a[orderBy]) {
-    return 1;
-  }
-  return 0;
 }
 
 class EnhancedTableHead extends React.Component {
@@ -63,11 +63,12 @@ class EnhancedTableHead extends React.Component {
             />
           </TableCell>
           {columnData.map(column => {
+            console.log(orderBy)
             return (
               <TableCell
                 key={column.id}
                 padding={column.disablePadding ? 'none' : 'default'}
-                sortDirection={orderBy === column.id ? order : false}
+                sortDirection={orderBy === column.pos ? order : false}
               >
                 <Tooltip
                   title="Sort"
@@ -75,9 +76,9 @@ class EnhancedTableHead extends React.Component {
                   enterDelay={300}
                 >
                   <TableSortLabel
-                    active={orderBy === column.id}
+                    active={orderBy === column.pos}
                     direction={order}
-                    onClick={this.createSortHandler(column.id)}
+                    onClick={this.createSortHandler(column.pos)}
                   >
                     {column.label}
                   </TableSortLabel>
@@ -197,7 +198,7 @@ class EnhancedTable extends React.Component {
 
     this.state = {
         order: 'asc',
-        orderBy: 'calories',
+        orderBy: '',
         selected: [],
         data: props.data,
         page: 0,
