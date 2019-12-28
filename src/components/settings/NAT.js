@@ -100,7 +100,7 @@ function NAT(props) {
         <Typography variant="caption">
           Check if you want server to stay within the signaling path
           <br />
-          <a target="_blank" href="https://routr.io/docs/configuration/general/" className={classes.link2}>
+          <a target="_blank" rel="noopener noreferrer" href="https://routr.io/docs/configuration/general/" className={classes.link2}>
             Learn more
           </a>
         </Typography>

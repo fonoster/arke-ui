@@ -171,7 +171,7 @@ function NetworkingAndTransport(props) {
           Check if you want to enable unsecured connections with<br />
           the APIs. Not recommended.
           <br />
-          <a target="_blank" href="https://routr.io/docs/configuration/general/" className={classes.link2}>
+          <a target="_blank" rel="noopener noreferrer" href="https://routr.io/docs/configuration/general/" className={classes.link2}>
             Learn more
           </a>
         </Typography>
