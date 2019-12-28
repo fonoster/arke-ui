@@ -6,7 +6,7 @@
 
 <img src="https://github.com/fonoster/routr-ui/blob/master/screenshot.png" alt="Routr UI Screenshot" />
 
-The Web Console — WC for short — is an additional tool for remote control of Routr server that ships with the Command-Line tool. The Web Console accesses your Routr server remotely using a Restful API.
+The Web Console — WC for short — is an additional tool for remote control of Routr server that ships with the Command-Line tool. The Web Console connects with your Routr server remotely using a Restful API.
 
 # Getting Started
 
