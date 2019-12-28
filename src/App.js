@@ -25,7 +25,8 @@ const theme = createMuiTheme({
 
 class App extends Component {
 
-  UNSAFE_componentWillMount() {
+  componentDidMount() {
+      // This is only working on dev mode :(
       if(getParameterByName('token')) {
           this.props.apiStore.setToken(getParameterByName('token'))
       }

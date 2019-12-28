@@ -7,7 +7,6 @@
     "@material-ui/icons": "~4.5.1",
     "ip-address-utils": "^1.0.2",
     "is-valid-path": "^0.1.1",
-    "json2yaml": "^1.1.0",
     "mobx": "^5.15.1",
     "mobx-react": "^6.1.4",
     "moment": "^2.24.0",
@@ -17,8 +16,8 @@
     "react-dropzone-component": "^3.2.0",
     "react-scripts": "^3.3.0",
     "tsutils": "^3.17.1",
-    "yaml2json": "^1.0.2",
-    "yamljs": "^0.3.0"
+    "yamljs": "^0.3.0",
+    "json2yaml": "^1.1.0"
   },
   "scripts": {
     "start": "react-scripts start",

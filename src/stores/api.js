@@ -16,16 +16,17 @@ class APIStore {
 
     constructor() {
        when(
-         () => this.token !== '',
-         async() => {
-           this.loadConfig()
-           // TODO:  This avoid a stream collission with the loadConfig fuction
-           // but it feels like a hack. Please take another look at it!
-           await setTimeout(()=> {}, 1500)
-           if (appStore.getCurrentSection() !== 'settings') {
-              this.loadResources(appStore.getCurrentSection())
+           // In production this token is passed by the proxy
+           () => this.token !== '' || process.env.NODE_ENV === 'production',
+           async() => {
+               this.loadConfig()
+               // TODO:  This avoid a stream collission with the loadConfig fuction
+               // but it feels like a hack. Please take another look at it!
+               await setTimeout(()=> {}, 1500)
+               if (appStore.getCurrentSection() !== 'settings') {
+                  this.loadResources(appStore.getCurrentSection())
+               }
            }
-         }
        )
     }
 

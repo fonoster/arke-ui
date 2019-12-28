@@ -33,7 +33,7 @@ class MenuNav extends React.Component {
           if (appStore.isResourceSection() || appStore.isLocOrRegSection()) {
               apiStore.loadResources(section)
           } else if(appStore.isSettingsSection()) {
-              apiStore.getConfig()
+              apiStore.loadConfig()
           }
       }
 

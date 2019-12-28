@@ -63,7 +63,6 @@ class EnhancedTableHead extends React.Component {
             />
           </TableCell>
           {columnData.map(column => {
-            console.log(orderBy)
             return (
               <TableCell
                 key={column.id}
