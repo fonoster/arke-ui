@@ -27,9 +27,9 @@ function NAT(props) {
     return (
       <div>
         <Typography className={classes.secondaryHeading}>
-          IP address to advertise. This must be use <br /> in combination with
-          Localnets. If Localnets <br /> is empty the External
-          Address will be ignore.
+        The IP address to advertise. This must be used<br />
+        in combination with Localnets. If Localnets
+        is<br /> empty, the External Address will be ignored.
         </Typography>
         <br />
         <TextField
@@ -60,9 +60,9 @@ function NAT(props) {
         />
         <br />
         <Typography className={classes.secondaryHeading}>
-          Internal causes the server to use the IP and port <br />
-          it "sees"(received & rport) from a device attempting <br/>
-          to register. You will rarelly need this feature!
+        Choosing Internal causes the server to use the<br /> IP and port
+        it "sees"(received & rport) from a <br /> device attempting
+        to register. You will rarely need<br /> to change this!
         </Typography>
         <br />
         <FormControl size="small" variant="outlined" className={classes.textField}>
@@ -100,7 +100,7 @@ function NAT(props) {
         <Typography variant="caption">
           Check if you want server to stay within the signaling path
           <br />
-          <a href="https://routr.io/docs/configuration/general/" className={classes.link2}>
+          <a target="_blank" href="https://routr.io/docs/configuration/general/" className={classes.link2}>
             Learn more
           </a>
         </Typography>

@@ -199,7 +199,7 @@ function NetworkingAndTransport(props) {
           Check if you want to enable debugging for secured<br />
           connections. Not recommended.
           <br />
-          <a href="https://routr.io/docs/configuration/general/" className={classes.link2}>
+          <a target="_blank" href="https://routr.io/docs/configuration/general/" className={classes.link2}>
             Learn more
           </a>
         </Typography>

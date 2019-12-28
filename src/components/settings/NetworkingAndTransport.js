@@ -26,8 +26,8 @@ function NetworkingAndTransport(props) {
     return (
       <div>
         <Typography className={classes.secondaryHeading}>
-          This is the default stack IP address. <br /> All Sip traffic will be
-          routed through this interface.
+        This is the default IP address for the SIP stack. <br />
+        All Sip traffic will be routed through this interface.
         </Typography>
         <br />
         <TextField
@@ -56,9 +56,7 @@ function NetworkingAndTransport(props) {
         />
         <br />
         <Typography className={classes.secondaryHeading}>
-          If you use UDP you must also set a port for TCP <br />
-          In accordance with [link]. Using the same port<br /> as UDP is
-          acceptable.
+          You can use the same port number for both TCP<br /> and UDP.
         </Typography>
         <br />
         <TextField
@@ -76,7 +74,7 @@ function NetworkingAndTransport(props) {
         <br />
         <Typography className={classes.secondaryHeading}>
           Secure transport, like TLS and WSS, required<br />
-          a valid certificate to secure your signaling.
+          a valid certificate to secure the SIP signaling.
         </Typography>
         <br />
         <TextField

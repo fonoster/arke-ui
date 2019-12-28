@@ -33,7 +33,7 @@ function NetworkingAndTransport(props) {
     return (
       <div>
         <Typography className={classes.secondaryHeading}>
-          This is the default IP address for the service. <br /> All HTTP
+          This is the default IP address for the Rest service. <br /> All HTTP
           traffic will be routed through this interface.
         </Typography>
         <br />
@@ -62,7 +62,7 @@ function NetworkingAndTransport(props) {
         />
         <br />
         <Typography className={classes.secondaryHeading}>
-          Minimum thread allocation. Defaults to 8
+          Minimum thread allocation. Defaults to 8.
         </Typography>
         <br />
         <TextField
@@ -78,7 +78,7 @@ function NetworkingAndTransport(props) {
         />
         <br />
         <Typography className={classes.secondaryHeading}>
-          Maximum thread allocation. Defaults to 200
+          Maximum thread allocation. Defaults to 200.
         </Typography>
         <br />
         <TextField
@@ -93,9 +93,9 @@ function NetworkingAndTransport(props) {
           placeholder="200"
         />
         <br />
-        <Typography>
-          Will reject requests that last more than this value. <br />
-          Defaults to 5000(5 seconds)
+        <Typography className={classes.secondaryHeading}>
+          Will reject requests that last more than the timeout. <br />
+          Defaults to 5000(5 seconds.)
         </Typography>
         <br />
         <TextField
@@ -104,16 +104,11 @@ function NetworkingAndTransport(props) {
           onChange={onChange}
           className={classes.textField}
           value={config.restTimeOutMillis}
-          error={isNaN(config.restTimeOutMillis)}             
+          error={isNaN(config.restTimeOutMillis)}
           variant="outlined"
           size="small"
           placeholder="5000"
         />
-        <br />
-        <Typography className={classes.secondaryHeading}>
-          Secure transport, like TLS and WSS, required<br />
-          a valid certificate to secure your signaling.
-        </Typography>
         <br />
         <TextField
           id="restKeyStorePath"
@@ -176,7 +171,7 @@ function NetworkingAndTransport(props) {
           Check if you want to enable unsecured connections with<br />
           the APIs. Not recommended.
           <br />
-          <a href="https://routr.io/docs/configuration/general/" className={classes.link2}>
+          <a target="_blank" href="https://routr.io/docs/configuration/general/" className={classes.link2}>
             Learn more
           </a>
         </Typography>

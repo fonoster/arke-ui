@@ -24,7 +24,7 @@ function DataAccess(props) {
     return (
       <div>
         <Typography className={classes.secondaryHeading}>
-          Defines data provider. The recommended provider for production is <br />
+          The recommended provider for production is<br />
           <em>redis_data_provider.</em>
         </Typography>
         <br />

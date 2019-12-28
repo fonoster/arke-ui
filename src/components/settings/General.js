@@ -17,8 +17,8 @@ function General(props) {
     return (
       <div>
         <Typography className={classes.secondaryHeading}>
-          Sets sip header User-Agent to the desired value. <br /> If
-          not value is provided the server will use <em>`Routr $version.`</em>
+          Sets the SIP header User-Agent to the desired value. <br /> If
+          not value is provided, the server will use <em>`Routr $version.`</em>
         </Typography>
         <br />
         <TextField

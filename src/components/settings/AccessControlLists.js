@@ -21,8 +21,8 @@ function AccessControlLists(props) {
     return (
       <div>
         <Typography className={classes.secondaryHeading}>
-          Denies or allows incoming traffic from network list. <br /> The "Deny Subnets"
-          takes presedence over the "Allow Subnets"
+        Denies or allows incoming traffic from the network list. <br />
+        The "Deny Subnets" takes precedence over the <br /> "Allow Subnets."
         </Typography>
         <br />
         <TextField

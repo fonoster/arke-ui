@@ -66,7 +66,7 @@ export function gatewaysStruct(item) {
         c3: item.metadata.name,
         c4: !item.spec.credentials || !item.spec.credentials.username
           ? 'None' : item.spec.credentials.username ,
-        c5: `${item.spec.transport} | ${item.spec.host}`,
+        c5: item.spec.host,
         c6: moment(item.metadata.modifiedOn).fromNow()
     }
 }
