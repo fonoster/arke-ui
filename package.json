@@ -19,6 +19,21 @@
     "yamljs": "^0.3.0",
     "json2yaml": "^1.1.0"
   },
+  "keywords": [
+    "webui",
+    "cli",
+    "rctl",
+    "routr",
+    "sip",
+    "webrtc",
+    "voip",
+    "server",
+    "softphone",
+    "asterisk",
+    "freeswitch",
+    "instant-messaging",
+    "ims"
+  ],
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
