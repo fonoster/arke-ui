@@ -67,14 +67,20 @@ class Settings extends React.Component {
         let dsParameters = ''
         let aclDeny = ''
         let aclAllow = ''
+
         if (config.spec.dataSource) {
             dsProvider = config.spec.dataSource.provider
             dsParameters = config.spec.dataSource.parameters
         }
-        if (config.spec.accessControlList) {
-            aclDeny = config.spec.accessControlList.deny.join('\n')
+
+        if (config.spec.accessControlList && config.spec.accessControlList.allow) {
             aclAllow = config.spec.accessControlList.allow.join('\n')
         }
+
+        if (config.spec.accessControlList && config.spec.accessControlList.deny) {
+            aclDeny = config.spec.accessControlList.deny.join('\n')
+        }
+
         const transportPorts = {}
 
         config.spec.transport.forEach(transport => {
@@ -129,23 +135,41 @@ class Settings extends React.Component {
     }
 
     handleSave = () => {
+        const hasList = list => list && list.length > 0
+        const hasACL = state => hasList(state.aclAllow) || hasList(state.aclDeny)
+
         // Convert back to correct format
         const config = this.state.config
         const state = this.state
+
         if (!config.spec.dataSource) config.spec.dataSource = {}
-        if (!config.spec.accessControlList) config.spec.accessControlList = {}
+        if (!hasACL(state)) {
+          delete config.spec.accessControlList
+        } else {
+          config.spec.accessControlList = {}
+        }
+
         if (!config.metadata) config.metadata = {}
+
+        if (state.localnets) {
+          config.spec.localnets = state.localnets.toString().split('\n')
+        }
+
+        if(hasList(state.aclDeny)) {
+          config.spec.accessControlList.deny = state.aclDeny.toString().split('\n')
+        }
+
+        if(hasList(state.aclAllow)) {
+          config.spec.accessControlList.allow = state.aclAllow.toString().split('\n')
+        }
 
         config.metadata.userAgent = state.userAgent
         config.spec.bindAddr = state.bindAddr
         config.spec.externAddr = state.externAddr
-        config.spec.localnets = state.localnets.toString().split('\n')
         config.spec.registrarIntf = state.registrarIntf
         config.spec.recordRoute = state.recordRoute
         config.spec.dataSource.provider = state.dsProvider
         config.spec.dataSource.parameters = state.dsParameters
-        config.spec.accessControlList.deny = state.aclDeny.toString().split('\n')
-        config.spec.accessControlList.allow = state.aclAllow.toString().split('\n')
         config.spec.restService.bindAddr = state.restBindAddr
         config.spec.restService.port = state.restPort
         config.spec.restService.minThreads = state.restMinThreads
@@ -175,11 +199,11 @@ class Settings extends React.Component {
         const transport = []
         const transportPorts = this.state.transportPorts
 
-        if (transportPorts.udp) transport.push({ protocol: 'udp', port: transportPorts.udp})
-        if (transportPorts.tcp) transport.push({ protocol: 'tcp', port: transportPorts.tcp})
-        if (transportPorts.tls) transport.push({ protocol: 'tls', port: transportPorts.tls})
-        if (transportPorts.ws) transport.push({ protocol: 'ws', port: transportPorts.ws})
-        if (transportPorts.wss) transport.push({ protocol: 'wss', port: transportPorts.wss})
+        if (transportPorts.udp) transport.push({ protocol: 'udp', port: parseInt(transportPorts.udp)})
+        if (transportPorts.tcp) transport.push({ protocol: 'tcp', port: parseInt(transportPorts.tcp)})
+        if (transportPorts.tls) transport.push({ protocol: 'tls', port: parseInt(transportPorts.tls)})
+        if (transportPorts.ws) transport.push({ protocol: 'ws', port: parseInt(transportPorts.ws)})
+        if (transportPorts.wss) transport.push({ protocol: 'wss', port: parseInt(transportPorts.wss)})
 
         config.spec.transport = transport
 
@@ -224,7 +248,7 @@ class Settings extends React.Component {
         if (id === 'scKeyStorePassword') this.setState({scKeyStorePassword: value})
         if (id === 'scTrustStorePassword') this.setState({scTrustStorePassword: value})
         if (id === 'scClientAuthType') this.setState({scClientAuthType: value})
-        if (id === 'scKeyStoreType') this.setState({scKeyStoreType: value})        
+        if (id === 'scKeyStoreType') this.setState({scKeyStoreType: value})
         if (id === 'scDebugging') this.setState({scDebugging: e.target.checked})
         if (id === 'scTLSv1') this.setState({scTLSv1: e.target.checked})
         if (id === 'scTLSv11') this.setState({scTLSv11: e.target.checked})

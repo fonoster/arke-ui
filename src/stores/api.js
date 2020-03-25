@@ -136,7 +136,11 @@ class APIStore {
             if (response.status === 200) {
                 appStore.notify('Updated settings.')
             } else {
-                appStore.notify(response.message)
+                let message = response.message
+                if (response.data) {
+                    message += ': ' + response.data
+                }
+                appStore.notify(message)
             }
         })
     }

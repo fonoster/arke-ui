@@ -169,7 +169,7 @@ function NetworkingAndTransport(props) {
         <br />
         <Typography variant="caption">
           Check if you want to enable unsecured connections with<br />
-          the APIs. Not recommended.
+          the APIs. Not recommended in production.
           <br />
           <a target="_blank" rel="noopener noreferrer" href="https://routr.io/docs/configuration/general/" className={classes.link2}>
             Learn more
