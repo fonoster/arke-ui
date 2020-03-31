@@ -80,8 +80,11 @@ export const columnDataNumbers = [
 ]
 
 export function numbersStruct(item) {
-    const location = item.metadata.geoInfo.city + ', '
+    let location = ''
+    if(item.metadata.geoInfo) {
+     location = item.metadata.geoInfo.city + ', '
       + item.metadata.geoInfo.country
+    }
 
     return {
         c1: item.metadata.ref,
