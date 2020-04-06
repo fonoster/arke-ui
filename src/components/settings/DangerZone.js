@@ -145,7 +145,7 @@ function DangerZone(props) {
         <DialogTitle id="form-dialog-title">Are you sure?</DialogTitle>
         <DialogContent>
           <DialogContentText className={classes.secondaryHeading}>
-            Last chance. A signal will be send to your Router instance and the UI will be temporarily unresponsive.
+            Last chance. A signal will be send to your Routr instance and the UI will be temporarily unresponsive.
             Some changes can render your server inoperable. Proceed with caution!
           </DialogContentText>
           <TextField
