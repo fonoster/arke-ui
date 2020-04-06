@@ -3,6 +3,7 @@ import Links from './Links'
 import General from './General'
 import NetworkingAndTransport from './NetworkingAndTransport'
 import NAT from './NAT'
+import DangerZone from './DangerZone'
 import DataAccess from './DataAccess'
 import RestService from './RestService'
 import Certificates from './Certificates'
@@ -62,11 +63,20 @@ class Settings extends React.Component {
     componentDidUpdate(props) {
         if (this.state.updated === true) return
 
-        const config = props.apiStore.getConfig()
+        let config = props.apiStore.getConfig()
         let dsProvider = ''
         let dsParameters = ''
         let aclDeny = ''
         let aclAllow = ''
+
+        config = config || {}
+        config.spec = config.spec || {}
+        config.metadata = config.metadata || {}
+        config.spec.transport = config.spec.transport || []
+        config.spec.securityContext = config.spec.securityContext || {}
+        config.spec.securityContext.client = config.spec.securityContext.client || {}
+        config.spec.securityContext.client.protocols = config.spec.securityContext.client.protocols || []
+        config.spec.restService = config.spec.restService || {}
 
         if (config.spec.dataSource) {
             dsProvider = config.spec.dataSource.provider
@@ -171,10 +181,6 @@ class Settings extends React.Component {
         config.spec.dataSource.provider = state.dsProvider
         config.spec.dataSource.parameters = state.dsParameters
         config.spec.restService.bindAddr = state.restBindAddr
-        config.spec.restService.port = state.restPort
-        config.spec.restService.minThreads = state.restMinThreads
-        config.spec.restService.maxThreads = state.restMaxThreads
-        config.spec.restService.timeOutMillis = state.restTimeOutMillis
         config.spec.restService.keyStore= state.restKeyStorePath
         config.spec.restService.trustStore = state.restTrustStorePath
         config.spec.restService.keyStorePassword = state.restKeyStorePassword
@@ -187,6 +193,30 @@ class Settings extends React.Component {
         config.spec.securityContext.debugging = state.scDebugging
         config.spec.securityContext.client.authType = state.scClientAuthType
         config.spec.securityContext.keyStoreType = state.scKeyStoreType
+
+        if (state.restPort) {
+          config.spec.restService.port = parseInt(state.restPort)
+        } else {
+          delete config.spec.restService.port
+        }
+
+        if (state.restMinThreads) {
+          config.spec.restService.minThreads = parseInt(state.restMinThreads)
+        } else {
+          delete config.spec.restService.minThreads
+        }
+
+        if (state.restMaxThreads) {
+          config.spec.restService.maxThreads = parseInt(state.restMaxThreads)
+        } else {
+          delete config.spec.restService.maxThreads
+        }
+
+        if (state.restTimeOutMillis) {
+          config.spec.restService.timeOutMillis = parseInt(state.restTimeOutMillis)
+        } else {
+          delete config.spec.restService.timeOutMillis
+        }
 
         const tlsProtocols = []
         if (state.scTLSv1) tlsProtocols.push('TLSv1')
@@ -256,6 +286,22 @@ class Settings extends React.Component {
         if (id === 'scSSLv3') this.setState({scSSLv3: e.target.checked})
     }
 
+    handleRestartServerNow = () => {
+      this.props.apiStore.changeStatus('restarting', true)
+    }
+
+    handleRestartServer = () => {
+      this.props.apiStore.changeStatus('restarting', false)
+    }
+
+    handleStopServerNow = () => {
+      this.props.apiStore.changeStatus('down', true)
+    }
+
+    handleStopServer = () => {
+      this.props.apiStore.changeStatus('down', false)
+    }
+
     render(props) {
       return (
         <div>
@@ -320,6 +366,15 @@ class Settings extends React.Component {
           {
             this.state.currentSection === 'home' &&
             <Links onChangeSection={this.handleChangeSection} />
+          }
+          {
+            this.isSection('danger_zone') &&
+            <DangerZone
+              onRestartServerNow={this.handleRestartServerNow}
+              onStopServerNow={this.handleStopServerNow}
+              onRestartServer={this.handleRestartServer}
+              onStopServer={this.handleStopServer}
+              />
           }
         </div>
       )

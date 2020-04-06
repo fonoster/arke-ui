@@ -48,6 +48,11 @@ function Links(props) {
           href="/" className={classes.link}>
           Certificates
         </Link>
+        <Link color="secondary"
+          onClick={e => handleChangeSection(e, 'danger_zone')}
+          href="/" className={classes.link}>
+          Danger Zone
+        </Link>
       </div>
     )
 }

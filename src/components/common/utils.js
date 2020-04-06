@@ -42,6 +42,8 @@ export const isValidPort = field => !hasValue(field) || !isNaN(field)
 
 export const isValidPath = field => !hasValue(field) || isValid(field)
 
+export const isValidTimeout = field => !hasValue(field) || !isNaN(field)
+
 // TODO: Considered the maximum allowed thread number
 export const isValidThreadNumber = field => !hasValue(field) || !isNaN(field)
 

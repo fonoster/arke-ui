@@ -10,7 +10,8 @@ import {
   isValidIp,
   isValidPort,
   isValidPath,
-  isValidThreadNumber
+  isValidThreadNumber,
+  isValidTimeout
 } from '../common/utils'
 
 function NetworkingAndTransport(props) {
@@ -22,13 +23,13 @@ function NetworkingAndTransport(props) {
       classes
     } = props
 
-    const isValid = () => isValidIp(config.restBindAddr) &&
-        isValidPort(config.restPort) &&
-        isValidPath(config.restKeyStorePath) &&
-        isValidPath(config.restTrustStorePath) &&
-        isValidThreadNumber(config.restMinThreads) &&
-        isValidThreadNumber(config.restMaxThreads) &&
-        !isNaN(config.restTimeOutMillis)
+    const isValid = () => isValidIp(config.restBindAddr)
+        && isValidPort(config.restPort)
+        && isValidThreadNumber(config.restMinThreads)
+        && isValidThreadNumber(config.restMaxThreads)
+        && isValidPath(config.restKeyStorePath)
+        && isValidPath(config.restTrustStorePath)
+        && isValidTimeout(config.restTimeOutMillis)
 
     return (
       <div>
@@ -104,7 +105,7 @@ function NetworkingAndTransport(props) {
           onChange={onChange}
           className={classes.textField}
           value={config.restTimeOutMillis}
-          error={isNaN(config.restTimeOutMillis)}
+          error={!isValidTimeout(config.restTimeOutMillis) }
           variant="outlined"
           size="small"
           placeholder="5000"

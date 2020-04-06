@@ -8,11 +8,11 @@ import { isValidIp, isValidPort } from '../common/utils'
 
 function NetworkingAndTransport(props) {
     const {
-        onSave,
-        onCancel,
-        config,
-        onChange,
-        classes
+      onSave,
+      onCancel,
+      config,
+      onChange,
+      classes
     } = props
 
     // TODO: It should also prevent ports to repeat, unless is udp and tcp

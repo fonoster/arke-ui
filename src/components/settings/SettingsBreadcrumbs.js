@@ -17,6 +17,7 @@ function SettingsBreadcrumbs(props) {
         access_control_lists: 'Access Control Lists',
         rest_service: 'Rest Service',
         data_access: 'Data Access',
+        danger_zone: 'Danger Zone',
     }
     const handleChangeSection = (e, section) => {
         e.preventDefault()

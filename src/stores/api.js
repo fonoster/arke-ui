@@ -134,7 +134,29 @@ class APIStore {
         })
         .then(response => {
             if (response.status === 200) {
-                appStore.notify('Updated settings.')
+                appStore.notify('Updated settings. This changes will take effect on the next restart')
+            } else {
+                let message = response.message
+                if (response.data) {
+                    message += ': ' + response.data
+                }
+                appStore.notify(message)
+            }
+        })
+    }
+
+    changeStatus = (status, now) => {
+        const t = `system/status/${status}`
+        const endpoint = getEndpoint(this.apiURL, t , `now=${now}`, this.token)
+        fetch(endpoint, {
+            method: 'POST'
+        })
+        .then(results => {
+            return results.json()
+        })
+        .then(response => {
+            if (response.status === 200) {
+                appStore.notify('Restarting.')
             } else {
                 let message = response.message
                 if (response.data) {
