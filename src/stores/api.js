@@ -5,7 +5,9 @@ import { appStore } from './app'
 
 class APIStore {
     resources = []
+    // This can only happen in 'dev' environment
     apiURL = '/api/v1beta1'
+    apiHost = 'localhost'
     config = {
       spec: {
         restService: {},
@@ -112,7 +114,9 @@ class APIStore {
 
     getAPIUrl = () => this.apiURL
 
-    setApiURL = apiURL => this.apiURL = apiURL
+    setApiURL = url => this.apiURL = url
+
+    setApiHost = host => this.apiHost = host
 
     getToken = () => this.token
 
@@ -184,6 +188,12 @@ class APIStore {
 
     doesNotSupportWOOps = () => this.config.spec.dataSource.provider === 'files_data_provider'
 
+    getSystemLogsURL = () => {
+      const host = this.apiHost
+      const port = this.config.restService
+        && this.config.restService.port? this.config.restService.port : 4567
+      return `wss://${host}:${port}${getEndpoint(this.apiURL, 'system/logs-ws' , '', this.token)}`
+    }
 }
 
 decorate(APIStore, {

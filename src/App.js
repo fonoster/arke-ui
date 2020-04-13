@@ -30,8 +30,12 @@ class App extends Component {
       if(getParameterByName('token')) {
           this.props.apiStore.setToken(getParameterByName('token'))
       }
+      // This variable name is misleading. Consider refactoring.
       if(getParameterByName('apiURL')) {
           this.props.apiStore.setApiURL(getParameterByName('apiURL'))
+      }
+      if(getParameterByName('apiHost')) {
+          this.props.apiStore.setApiHost(getParameterByName('apiHost'))
       }
   }
 
