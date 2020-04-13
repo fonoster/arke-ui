@@ -86,6 +86,8 @@ function DangerZone(props) {
       case 3:
         onStopServer()
         break;
+      default:      
+        break;
     }
     setOpenDialog(false)
   }

@@ -62,7 +62,7 @@ function NAT(props) {
         <Typography className={classes.secondaryHeading}>
         Choosing Internal causes the server to use the<br /> IP and port
         it "sees"(received & rport) from a <br /> device attempting
-        to register. You will rarely need<br /> to change this!
+        to register. You will rarely need<br /> to change this.
         </Typography>
         <br />
         <FormControl size="small" variant="outlined" className={classes.textField}>
