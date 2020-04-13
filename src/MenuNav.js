@@ -9,6 +9,7 @@ import DomainsIcon from '@material-ui/icons/Business'
 import SettingsIcon from '@material-ui/icons/Settings'
 import GatewaysIcon from '@material-ui/icons/SwapHoriz'
 import AgentsIcon from '@material-ui/icons/People'
+import ConsoleIcon from '@material-ui/icons/Assignment'
 import DialpadIcon from '@material-ui/icons/Dialpad'
 import PeersAgent from '@material-ui/icons/GroupWork'
 import LocationSearching from '@material-ui/icons/LocationSearching'
@@ -87,6 +88,12 @@ class MenuNav extends React.Component {
                 <SettingsIcon />
               </ListItemIcon>
               <ListItemText primary="Settings" />
+            </ListItem>
+            <ListItem button onClick={e => handleChangeSection(e, 'logs')}>
+              <ListItemIcon>
+                <ConsoleIcon />
+              </ListItemIcon>
+              <ListItemText primary="Logs" />
             </ListItem>
             <ListItem button onClick={e => window.open('https://github.com/fonoster/routr/issues', '_blank')}>
               <ListItemIcon>

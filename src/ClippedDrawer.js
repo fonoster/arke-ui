@@ -6,6 +6,7 @@ import MainNav from './MainNav'
 import MenuNav from './MenuNav'
 import Resources from './components/resources/Resources.js'
 import Settings from './components/settings/Settings.js'
+import Logs from './components/logs/Logs.js'
 import NotificationBar from './components/common/NotificationBar'
 import PaginationTable from './components/common/PaginationTable'
 import About from './components/common/About'
@@ -69,6 +70,9 @@ class ClippedDrawer extends React.Component {
                 columnData= { columnData }
                 data={ data }
             />
+          }
+          {
+            appStore.isLogsSection() && <Logs/>
           }
           {
             appStore.isSettingsSection() && <Settings/>

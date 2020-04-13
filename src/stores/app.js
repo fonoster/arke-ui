@@ -34,6 +34,7 @@ class AppStore {
     || this.currentSection === 'registration'
 
   isSettingsSection = () => this.currentSection === 'settings'
+  isLogsSection = () => this.currentSection === 'logs'
   isAboutDialogOpen = () => this.aboutDialogOpen
   isResourceEditorOpen = () => this.resourceEditorOpen
   isFileUploaderOpen = () => this.fileUploaderOpen

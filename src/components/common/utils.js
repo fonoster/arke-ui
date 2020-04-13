@@ -21,14 +21,14 @@ export function getParameterByName(name, url) {
 }
 
 export function getEndpoint (apiURL, resource, filter, token) {
-    let endpoint = apiURL + '/' + resource
+    let endpoint = `${apiURL}/${resource}`
 
     if (filter) {
-        endpoint = endpoint + '?filter=' + filter
+        endpoint = `${endpoint}?filter=${filter}`
     }
 
     if (token) {
-        filter ? endpoint = endpoint + '&token=' + token : endpoint = endpoint + '?token=' + token
+        endpoint = filter ? `${endpoint}&token=${token}` : `${endpoint}?token=${token}`
     }
 
     return endpoint
