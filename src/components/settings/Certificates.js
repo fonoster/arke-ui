@@ -40,7 +40,7 @@ function NetworkingAndTransport(props) {
             <Select
               value={config.scClientAuthType}
               onChange={onChange}
-              labelWidth={200}
+              labelWidth={190}
               size="small"
             >
               <MenuItem id='scClientAuthType' value="DisabledAll">
@@ -65,7 +65,7 @@ function NetworkingAndTransport(props) {
             <Select
               value={config.scKeyStoreType}
               onChange={onChange}
-              labelWidth={200}
+              labelWidth={108}
               size="small"
             >
               <MenuItem id='scKeyStoreType' value="jks">
