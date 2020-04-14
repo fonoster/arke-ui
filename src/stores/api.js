@@ -188,6 +188,19 @@ class APIStore {
 
     doesNotSupportWOOps = () => this.config.spec.dataSource.provider === 'files_data_provider'
 
+    getSystemLogs = async() => {
+        const t = 'system/logs'
+        const endpoint = getEndpoint(this.apiURL, t , '', this.token)
+        const stream = await fetch(endpoint, { method: 'GET' })
+        const response = await stream.json()
+
+        if (response.status === 200) {
+            return response.data
+        } else {
+            appStore.notify(response.message)
+        }
+    }
+
     getSystemLogsURL = () => {
       const host = this.apiHost
       const port = this.config.restService
