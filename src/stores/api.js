@@ -8,6 +8,8 @@ class APIStore {
     // This can only happen in 'dev' environment
     apiURL = '/api/v1beta1'
     apiHost = 'localhost'
+    ready = false
+    authorized = false
     config = {
       spec: {
         restService: {},
@@ -112,9 +114,7 @@ class APIStore {
 
     getResources = () => this.resources
 
-    getAPIUrl = () => this.apiURL
-
-    setApiURL = url => this.apiURL = url
+    getApiURL = () => this.apiURL
 
     setApiHost = host => this.apiHost = host
 
@@ -176,9 +176,13 @@ class APIStore {
         const endpoint = getEndpoint(this.apiURL, t, '*', this.token)
         const stream = await fetch(endpoint)
         const response = await stream.json()
+        this.ready = true
 
         if (response.status === 200) {
             this.config = response.data
+            this.authorized = true
+        } else if (response.status === 401) {
+            this.authorized = false
         } else {
             appStore.notify(response.message)
         }
@@ -207,12 +211,24 @@ class APIStore {
         && this.config.restService.port? this.config.restService.port : 4567
       return `wss://${host}:${port}${getEndpoint(this.apiURL, 'system/logs-ws' , '', this.token)}`
     }
+
+    getPingEndpoint= () => {
+      const host = this.apiHost
+      const port = this.config.restService
+        && this.config.restService.port? this.config.restService.port : 4567
+      return `https://${host}:${port}${getEndpoint(this.apiURL, 'system/status' , '', this.token)}`
+    }
+
+    isReady = () => this.ready
+    isAuthorized = () => this.authorized
 }
 
 decorate(APIStore, {
     resources: observable,
     token: observable,
-    config: observable
+    config: observable,
+    ready: observable,
+    authorized: observable
 })
 
 export const apiStore = new APIStore()
