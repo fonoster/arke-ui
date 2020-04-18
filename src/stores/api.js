@@ -212,12 +212,7 @@ class APIStore {
       return `wss://${host}:${port}${getEndpoint(this.apiURL, 'system/logs-ws' , '', this.token)}`
     }
 
-    getPingEndpoint= () => {
-      const host = this.apiHost
-      const port = this.config.restService
-        && this.config.restService.port? this.config.restService.port : 4567
-      return `https://${host}:${port}${getEndpoint(this.apiURL, 'system/status' , '', this.token)}`
-    }
+    getPingEndpoint= () => getEndpoint(this.apiURL, 'system/status' , '', this.token)
 
     isReady = () => this.ready
     isAuthorized = () => this.authorized

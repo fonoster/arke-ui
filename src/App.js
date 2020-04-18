@@ -40,11 +40,7 @@ class App extends Component {
       if(getParameterByName('apiHost')) {
         this.props.apiStore.setApiHost(getParameterByName('apiHost'))
       }
-      this.setState({
-        url: this.props.apiStore.getPingEndpoint(),
-        ready: this.props.apiStore.isReady(),
-        authorized: this.props.apiStore.isAuthorized()
-      })
+      this.setState({ url: this.props.apiStore.getPingEndpoint() })
   }
 
   render() {
