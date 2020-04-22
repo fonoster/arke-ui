@@ -69,6 +69,9 @@ class Logging extends React.Component {
                     this.setState({sock})
                     this.state.sock.send(JSON.stringify({message: "Open channel!"}))
                   },
+                  onClose: () => {
+                    this.setState({open: false})
+                  },
                   formatMessage: e => e,
                 }}
               />

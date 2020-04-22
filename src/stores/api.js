@@ -6,8 +6,7 @@ import { appStore } from './app'
 class APIStore {
     resources = []
     // This can only happen in 'dev' environment
-    apiURL = '/api/v1beta1'
-    apiHost = 'localhost'
+    endpointBase = '/api/v1beta1'
     ready = false
     authorized = false
     config = {
@@ -47,7 +46,7 @@ class APIStore {
             return
         }
         const t = appStore.getCurrentSection()
-        const endpoint = getEndpoint(this.apiURL,
+        const endpoint = getEndpoint(this.endpointBase,
           t + '/' + rObj.metadata.ref, '', this.token)
         fetch(endpoint, {
             method: 'PUT',
@@ -73,7 +72,7 @@ class APIStore {
             appStore.notify('Operation not supported by data source provider.')
             return
         }
-        const ep = ref => getEndpoint(this.apiURL, type + '/'+ ref, '', this.token)
+        const ep = ref => getEndpoint(this.endpointBase, type + '/'+ ref, '', this.token)
         let error = []
         for (let i =0; i < refs.length; i++) {
             const stream = await fetch(ep(refs[i]), { method: 'DELETE'})
@@ -95,28 +94,31 @@ class APIStore {
 
     loadResources = async(type) => {
         const t = type === 'registration' ? 'registry' : type
-        const endpoint = getEndpoint(this.apiURL, t, '*', this.token)
+        const endpoint = getEndpoint(this.endpointBase, t, '*', this.token)
         const stream = await fetch(endpoint)
-        const response = await stream.json()
 
-        if (response.status === 200) {
-            const data = []
-            if (response && response.data) {
-              response.data.forEach(item => {
-                  data.push(createData(item, type))
-              })
+        try {
+            const response = await stream.json()
+
+            if (response.status === 200) {
+                const data = []
+                if (response && response.data) {
+                  response.data.forEach(item => {
+                      data.push(createData(item, type))
+                  })
+                }
+                this.resources = data
+            } else {
+                appStore.notify(response.message)
             }
-            this.resources = data
-        } else {
-            appStore.notify(response.message)
-        }
+        } catch(e) {}
     }
 
     getResources = () => this.resources
 
-    getApiURL = () => this.apiURL
+    setApiURL = url =>this.apiURL = url
 
-    setApiHost = host => this.apiHost = host
+    getApiURL = () => this.apiURL
 
     getToken = () => this.token
 
@@ -128,7 +130,7 @@ class APIStore {
             return
         }
         const t = 'system/config'
-        const endpoint = getEndpoint(this.apiURL, t , '', this.token)
+        const endpoint = getEndpoint(this.endpointBase, t , '', this.token)
         fetch(endpoint, {
             method: 'PUT',
             body: JSON.stringify(config)
@@ -138,7 +140,7 @@ class APIStore {
         })
         .then(response => {
             if (response.status === 200) {
-                appStore.notify('Updated settings. This changes will take effect on the next restart')
+                appStore.notify('Configuration changes will take effect on the next restart')
             } else {
                 let message = response.message
                 if (response.data) {
@@ -151,7 +153,7 @@ class APIStore {
 
     changeStatus = (status, now) => {
         const t = `system/status/${status}`
-        const endpoint = getEndpoint(this.apiURL, t , `now=${now}`, this.token)
+        const endpoint = getEndpoint(this.endpointBase, t , `now=${now}`, this.token)
         fetch(endpoint, {
             method: 'POST'
         })
@@ -173,7 +175,7 @@ class APIStore {
 
     loadConfig = async() => {
         const t = 'system/config'
-        const endpoint = getEndpoint(this.apiURL, t, '*', this.token)
+        const endpoint = getEndpoint(this.endpointBase, t, '*', this.token)
         const stream = await fetch(endpoint)
         const response = await stream.json()
         this.ready = true
@@ -193,26 +195,25 @@ class APIStore {
     doesNotSupportWOOps = () => this.config.spec.dataSource.provider === 'files_data_provider'
 
     getSystemLogs = async() => {
-        const t = 'system/logs'
-        const endpoint = getEndpoint(this.apiURL, t , '', this.token)
-        const stream = await fetch(endpoint, { method: 'GET' })
-        const response = await stream.json()
+      const t = 'system/logs'
+      const endpoint = getEndpoint(this.endpointBase, t , '', this.token)
+      const stream = await fetch(endpoint, { method: 'GET' })
+      const response = await stream.json()
 
-        if (response.status === 200) {
-            return response.data
-        } else {
-            appStore.notify(response.message)
-        }
+      if (response.status === 200) {
+          return response.data
+      } else {
+          appStore.notify(response.message)
+      }
     }
 
     getSystemLogsURL = () => {
-      const host = this.apiHost
-      const port = this.config.restService
-        && this.config.restService.port? this.config.restService.port : 4567
-      return `wss://${host}:${port}${getEndpoint(this.apiURL, 'system/logs-ws' , '', this.token)}`
+      const url = this.getApiURL() ? this.getApiURL() : window.location.origin
+      const wsUrl = url.replace('http', 'ws')
+      return`${wsUrl}${getEndpoint(this.endpointBase, 'system/logs-ws' , '', this.token)}`
     }
 
-    getPingEndpoint= () => getEndpoint(this.apiURL, 'system/status' , '', this.token)
+    getPingEndpoint= () => getEndpoint(this.endpointBase, 'system/status' , '', this.token)
 
     isReady = () => this.ready
     isAuthorized = () => this.authorized

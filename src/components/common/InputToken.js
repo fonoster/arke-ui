@@ -43,7 +43,7 @@ class InputToken extends Component {
           To access the web console, please enter the access token. Refer to
           <Button href="https://routr.io/docs/api/token/" color="primary">
           authentication
-          </Button> to obtain a token
+          </Button> to obtain a token.
 
           </DialogContentText>
           { this.state.badToken && <p style={{color: '#33383d'}}>Bad token!</p> }

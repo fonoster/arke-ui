@@ -2,8 +2,11 @@ import React, { Component } from 'react'
 import './App.css'
 import '../node_modules/dropzone/dist/min/dropzone.min.css'
 import ClippedDrawer from './ClippedDrawer'
+import Snackbar from '@material-ui/core/Snackbar'
 import LostConnectionDialog from './components/common/LostConnectionDialog'
 import InputToken from './components/common/InputToken'
+import Button from '@material-ui/core/Button'
+import ClearCache from "react-clear-cache"
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import { Online, Offline } from "react-detect-offline"
 import { getParameterByName } from './components/common/utils'
@@ -28,8 +31,12 @@ const theme = createMuiTheme({
 
 class App extends Component {
 
-  state = {
-    url: 'https://google.com'
+  constructor(props) {
+      super(props)
+      this.state = {
+        url: 'https://google.com',
+        snackOpen: true
+      }
   }
 
   componentDidMount() {
@@ -37,10 +44,14 @@ class App extends Component {
       if(getParameterByName('token')) {
         this.props.apiStore.setToken(getParameterByName('token'))
       }
-      if(getParameterByName('apiHost')) {
-        this.props.apiStore.setApiHost(getParameterByName('apiHost'))
+      if(getParameterByName('apiUrl')) {
+        this.props.apiStore.setApiURL(getParameterByName('apiUrl'))
       }
       this.setState({ url: this.props.apiStore.getPingEndpoint() })
+  }
+
+  handleCloseUpdateSnack =() => {
+    this.setState({snackOpen: false})
   }
 
   render() {
@@ -75,6 +86,39 @@ class App extends Component {
                   <LostConnectionDialog />
                 </div>
               </Offline>
+              <ClearCache>
+              {({ isLatestVersion, emptyCacheStorage }) => (
+                <div>
+                  {!isLatestVersion && (
+                    <Snackbar
+                      open={this.state.snackOpen}
+                      anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'center',
+                      }}
+                      autoHideDuration={15000}
+                      onClose={this.handleCloseUpdateSnack}
+                      message="A new version of the web console is available"
+                      action={[
+                        <Button
+                          key="update"
+                          aria-label="Update console"
+                          size="small"
+                          variant="contained"
+                          onClick={e => {
+                             e.preventDefault();
+                             emptyCacheStorage();
+                          }}
+                        >
+                          Update now
+                        </Button>,
+                      ]}
+                    />            
+                  )}
+                </div>
+              )}
+            </ClearCache>
+
           </MuiThemeProvider>
       </div>
     )
