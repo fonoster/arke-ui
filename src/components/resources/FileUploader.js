@@ -73,7 +73,7 @@ class FileUploader extends React.Component {
     }
     const djsConfig = { addRemoveLinks: true }
     const endpoint = getEndpoint(
-        apiStore.getApiURL(),
+        apiStore.getEndpointBase(),
         appStore.getCurrentSection(),
         '',
         apiStore.getToken()

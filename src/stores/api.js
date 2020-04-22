@@ -5,7 +5,6 @@ import { appStore } from './app'
 
 class APIStore {
     resources = []
-    // This can only happen in 'dev' environment
     endpointBase = '/api/v1beta1'
     ready = false
     authorized = false
@@ -119,6 +118,8 @@ class APIStore {
     setApiURL = url =>this.apiURL = url
 
     getApiURL = () => this.apiURL
+
+    getEndpointBase = () => this.endpointBase
 
     getToken = () => this.token
 
