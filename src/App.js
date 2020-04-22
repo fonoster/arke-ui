@@ -98,22 +98,24 @@ class App extends Component {
                       }}
                       autoHideDuration={15000}
                       onClose={this.handleCloseUpdateSnack}
-                      message="A new version of the web console is available"
+                      message="A new version of Web Console is available!"
                       action={[
                         <Button
-                          key="update"
-                          aria-label="Update console"
+                          key="refresh"
+                          aria-label="Refresh"
                           size="small"
                           variant="contained"
                           onClick={e => {
                              e.preventDefault();
                              emptyCacheStorage();
                           }}
+                          size="small"
+                          disableElevation
                         >
-                          Update now
+                          Refresh
                         </Button>,
                       ]}
-                    />            
+                    />
                   )}
                 </div>
               )}
