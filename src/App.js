@@ -109,7 +109,6 @@ class App extends Component {
                              e.preventDefault();
                              emptyCacheStorage();
                           }}
-                          size="small"
                           disableElevation
                         >
                           Refresh

@@ -118,7 +118,7 @@ export const columnDataRegistration = [
 export function registrationStruct(item) {
     console.log('item:' + JSON.stringify(item))
     return {
-        c1: item.user,
+        c1: item.username,
         c2: item.host,
         c3: item.ip,
         c4: item.regOnFormatted,
